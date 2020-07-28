@@ -5,3 +5,5 @@ DATASET = '/'.join([DATA, 'waseem.tsv'])  # CUSTOMIZE
 ORG = '/'.join([DATA, 'org.tsv'])  # CUSTOMIZE
 CACHE_DIR = 'CACHE'
 LEXICON = '/'.join([DATA, 'hurtlex_EN_1.2.tsv'])
+KENNEDY_RACISM_MODEL_PATH = 'models/racism.bin'
+KENNEDY_SEXISM_MODEL_PATH = 'models/sexism.bin'

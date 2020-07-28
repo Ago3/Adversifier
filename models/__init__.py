@@ -1,0 +1,1 @@
+from .kennedy import KennedyModel

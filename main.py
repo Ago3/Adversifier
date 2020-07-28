@@ -1,7 +1,8 @@
 from AAAdversifier import AAAdversifier
 from utils import get_config
-from info import DATASET
+from info import DATASET, KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH
 from random import randint
+from models import KennedyModel
 
 
 def toy_model(list_of_non_preprocessed_posts):
@@ -24,6 +25,9 @@ def main():
     config = get_config()
     adversifier = AAAdversifier(config)
     adversifier.aaa(toy_model, get_data())  # Check arguments description in AAAdversifier.py
+    # Example: Kennedy
+    kennedy_model = KennedyModel(KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, 100)
+    adversifier.aaa(kennedy_model.forward, get_data())
 
 
 if __name__ == '__main__':
