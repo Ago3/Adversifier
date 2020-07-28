@@ -83,7 +83,7 @@ class Id_e(Attack):
         return label
 
     def setup(self, params):
-        self.group_identifiers = params[-1] if len(params) == 3 else group_identifiers
+        self.group_identifiers = params[-1] if params[-1] else group_identifiers
 
 
 class Quoting_a(Attack):
@@ -98,7 +98,7 @@ class Quoting_a(Attack):
         return 1
 
     def setup(self, params):
-        self.group_identifiers = params[-1] if len(params) == 3 else quoting_a_group_identifiers
+        self.group_identifiers = params[-1] if params[-1] else quoting_a_group_identifiers
 
 
 class PmiAttack(Attack):
