@@ -129,6 +129,6 @@ dmypy.json
 .pyre/
 
 waseem*.tsv
-org.tsv
+org*.tsv
 CACHE
 *.bin
