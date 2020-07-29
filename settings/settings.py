@@ -22,7 +22,7 @@ class Org_n(Setting):
     def run(self, params=None):
         with open(ORG, 'r') as f:
             posts = [line.split('\t')[1] for line in f.readlines()]
-            labels = [0 for line in f.readlines()]
+            labels = [0 for p in posts]
             return posts, labels
 
 
