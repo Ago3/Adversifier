@@ -10,7 +10,8 @@ In order to run the AAA benchmark, you need to download the ORG dataset. The ids
 
 The weights of **BERT_KEN** [(Kennedy et al., 2020)]() can be downloaded at:
 * [sexism.bin](https://drive.google.com/file/d/1qVsRTEFUPYWEKuY4gEsU2qSKk28vIagl/view?usp=sharing)
-* [racism.bin](https://drive.google.com/file/d/1waS2kcmw3ayEonK9fofsTKweqYOdguJu/view?usp=sharing)\ 
+* [racism.bin](https://drive.google.com/file/d/1waS2kcmw3ayEonK9fofsTKweqYOdguJu/view?usp=sharing)
+
 Put both files in the _models_ directory.
 
 ## How to evaluate your own model
