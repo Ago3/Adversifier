@@ -128,7 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-waseem.tsv
+waseem*.tsv
 org.tsv
 CACHE
 *.bin
