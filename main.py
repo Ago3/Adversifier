@@ -5,7 +5,8 @@ from random import randint
 from models import KennedyModel
 
 
-def toy_model(list_of_non_preprocessed_posts):
+def toy_model(list_of_arguments):
+    list_of_non_preprocessed_posts = list_of_arguments[0]
     list_of_predictions = [randint(0, 1) for p in list_of_non_preprocessed_posts]
     return list_of_predictions
 
@@ -17,7 +18,8 @@ def get_data():
         posts = [line.split('\t')[1] for line in lines]
         labels = [LABELS.index(line.split('\t')[2].strip()) for line in lines]  # <--- Convert to 0 or 1
         labels = [l if l <= 1 else 1 for l in labels]
-        return [posts, labels]
+        extra_info_the_model_might_need = ['' for l in labels]
+        return [posts, labels, extra_info_the_model_might_need]
 
 
 def main():

@@ -42,7 +42,8 @@ class KennedyModel():
         self.sexism_model.load_state_dict(torch.load(sexism_model, map_location='cpu'))
         self.sexism_model.to(self.device)
 
-    def forward(self, input_lines):
+    def forward(self, input_args):
+        input_lines = input_args[0]
         input_lines = [preprocess_tweet(tweet) for tweet in input_lines]
         predictions = None
         for batch_lines in tqdm(batcher(input_lines, batch_size=self.batch_size)):

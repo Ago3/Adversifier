@@ -26,9 +26,10 @@ class AAAdversifier():
         """
         print('\nSETTING: {}'.format(setting_name))
         setting = create_setting(setting_name)
-        posts, labels = setting.run(params=[self.dataset_name, data, self.group_indentifiers])
+        posts, labels = setting.run(params=[self.dataset_name, data[:2], self.group_indentifiers])
         print('Generating predictions..')
-        predictions = model(posts)
+        model_input = [posts] + ([] if len(data) == 2 else data[2:])
+        predictions = model(model_input)
         self.scores[setting_name] = setting_f1_score(predictions, labels, setting_name)
         print('{} score: {}'.format(setting_name, self.scores[setting_name]))
         return self.scores[setting_name]
