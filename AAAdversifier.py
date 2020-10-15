@@ -18,8 +18,8 @@ class AAAdversifier():
         
         Arguments:
             setting_name {string} -- The name of the setting (e.g., one of the available attacks)
-            model {function} -- A function that takes as input a list of (NON-preprocessed) posts, and returns a list containing the corresponding predictions
-            data {list} -- List containing 2 lists in the form: [list_of_posts, list_of_labels]. Each label should be in [0, 1], where 0 corresponds to the non-abusive class and 1 corresponds to the abusive class
+            model {function} -- A function that takes as input a list of arguments, the 1st one being a list of (NON-preprocessed) posts, and returns a list containing the corresponding predictions
+            data {list} -- List in the form: [list_of_posts, list_of_labels, any_extra_info, your_model_might_need]. Each label should be in [0, 1], where 0 corresponds to the non-abusive class and 1 corresponds to the abusive class
         
         Returns:
             float -- the score obtained by model under the specified setting
@@ -38,8 +38,8 @@ class AAAdversifier():
         """Computes the model scores on the AAA benchmark.        
         
         Arguments:
-            model {function} -- A function that takes as input a list of (NON-preprocessed) posts, and returns a list containing the corresponding predictions
-            data {list} -- List containing 2 lists in the form: [list_of_posts, list_of_labels]. Each label should be in [0, 1], where 0 corresponds to the non-abusive class and 1 corresponds to the abusive class
+            model {function} -- A function that takes as input a list of arguments, the 1st one being a list of (NON-preprocessed) posts, and returns a list containing the corresponding predictions
+            data {list} -- List in the form: [list_of_posts, list_of_labels, any_extra_info, your_model_might_need]. Each label should be in [0, 1], where 0 corresponds to the non-abusive class and 1 corresponds to the abusive class
         
         Returns:
             float -- the AAA score

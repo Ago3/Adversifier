@@ -16,9 +16,9 @@ def get_data():
     with open(DATASET, 'r') as f:
         lines = f.readlines()
         posts = [line.split('\t')[1] for line in lines]
-        labels = [LABELS.index(line.split('\t')[2].strip()) for line in lines]  # <--- Convert to 0 or 1
+        labels = [LABELS.index(line.split('\t')[2].strip()) for line in lines]  # <--- Convert to 0 (not abusive) or 1 (abusive)
         labels = [l if l <= 1 else 1 for l in labels]
-        extra_info_the_model_might_need = ['' for l in labels]
+        extra_info_the_model_might_need = ['' for l in labels]  # you can use this variable to pass, e.g., conversation context or user-related info
         return [posts, labels, extra_info_the_model_might_need]
 
 
