@@ -13,8 +13,8 @@ def toy_model(list_of_arguments):
 
 def get_data():
     LABELS = ['neither', 'sexism', 'racism', 'both']
+    data = dict()
     for dataset, name in zip([TRAIN_DATASET, TEST_DATASET], ['train', 'test']):
-        data = dict()
         with open(dataset, 'r') as f:
             lines = f.readlines()
             posts = [line.split('\t')[1] for line in lines]
