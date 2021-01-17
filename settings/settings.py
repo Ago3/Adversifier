@@ -162,5 +162,5 @@ class Hashtag_check(Attack):
 
 def create_setting(setting_name):
     assert setting_name in SETTING_NAMES, 'The specified setting ({}) is not correct. Please select a setting from: {}'.format(setting_name, SETTING_NAMES)
-    ss = [F1_o(), Quoting_nr(), Pmi_n(), Pmi_a(), Quoting_a()]
+    ss = [F1_o(), Hashtag_check(), Quoting_nr(), Pmi_n(), Pmi_a(), Quoting_a()]
     return ss[SETTING_NAMES.index(setting_name)]
