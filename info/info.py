@@ -1,7 +1,8 @@
 CONFIG_DIR = 'config'
 CONFIG_FILE = '/'.join([CONFIG_DIR, 'example.json'])  # CUSTOMIZE
 DATA = 'DATA'
-DATASET = '/'.join([DATA, 'waseem_0.tsv'])  # CUSTOMIZE
+TRAIN_DATASET = '/'.join([DATA, 'waseem_train_0.tsv'])  # CUSTOMIZE
+TEST_DATASET = '/'.join([DATA, 'waseem_0.tsv'])  # CUSTOMIZE
 ORG = '/'.join([DATA, 'org.tsv'])  # CUSTOMIZE
 CACHE_DIR = 'CACHE'
 LEXICON = '/'.join([DATA, 'hurtlex_EN_1.2.tsv'])

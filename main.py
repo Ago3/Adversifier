@@ -1,6 +1,6 @@
 from AAAdversifier import AAAdversifier
 from utils import get_config
-from info import DATASET, KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH
+from info import TRAIN_DATASET, TEST_DATASET, KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH
 from random import randint
 from models import KennedyModel
 
@@ -13,13 +13,16 @@ def toy_model(list_of_arguments):
 
 def get_data():
     LABELS = ['neither', 'sexism', 'racism', 'both']
-    with open(DATASET, 'r') as f:
-        lines = f.readlines()
-        posts = [line.split('\t')[1] for line in lines]
-        labels = [LABELS.index(line.split('\t')[2].strip()) for line in lines]  # <--- Convert to 0 (not abusive) or 1 (abusive)
-        labels = [l if l <= 1 else 1 for l in labels]
-        extra_info_the_model_might_need = ['' for l in labels]  # you can use this variable to pass, e.g., conversation context or user-related info
-        return [posts, labels, extra_info_the_model_might_need]
+    for dataset, name in zip([TRAIN_DATASET, TEST_DATASET], ['train', 'test']):
+        data = dict()
+        with open(dataset, 'r') as f:
+            lines = f.readlines()
+            posts = [line.split('\t')[1] for line in lines]
+            labels = [LABELS.index(line.split('\t')[2].strip()) for line in lines]  # <--- Convert to 0 (not abusive) or 1 (abusive)
+            labels = [l if l <= 1 else 1 for l in labels]
+            extra_info_the_model_might_need = ['' for l in labels]  # you can use this variable to pass, e.g., conversation context or user-related info
+            data[name] = [posts, labels, extra_info_the_model_might_need]
+    return data
 
 
 def main():
@@ -27,11 +30,12 @@ def main():
     print('Evaluating Random Classifier:')
     config = get_config()
     adversifier = AAAdversifier(config)
-    adversifier.aaa(toy_model, get_data())  # Check arguments description in AAAdversifier.py
+    data = get_data()
+    adversifier.aaa(toy_model, data['train'], data['test'])  # Check arguments description in AAAdversifier.py
     # Example: Kennedy
     print('\nEvaluating Kennedy Classiefier:')
     kennedy_model = KennedyModel(KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, 100)
-    adversifier.aaa(kennedy_model.forward, get_data())
+    adversifier.aaa(kennedy_model.forward, data['train'], data['test'])
 
 
 if __name__ == '__main__':

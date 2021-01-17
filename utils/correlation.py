@@ -4,10 +4,12 @@ import string
 
 
 def pmi(data, top_k=50, no_hashtag=False):
+    print('For PMI: using only words that do not contain punctuation')
     documents = ['', '']
     high_corr_words = []
     posts, labels = data
     for post, label in zip(posts, labels):
+        # Here I'm discarding hashtags as well
         text = ' '.join(w for w in post.split() if all([c not in string.punctuation for c in w]))
         documents[label] += (' ' + text)
     counters = []

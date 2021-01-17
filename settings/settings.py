@@ -5,7 +5,7 @@ from .strings import quoting_n_strings, group_identifiers, quoting_a_group_ident
 from utils import get_high_corr_words, get_hateful_words
 
 
-SETTING_NAMES = ['f1_o', 'quoting_nr', 'id_e', 'pmi_n', 'pmi_a', 'quoting_a', 'org_n']
+SETTING_NAMES = ['f1_o', 'hashtag_check', 'quoting_nr', 'pmi_n', 'pmi_a', 'quoting_a']
 random.seed(1)
 
 
@@ -35,9 +35,9 @@ class Attack(Setting):
             if label in self.affected_labels():
                 new_posts.append(self.perturb_post(post))
                 new_labels.append(self.get_label(label))
-            else:
-                new_posts.append(post)
-                new_labels.append(label)
+            # else:
+            #     new_posts.append(post)
+            #     new_labels.append(label)
         return new_posts, new_labels
 
     @abstractmethod
@@ -106,7 +106,7 @@ class PmiAttack(Attack):
         n = random.randint(1, 10)
         wordlist = []
         for i in range(n):
-            wordlist.append(random.choice(self.relevant_words))  # e.g., Pmi_a: Pick n random words that are relevant for the non-abusive class
+            wordlist.append('#' + random.choice(self.relevant_words))  # e.g., Pmi_a: Pick n random words that are relevant for the non-abusive class
         return "{} {}".format(post, ' '.join(wordlist))
 
     def get_label(self, label):
@@ -136,7 +136,31 @@ class Pmi_n(PmiAttack):
                     break
 
 
+class Hashtag_check(Attack):
+    @abstractmethod
+    def affected_labels(self):
+        return [0]
+
+    def get_label(self, label):
+        return 1
+
+    def perturb_post(self, post):
+        wordlist = ['#' + w for w in self.abusive_posts[self.idx]]
+        self.idx = (self.idx + 1) % len(self.abusive_posts)
+        return "{} {}".format(post, ' '.join(wordlist))
+
+    def setup(self, params):
+        self.idx = 0
+        train_post, train_labels = params[-1]
+        self.abusive_posts = list()
+        for post, label in train_post, train_labels:
+            if label == 1:
+                self.abusive_posts.append(post)
+                if len(self.abusive_posts) == len(params[1][0]):  #we need one abusive post for each training instance
+                    break
+
+
 def create_setting(setting_name):
     assert setting_name in SETTING_NAMES, 'The specified setting ({}) is not correct. Please select a setting from: {}'.format(setting_name, SETTING_NAMES)
-    ss = [F1_o(), Quoting_nr(), Id_e(), Pmi_n(), Pmi_a(), Quoting_a(), Org_n()]
+    ss = [F1_o(), Quoting_nr(), Pmi_n(), Pmi_a(), Quoting_a()]
     return ss[SETTING_NAMES.index(setting_name)]
