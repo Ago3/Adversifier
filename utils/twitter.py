@@ -3,7 +3,7 @@ import re
 from nltk.tokenize import TweetTokenizer
 
 
-def preprocess_tweet(text):
+def preprocess_tweet(text, max_len=512):
     text = re.sub('\n', ' ', text)
     tknzr = TweetTokenizer(strip_handles=True, reduce_len=True)
     # Check characters to see if they are in punctuation
@@ -20,7 +20,8 @@ def preprocess_tweet(text):
     # remove the # in #hashtag
     nopunc = re.sub(r'#([^\s]+)', r'<hashtag> \1 </hashtag>', nopunc)
     # remove repeated characters
-    nopunc = ' '.join(tknzr.tokenize(nopunc))
+    nopunc = tknzr.tokenize(nopunc)
+    nopunc = ' '.join(nopunc if len(nopunc) <= max_len else nopunc[:max_len])
     # remove numbers
     nopunc = re.sub('\d+', '<number>', nopunc)
     return nopunc
