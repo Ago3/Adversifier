@@ -137,7 +137,6 @@ class Pmi_n(PmiAttack):
 
 
 class Hashtag_check(Attack):
-    @abstractmethod
     def affected_labels(self):
         return [0]
 
