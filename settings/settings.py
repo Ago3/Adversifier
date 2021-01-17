@@ -56,7 +56,13 @@ class Attack(Setting):
 
 class F1_o(Attack):
     def affected_labels(self):
-        return []
+        return [0, 1]
+
+    def perturb_post(self, post):
+        return post
+
+    def get_label(self, label):
+        return label
 
 
 class Quoting_nr(Attack):
@@ -98,7 +104,7 @@ class Quoting_a(Attack):
         return 1
 
     def setup(self, params):
-        self.group_identifiers = params[-1] if params[-1] else quoting_a_group_identifiers
+        self.group_identifiers = params[-2] if params[-2] else quoting_a_group_identifiers
 
 
 class PmiAttack(Attack):
