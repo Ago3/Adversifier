@@ -152,7 +152,7 @@ class Hashtag_check(Attack):
         self.idx = 0
         train_post, train_labels = params[-1]
         self.abusive_posts = list()
-        for post, label in train_post, train_labels:
+        for post, label in zip(train_post, train_labels):
             if label == 1:
                 self.abusive_posts.append(post)
                 if len(self.abusive_posts) == len(params[1][0]):  #we need one abusive post for each training instance
