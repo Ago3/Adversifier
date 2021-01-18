@@ -1,6 +1,7 @@
 from collections import Counter
 import numpy as np
 import string
+from .twitter import preprocess_tweet
 
 
 def pmi(data, top_k=50, no_hashtag=False):
@@ -10,7 +11,8 @@ def pmi(data, top_k=50, no_hashtag=False):
     posts, labels = data
     for post, label in zip(posts, labels):
         # Here I'm discarding hashtags as well
-        text = ' '.join(w.lower() for w in post.split() if all([c not in string.punctuation for c in w]))
+        # text = ' '.join(w.lower() for w in post.split() if all([c not in string.punctuation for c in w]))
+        text = preprocess_tweet(post)
         documents[label] += (' ' + text)
     counters = []
     total_counter = Counter([])
