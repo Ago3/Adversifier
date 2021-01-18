@@ -47,7 +47,7 @@ class KennedyModel():
         input_lines = [preprocess_tweet(tweet) for tweet in input_lines]
         predictions = None
         for batch_lines in tqdm(batcher(input_lines, batch_size=self.batch_size)):
-            batch = self.tokenizer.batch_encode_plus(batch_lines, return_tensors='pt', padding='longest')
+            batch = self.tokenizer.batch_encode_plus(batch_lines, return_tensors='pt', padding='longest', max_length=512)
             batch = {k: v.to(self.device) if isinstance(v, torch.Tensor) else v for k, v in batch.items()}
             with torch.no_grad():
                 racism_predictions = torch.tensor(self.racism_model(**batch)[0].argmax(-1).tolist())

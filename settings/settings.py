@@ -150,9 +150,10 @@ class Hashtag_check(Attack):
         return 1
 
     def perturb_post(self, post):
-        wordlist = ['#' + w for w in self.abusive_posts[self.idx]]
+        wordlist = ['#' + w for w in self.abusive_posts[self.idx] if '@' not in w]
+        wordlist = [re.sub(r'##([^\s]+)', r'#\1', w) for w in wordlist]
         self.idx = (self.idx + 1) % len(self.abusive_posts)
-        return "{} {}".format(post, ' '.join(wordlist))
+        return "{} {}".format(' '.join(wordlist), post)  # We don't want the abusive post to be truncated, otherwise we can't control the final label
 
     def setup(self, params):
         self.idx = 0
