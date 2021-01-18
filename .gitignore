@@ -132,3 +132,4 @@ waseem*.tsv
 org*.tsv
 CACHE
 *.bin
+*.txt

@@ -5,13 +5,13 @@ from .twitter import preprocess_tweet
 
 
 def pmi(data, top_k=50, no_hashtag=False):
-    print('For PMI: using only words that do not contain punctuation')
     documents = ['', '']
     high_corr_words = []
     posts, labels = data
     for post, label in zip(posts, labels):
         # Here I'm discarding hashtags as well
         # text = ' '.join(w.lower() for w in post.split() if all([c not in string.punctuation for c in w]))
+        post = ' '.join(w for w in post.split() if '#' not in w)
         text = preprocess_tweet(post)
         documents[label] += (' ' + text)
     counters = []
