@@ -10,7 +10,7 @@ def pmi(data, top_k=50, no_hashtag=False):
     posts, labels = data
     for post, label in zip(posts, labels):
         # Here I'm discarding hashtags as well
-        text = ' '.join(w for w in post.split() if all([c not in string.punctuation for c in w]))
+        text = ' '.join(w.lower() for w in post.split() if all([c not in string.punctuation for c in w]))
         documents[label] += (' ' + text)
     counters = []
     total_counter = Counter([])
