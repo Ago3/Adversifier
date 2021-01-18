@@ -4,6 +4,8 @@ import random
 import re
 from .strings import quoting_n_strings, group_identifiers, quoting_a_group_identifiers
 from utils import get_high_corr_words, get_hateful_words
+import nltk
+from nltk.stem import WordNetLemmatizer
 
 
 SETTING_NAMES = ['f1_o', 'hashtag_check', 'quoting_nr', 'pmi_n', 'pmi_a', 'quoting_a']
@@ -110,7 +112,7 @@ class Quoting_a(Attack):
 
 class PmiAttack(Attack):
     def perturb_post(self, post):
-        n = random.randint(1, 10)
+        n = random.randint(1, 5)
         wordlist = []
         for i in range(n):
             wordlist.append('#' + random.choice(self.relevant_words))  # e.g., Pmi_a: Pick n random words that are relevant for the non-abusive class
@@ -133,11 +135,12 @@ class Pmi_n(PmiAttack):
         return [0]
 
     def setup(self, params):
+        wordnet_lemmatizer = WordNetLemmatizer()
         hateful_words = get_hateful_words()
         high_corr_words = get_high_corr_words(params[0], params[1], class_id=1)
         self.relevant_words = list()
         for word in high_corr_words:
-            if word not in hateful_words:
+            if word not in hateful_words and wordnet_lemmatizer.lemmatize(word, pos='v') not in hateful_words:
                 self.relevant_words.append(word)
                 if len(self.relevant_words) >= 50:
                     break
