@@ -1,5 +1,5 @@
 from settings import create_setting, SETTING_NAMES
-from utils import geometric_mean, setting_f1_score, get_high_corr_words
+from utils import geometric_mean, setting_f1_score, get_high_corr_words, is_significant
 
 
 class AAAdversifier():
@@ -31,7 +31,10 @@ class AAAdversifier():
         print('Generating predictions..')
         model_input = [posts] + ([] if len(test_data) == 2 else test_data[2:])
         predictions = model(model_input)
-        self.scores[setting_name] = setting_f1_score(predictions, labels, setting_name)
+        if setting_name == 'f1_o':
+            self.scores[setting_name], self.scores[setting_name + '_non_abusive'] = setting_f1_score(predictions, labels, setting_name)
+        else:
+            self.scores[setting_name] = setting_f1_score(predictions, labels, setting_name)
         print('{} score: {}'.format(setting_name, self.scores[setting_name]))
         return self.scores[setting_name]
 
@@ -52,7 +55,7 @@ class AAAdversifier():
             get_high_corr_words(self.dataset_name, train_data[:2], class_id=class_id)
         for setting in SETTING_NAMES:
             #If hashtags are not being used by the model, just skip the pmi_a and pmi_n attack
-            if 'hashtag_check' in self.scores and self.scores['hashtag_check'] == 0 and 'pmi' in setting:
+            if 'hashtag_check' in self.scores and is_significant(self.scores['hashtag_check'], self.scores['f1_o_non_abusive'])  and 'pmi' in setting:
                 self.scores[setting] = 0
                 continue
             self.eval_setting(setting, model, test_data, train_data)

@@ -19,6 +19,10 @@ def preprocess_tweet(text, max_len=512):
     nopunc = re.sub('@[^\s]+', '<user>', nopunc)
     # remove the # in #hashtag
     nopunc = re.sub(r'#([^\s]+)', r'<hashtag> \1 </hashtag>', nopunc)
+    # if need to test a model that does not use hashtags, comment the previous line and uncomment the followings:
+    # nopunc = re.sub(r'#([^\s]+)', r' ', nopunc)
+    # if not nopunc.strip():
+    #     nopunc = '<empty>'
     # remove repeated characters
     nopunc = tknzr.tokenize(nopunc)
     nopunc = ' '.join(nopunc if len(nopunc) <= max_len else nopunc[:max_len])
