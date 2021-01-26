@@ -34,7 +34,7 @@ def load_from_cache(file_name):
 def get_high_corr_words(dataset_name, data, class_id, cache=True):
     if cache:
         high_corr_words = load_from_cache(dataset_name + '_pmi.pkl')
-    if not high_corr_words:
+    if not cache or not high_corr_words:
         high_corr_words = logReg(data)
         # high_corr_words = pmi(data, no_hashtag=True)
         store_to_cache(high_corr_words, dataset_name + '_pmi.pkl')
