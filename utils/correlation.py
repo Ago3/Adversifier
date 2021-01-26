@@ -61,7 +61,7 @@ def feature_importance(coef, names, top_k=100):
     features = list()
     for c, class_name in zip([-1, 1], ['non_abusive', 'abusive']):
         values, c_names = zip(*sorted(zip(imp[0], names), reverse=True, key=lambda x: c * x[0]))
-        features.append(values[:100])
+        features.append(list(c_names[:100]))
         # Uncomment for plotting the features
         # values, c_names = values[:50], c_names[:50]
         # f = plt.figure() 
