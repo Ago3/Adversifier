@@ -31,14 +31,13 @@ def load_from_cache(file_name):
         return None
 
 
-def get_high_corr_words(dataset_name, data, class_id, cache=False):
-    high_corr_words = load_from_cache(dataset_name + '_pmi.pkl')
+def get_high_corr_words(dataset_name, data, class_id, cache=True):
+    if cache:
+        high_corr_words = load_from_cache(dataset_name + '_pmi.pkl')
     if not high_corr_words:
-        logReg(data)
-        exit(0)
-        high_corr_words = pmi(data, no_hashtag=True)
-        if cache:
-            store_to_cache(high_corr_words, dataset_name + '_pmi.pkl')
+        high_corr_words = logReg(data)
+        # high_corr_words = pmi(data, no_hashtag=True)
+        store_to_cache(high_corr_words, dataset_name + '_pmi.pkl')
     return high_corr_words[class_id]
 
 

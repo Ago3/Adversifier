@@ -6,7 +6,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
 from matplotlib import pyplot as plt
 
-
 def pmi(data, top_k=100, no_hashtag=False):
     documents = ['', '']
     high_corr_words = []
@@ -37,7 +36,11 @@ def pmi(data, top_k=100, no_hashtag=False):
 
 def logReg(data):
     train_tweets, train_labels = data
-    print(set(train_labels))
+    preprocessed_train_tweets = list()
+    for post in train_tweets:
+        post = ' '.join(w for w in post.split() if '#' not in w)
+        preprocessed_train_tweets.append(preprocess_tweet(post))
+    train_tweets = preprocessed_train_tweets
     vectorizer = CountVectorizer(analyzer="word", tokenizer=None, preprocessor=None, stop_words=None, max_features=1500) 
     train_data_features = vectorizer.fit_transform(train_tweets)
     print("Creating Features...")
@@ -48,16 +51,25 @@ def logReg(data):
     print("Training..")
     clf = clf.fit(train_data_features, train_labels)
     print("Training Completed")
-    feature_importance(clf.coef_, vectorizer.get_feature_names())
-    return clf, vectorizer
+    features = feature_importance(clf.coef_, vectorizer.get_feature_names())
+    return features
 
 
-def feature_importance(coef, names):
+def feature_importance(coef, names, top_k=100):
     imp = coef
-    print(imp.shape)
-    for c in range(imp.shape[0]):
-        values, c_names = zip(*sorted(zip(imp[c], names), reverse=True, key=lambda x: x[0]))
-        values, c_names = values[:20], c_names[:20]
-        plt.barh(range(len(c_names)), values, align='center')
-        plt.yticks(range(len(c_names)), c_names)
-        plt.show()
+    assert imp.shape[0] == 1, 'Labels are not binary'
+    features = list()
+    for c, class_name in zip([-1, 1], ['non_abusive', 'abusive']):
+        values, c_names = zip(*sorted(zip(imp[0], names), reverse=True, key=lambda x: c * x[0]))
+        features.append(values[:100])
+        # Uncomment for plotting the features
+        # values, c_names = values[:50], c_names[:50]
+        # f = plt.figure() 
+        # f.set_figwidth(7) 
+        # f.set_figheight(7)
+        # plt.barh(range(len(c_names)), values, align='center')
+        # plt.yticks(range(len(c_names)), c_names)
+        # plt.tight_layout()
+        # plt.savefig('lr_features_{}.png'.format(class_name))
+    return features
+
