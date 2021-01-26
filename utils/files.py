@@ -2,7 +2,7 @@ import json
 import pickle
 from os import path, mkdir
 from info import CONFIG_FILE, CACHE_DIR, LEXICON
-from .correlation import pmi
+from .correlation import pmi, logReg
 
 
 def get_config():
@@ -34,6 +34,8 @@ def load_from_cache(file_name):
 def get_high_corr_words(dataset_name, data, class_id, cache=False):
     high_corr_words = load_from_cache(dataset_name + '_pmi.pkl')
     if not high_corr_words:
+        logReg(data)
+        exit(0)
         high_corr_words = pmi(data, no_hashtag=True)
         if cache:
             store_to_cache(high_corr_words, dataset_name + '_pmi.pkl')

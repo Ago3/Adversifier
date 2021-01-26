@@ -142,7 +142,7 @@ class Pmi_n(PmiAttack):
         for word in high_corr_words:
             if word not in hateful_words and wordnet_lemmatizer.lemmatize(word, pos='v') not in hateful_words:
                 self.relevant_words.append(word)
-                if len(self.relevant_words) >= 50:
+                if len(self.relevant_words) >= 100:
                     break
 
 
