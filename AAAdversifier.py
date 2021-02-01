@@ -51,7 +51,8 @@ class AAAdversifier():
         """
         print('\nRunning AAA evaluation')
         #Finding words with high PMI correlation with each class
-        get_high_corr_words(self.dataset_name, train_data[:2], class_id=0, cache=False)
+        for class_id in range(2):
+            get_high_corr_words(self.dataset_name, train_data[:2], class_id=class_id, cache=False)
         for setting in SETTING_NAMES:
             #If hashtags are not being used by the model, just skip the pmi_a and pmi_n attack
             if 'hashtag_check' in self.scores and is_significant(self.scores['hashtag_check'], self.scores['f1_o_non_abusive'])  and 'pmi' in setting:
