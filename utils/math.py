@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.metrics import f1_score
 import settings
 from scipy.stats import chisquare
-from sklearn.metrics import confusion_matrix
+# from sklearn.metrics import confusion_matrix
 
 
 def geometric_mean(values, weights=None):
