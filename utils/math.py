@@ -19,7 +19,7 @@ def setting_score(predictions, labels, setting_name):
             c_tp = (np.array(c_predictions) == np.array(c_labels)).sum()
             c_tpr = c_tp / len(c_predictions)
             print("Class: {} TPR: {}".format(class_id, c_tpr))
-        return f1_score(predictions, labels, average='weighted')
+        return f1_score(predictions, labels, average='binary')
     # if setting_name in settings.SETTING_NAMES[2:4]:
     #     class_id = 0
     # else:
@@ -39,5 +39,7 @@ def setting_score(predictions, labels, setting_name):
 def is_significant(mean_score, new_score):
     # z = (new_score - mean_score) / std
     # p_value = scipy.stats.norm.sf(abs(z))*2
-    p_value = chisquare([new_score], [mean_score])[1]
-    return p_value < 0.05
+    statistic = chisquare([new_score], [mean_score])[0]
+    print(chisquare([new_score], [mean_score]))
+    critical_value = 9.49
+    return statistic > critical_value
