@@ -1,5 +1,5 @@
 from settings import create_setting, SETTING_NAMES
-from utils import geometric_mean, setting_f1_score, get_high_corr_words, is_significant
+from utils import geometric_mean, setting_score, get_high_corr_words, is_significant
 
 
 class AAAdversifier():
@@ -32,9 +32,9 @@ class AAAdversifier():
         model_input = [posts] + ([] if len(test_data) == 2 else test_data[2:])
         predictions = model(model_input)
         if setting_name == 'f1_o':
-            self.scores[setting_name] = setting_f1_score(predictions, labels, setting_name)
+            self.scores[setting_name] = setting_score(predictions, labels, setting_name)
         else:
-            self.scores[setting_name] = setting_f1_score(predictions, labels, setting_name)
+            self.scores[setting_name] = setting_score(predictions, labels, setting_name)
         print('{} score: {}'.format(setting_name, self.scores[setting_name]))
         return self.scores[setting_name]
 
