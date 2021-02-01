@@ -50,18 +50,18 @@ class AAAdversifier():
             float -- the AAA score
         """
         print('\nRunning AAA evaluation')
-        #Finding words with high PMI correlation with each class
+        #Finding non-rare words with high correlation with each class
         for class_id in range(2):
             get_high_corr_words(self.dataset_name, train_data[:2], class_id=class_id, cache=False)
         for setting in SETTING_NAMES:
-            #If hashtags are not being used by the model, just skip the pmi_a and pmi_n attack
-            if 'hashtag_check' in self.scores and is_significant(self.scores['hashtag_check'], self.scores['f1_o'])  and 'pmi' in setting:
+            #If hashtags are not being used by the model, just skip the corr_a_to_a and corr_n_to_n attacks
+            if 'hashtag_check' in self.scores and is_significant(self.scores['hashtag_check'], self.scores['f1_o'])  and 'corr' in setting:
                 self.scores[setting] = 0
                 continue
             self.eval_setting(setting, model, test_data, train_data)
         # non_abusive_score = geometric_mean([self.scores[k] for k in ['quoting_nr', 'pmi_n']])
         # abusive_score = geometric_mean([self.scores[k] for k in ['pmi_a', 'quoting_a']])
         # self.scores['aaa'] = geometric_mean([self.scores['f1_o'], self.scores['org_n'], non_abusive_score, abusive_score], [1, 0.5, 0.5, 1])
-        self.scores['aaa'] = geometric_mean([self.scores[k] for k in ['quoting_nr', 'pmi_n', 'pmi_a', 'flip_n_to_a']])
+        self.scores['aaa'] = geometric_mean([self.scores[k] for k in ['quoting_nr', 'corr_n_to_n', 'corr_a_to_a', 'flip_n_to_a']])
         print('AAA score: {}'.format(self.scores['aaa']))
         return self.scores['aaa']

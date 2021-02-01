@@ -8,7 +8,7 @@ import nltk
 from nltk.stem import WordNetLemmatizer
 
 
-SETTING_NAMES = ['f1_o', 'hashtag_check', 'quoting_nr', 'pmi_n', 'pmi_a', 'flip_n_to_a']
+SETTING_NAMES = ['f1_o', 'hashtag_check', 'quoting_nr', 'corr_n_to_n', 'corr_a_to_a', 'flip_n_to_a']
 random.seed(1)
 
 
@@ -134,7 +134,7 @@ class Flip_n_to_a(Attack):
                     break
 
 
-class PmiAttack(Attack):
+class CorrAttack(Attack):
     def perturb_post(self, post):
         n = random.randint(1, 5)
         wordlist = []
@@ -146,7 +146,8 @@ class PmiAttack(Attack):
         return label
 
 
-class Pmi_a(PmiAttack):
+class Corr_a_to_a(CorrAttack):
+    # From abusive to abusive
     def affected_labels(self):
         return [1]
 
@@ -154,7 +155,8 @@ class Pmi_a(PmiAttack):
         self.relevant_words = get_high_corr_words(params[0], params[1], class_id=0)
 
 
-class Pmi_n(PmiAttack):
+class Corr_n_to_n(CorrAttack):
+    # From non-abusive to non-abusive
     def affected_labels(self):
         return [0]
 
@@ -178,12 +180,12 @@ class Hashtag_check(Attack):
         return label
 
     def perturb_post(self, post):
-        wordlist = ['#' + w for w in post if '@' not in w]
+        wordlist = ['#' + w for w in post.split() if '@' not in w]
         wordlist = [re.sub(r'##([^\s]+)', r'#\1', w) for w in wordlist]
         return ' '.join(wordlist)
 
 
 def create_setting(setting_name):
     assert setting_name in SETTING_NAMES, 'The specified setting ({}) is not correct. Please select a setting from: {}'.format(setting_name, SETTING_NAMES)
-    ss = [F1_o(), Hashtag_check(), Quoting_nr(), Pmi_n(), Pmi_a(), Flip_n_to_a()]
+    ss = [F1_o(), Hashtag_check(), Quoting_nr(), Corr_n_to_n(), Corr_a_to_a(), Flip_n_to_a()]
     return ss[SETTING_NAMES.index(setting_name)]
