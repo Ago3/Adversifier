@@ -16,10 +16,9 @@ def setting_score(predictions, labels, setting_name):
         for class_id in [0, 1]:
             c_predictions = [p for p, l in zip(predictions, labels) if l == class_id]
             c_labels = [class_id] * len(c_predictions)
-            cf = confusion_matrix(c_labels, c_predictions)
-            tp = np.diag(cf)
-            p = cf.sum(axis=1)
-            print("Class: {} TPR: {}".format(class_id, tp/p))
+            c_tp = (c_predictions == c_labels).sum()
+            c_tpr = c_tp / len(c_predictions)
+            print("Class: {} TPR: {}".format(class_id, c_tpr))
         return f1_score(predictions, labels, average='weighted')
     # if setting_name in settings.SETTING_NAMES[2:4]:
     #     class_id = 0
@@ -28,10 +27,12 @@ def setting_score(predictions, labels, setting_name):
     # c_predictions = [p for p, l in zip(predictions, labels) if l == class_id]
     # c_labels = [class_id] * len(c_predictions)
     # return f1_score(c_predictions, c_labels, average='micro')
-    cf = confusion_matrix(labels, predictions)
-    tp = np.diag(cf)
-    p = cf.sum(axis=1)
-    return tp/p
+    # cf = confusion_matrix(labels, predictions)
+    # tp = np.diag(cf)
+    # p = cf.sum(axis=1)
+    tp = (predictions == labels).sum()
+    tpr = tp / len(predictions)
+    return tpr
 
 
 
