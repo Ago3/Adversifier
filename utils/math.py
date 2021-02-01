@@ -12,12 +12,7 @@ def geometric_mean(values, weights=None):
 
 def setting_f1_score(predictions, labels, setting_name):
     if setting_name == 'f1_o':
-        f1 = f1_score(predictions, labels, average='weighted')
-        class_id = 0
-        c_predictions = [p for p, l in zip(predictions, labels) if l == class_id]
-        c_labels = [class_id] * len(c_predictions)
-        class_f1 = f1_score(c_predictions, c_labels, average='micro')
-        return f1, class_f1
+        return f1_score(predictions, labels, average='weighted')
     if setting_name in settings.SETTING_NAMES[2:4]:
         class_id = 0
     else:

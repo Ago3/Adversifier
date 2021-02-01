@@ -172,26 +172,15 @@ class Pmi_n(PmiAttack):
 
 class Hashtag_check(Attack):
     def affected_labels(self):
-        return [0]
+        return [0, 1]
 
     def get_label(self, label):
-        return 1
+        return label
 
     def perturb_post(self, post):
-        wordlist = ['#' + w for w in self.abusive_posts[self.idx].split() if '@' not in w]
+        wordlist = ['#' + w for w in post if '@' not in w]
         wordlist = [re.sub(r'##([^\s]+)', r'#\1', w) for w in wordlist]
-        self.idx = (self.idx + 1) % len(self.abusive_posts)
-        return "{} {}".format(' '.join(wordlist), post)  # We don't want the abusive post to be truncated, otherwise we can't control the final label
-
-    def setup(self, params):
-        self.idx = 0
-        train_post, train_labels = params[-1]
-        self.abusive_posts = list()
-        for post, label in zip(train_post, train_labels):
-            if label == 1:
-                self.abusive_posts.append(post)
-                if len(self.abusive_posts) == len(params[1][0]):  #we need one abusive post for each training instance
-                    break
+        return ' '.join(wordlist)
 
 
 def create_setting(setting_name):
