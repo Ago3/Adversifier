@@ -38,7 +38,7 @@ def logReg(data, class_id):
     train_tweets, train_labels = data
     preprocessed_train_tweets = list()
     for post in train_tweets:
-        post = ' '.join(w for w in post.split() if '#' not in w or class_id=0)
+        post = ' '.join(w for w in post.split() if '#' not in w or class_id==0)
         preprocessed_train_tweets.append(preprocess_tweet(post))
     train_tweets = preprocessed_train_tweets
     vectorizer = CountVectorizer(analyzer="word", tokenizer=None, preprocessor=None, stop_words=None, max_features=1500) 
