@@ -12,7 +12,7 @@ def geometric_mean(values, weights=None):
 
 
 def setting_score(predictions, labels, setting_name):
-    if setting_name == 'f1_o':
+    if setting_name in ['f1_o', 'hashtag_check']:
         for class_id in [0, 1]:
             c_predictions = [p for p, l in zip(predictions, labels) if l == class_id]
             c_labels = [class_id] * len(c_predictions)
