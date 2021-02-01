@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.metrics import f1_score
 import settings
-import scipy
+from scipy.stats import chisquare
 
 
 def geometric_mean(values, weights=None):
@@ -23,7 +23,8 @@ def setting_f1_score(predictions, labels, setting_name):
 
 
 
-def is_significant(mean_score, new_score, std=0.2):
-    z = (new_score - mean_score) / std
-    p_value = scipy.stats.norm.sf(abs(z))*2
+def is_significant(mean_score, new_score):
+    # z = (new_score - mean_score) / std
+    # p_value = scipy.stats.norm.sf(abs(z))*2
+    p_value = chisquare([new_score], [mean_score])[1]
     return p_value < 0.05
