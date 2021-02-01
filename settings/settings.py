@@ -8,7 +8,7 @@ import nltk
 from nltk.stem import WordNetLemmatizer
 
 
-SETTING_NAMES = ['f1_o', 'hashtag_check', 'quoting_nr', 'pmi_n', 'pmi_a', 'quoting_a']
+SETTING_NAMES = ['f1_o', 'hashtag_check', 'quoting_nr', 'pmi_n', 'pmi_a', 'flip_n_to_a']
 random.seed(1)
 
 
@@ -21,12 +21,12 @@ class Setting(ABC):
         pass
 
 
-class Org_n(Setting):
-    def run(self, params=None):
-        with open(ORG, 'r') as f:
-            posts = [line.split('\t')[1] for line in f.readlines()]
-            labels = [0 for p in posts]
-            return posts, labels
+# class Org_n(Setting):
+#     def run(self, params=None):
+#         with open(ORG, 'r') as f:
+#             posts = [line.split('\t')[1] for line in f.readlines()]
+#             labels = [0 for p in posts]
+#             return posts, labels
 
 
 class Attack(Setting):
@@ -79,26 +79,43 @@ class Quoting_nr(Attack):
         return 0
 
 
-class Id_e(Attack):
+# class Id_e(Attack):
+#     def perturb_post(self, post):
+#         n = random.randint(1, 5)
+#         wordlist = [random.choice(self.group_identifiers) for i in range(n)]
+#         return "{} {}".format(post, ' '.join(wordlist))
+
+#     def affected_labels(self):
+#         return [0]
+
+#     def get_label(self, label):
+#         return label
+
+#     def setup(self, params):
+#         self.group_identifiers = params[-1] if params[-1] else group_identifiers
+
+
+# class Quoting_a(Attack):
+#     def perturb_post(self, post):
+#         self.identifier = random.choice(self.group_identifiers)
+#         return "{} only a {} could agree with this".format(post, self.identifier)
+
+#     def affected_labels(self):
+#         return [0]
+
+#     def get_label(self, label):
+#         return 1
+
+#     def setup(self, params):
+#         self.group_identifiers = params[-2] if params[-2] else quoting_a_group_identifiers
+
+
+class Flip_n_to_a(Attack):
+    # From non-abusive to abusive
     def perturb_post(self, post):
-        n = random.randint(1, 5)
-        wordlist = [random.choice(self.group_identifiers) for i in range(n)]
-        return "{} {}".format(post, ' '.join(wordlist))
-
-    def affected_labels(self):
-        return [0]
-
-    def get_label(self, label):
-        return label
-
-    def setup(self, params):
-        self.group_identifiers = params[-1] if params[-1] else group_identifiers
-
-
-class Quoting_a(Attack):
-    def perturb_post(self, post):
-        self.identifier = random.choice(self.group_identifiers)
-        return "{} only a {} could agree with this".format(post, self.identifier)
+        abusive_post = self.abusive_posts[self.idx]
+        self.idx = (self.idx + 1) % len(self.abusive_posts)
+        return "{} {}".format(abusive_post, post)  # We don't want the abusive post to be truncated, otherwise we can't control the final label
 
     def affected_labels(self):
         return [0]
@@ -107,7 +124,14 @@ class Quoting_a(Attack):
         return 1
 
     def setup(self, params):
-        self.group_identifiers = params[-2] if params[-2] else quoting_a_group_identifiers
+        self.idx = 0
+        train_post, train_labels = params[-1]
+        self.abusive_posts = list()
+        for post, label in zip(train_post, train_labels):
+            if label == 1:
+                self.abusive_posts.append(post)
+                if len(self.abusive_posts) == len(params[1][0]):  #we need one abusive post for each testing instance
+                    break
 
 
 class PmiAttack(Attack):
@@ -172,5 +196,5 @@ class Hashtag_check(Attack):
 
 def create_setting(setting_name):
     assert setting_name in SETTING_NAMES, 'The specified setting ({}) is not correct. Please select a setting from: {}'.format(setting_name, SETTING_NAMES)
-    ss = [F1_o(), Hashtag_check(), Quoting_nr(), Pmi_n(), Pmi_a(), Quoting_a()]
+    ss = [F1_o(), Hashtag_check(), Quoting_nr(), Pmi_n(), Pmi_a(), Flip_n_to_a()]
     return ss[SETTING_NAMES.index(setting_name)]
