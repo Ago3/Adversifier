@@ -35,11 +35,15 @@ class KennedyModel():
         self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
         self.racism_model = BertForSequenceClassification.from_pretrained('bert-base-uncased').eval()
-        self.racism_model.load_state_dict(torch.load(racism_model, map_location='cpu'))
+        state_dict = torch.load(racism_model, map_location='cpu')
+        state_dict['bert.embeddings.position_ids'] = self.racism_model.state_dict()['bert.embeddings.position_ids']
+        self.racism_model.load_state_dict(state_dict)
         self.racism_model.to(self.device)
 
         self.sexism_model = BertForSequenceClassification.from_pretrained('bert-base-uncased').eval()
-        self.sexism_model.load_state_dict(torch.load(sexism_model, map_location='cpu'))
+        state_dict = torch.load(sexism_model, map_location='cpu')
+        state_dict['bert.embeddings.position_ids'] = self.sexism_model.state_dict()['bert.embeddings.position_ids']
+        self.sexism_model.load_state_dict(state_dict)
         self.sexism_model.to(self.device)
 
     def forward(self, input_args):
