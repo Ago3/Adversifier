@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from info import ORG
 import random
 import re
 from .strings import quoting_n_strings, group_identifiers, quoting_a_group_identifiers
