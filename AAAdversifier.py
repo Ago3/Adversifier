@@ -53,6 +53,7 @@ class AAAdversifier():
         print('\nRunning AAA evaluation')
         #Finding non-rare words with high correlation with each class
         random.seed(0)
+        self.scores = dict()
         for class_id in range(2):
             get_high_corr_words(self.dataset_name, train_data[:2], class_id=class_id, cache=False)
         for setting in SETTING_NAMES:

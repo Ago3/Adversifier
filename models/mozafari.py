@@ -63,6 +63,7 @@ class MozafariModel(nn.Module):
 
     def forward(self, input_args):
         input_lines = input_args[0]  # this model only takes the posts as input
+        print(input_lines[:10])
         input_lines = [preprocess_tweet(tweet) for tweet in input_lines]
         with torch.no_grad():
             answers = None

@@ -8,7 +8,6 @@ from nltk.stem import WordNetLemmatizer
 
 
 SETTING_NAMES = ['f1_o', 'hashtag_check', 'quoting_nr', 'corr_n_to_n', 'corr_a_to_a', 'flip_n_to_a']
-random.seed(1)
 
 
 class Setting(ABC):
