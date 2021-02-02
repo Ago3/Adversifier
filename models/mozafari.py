@@ -6,7 +6,10 @@ import torch.nn as nn
 from torch.nn.utils.weight_norm import weight_norm
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 from torch.utils.data import Dataset
-from info import DROPOUT, NUM_CLASSES, THRESHOLD, BATCH_SIZE
+from utils import preprocess_tweet
+
+
+NUM_CLASSES = 2
 
 
 class WaseemDataset(Dataset):
@@ -33,36 +36,18 @@ class WaseemDataset(Dataset):
 
 
 class MozafariModel(nn.Module):
-    def __init__(self, mozafari_model):
+    def __init__(self, mozafari_model, batch_size):
         super(MozafariModel, self).__init__()
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        self.batch_size = batch_size
         self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
         self.bert_model = BertModel.from_pretrained('bert-base-uncased')
         self.fc1 = weight_norm(nn.Linear(768, NUM_CLASSES, bias=True))
-        self.dropout = nn.Dropout(p=DROPOUT)
+        self.dropout = nn.Dropout(p=0.1)
         self.loss = nn.BCEWithLogitsLoss(reduction='mean')
         self.sigmoid = nn.Sigmoid()
-        self.load_state_dict(torch.load(mozafari_model, map_location='cpu'))
-
-    def forward(self, sample_batched):
-        tweet_emb = self.__bert_encoding__(self.bert_model, sample_batched['text'])  # [BATCH, 768]
-        predictions = self.dropout(self.fc1(tweet_emb).float())  # [BATCH, NUM_CLASSES]
-        # if self.training:
-        #     loss = self.loss(predictions, sample_batched['labels'].float().to(self.device))  # [1]
-        #     return loss
-        # else:
-        # confidence_scores = self.sigmoid(predictions)
-        # high_confidence_predictions = (self.sigmoid(predictions) > 0.9).sum().long() + (self.sigmoid(predictions) < 0.1).sum().long()
-        predictions = (self.sigmoid(predictions) >= THRESHOLD).long()
-        binary_pred = predictions.max(dim=1)[0]
-        # binary_labels = sample_batched['labels'].max(dim=1)[0]
-        # tp, tn, fp, fn, correct = self.__get_confusion_matrix__(predictions, sample_batched['labels'])
-        # labels_3c = self.__convert_to_3_classes__(sample_batched['labels'])
-        # predictions_3c = self.__convert_to_3_classes__(predictions)
-        # precision_3c = precision_score(labels_3c, predictions_3c, average='micro')
-        # recall_3c = recall_score(labels_3c, predictions_3c, average='micro')
-        # return correct.item(), tp.item(), tn.item(), fp.item(), fn.item(), predictions, labels_3c, predictions_3c, high_confidence_predictions.item(), confidence_scores, binary_pred, binary_labels
-        return binary_pred
+        self.load_state_dict(torch.load(mozafari_model, map_location='cpu')['model_state_dict'])
+        self.to(self.device)
 
     def __bert_encoding__(self, bert, sentences):
         import tensorflow as tf
@@ -76,21 +61,7 @@ class MozafariModel(nn.Module):
         last_hidden_states = outputs[0][:, 0, :]  # Take hidden for CLS token
         return last_hidden_states
 
-    # def __get_confusion_matrix__(self, predictions, labels):
-    #     tp = ((predictions == labels.to(self.device)) * (predictions == torch.ones(labels.shape, device=self.device).long())).sum()  # [1]
-    #     tn = ((predictions == labels.to(self.device)) * (predictions == torch.zeros(labels.shape, device=self.device).long())).sum()  # [1]
-    #     fp = ((predictions != labels.to(self.device)) * (predictions == torch.ones(labels.shape, device=self.device).long())).sum()  # [1]
-    #     fn = ((predictions != labels.to(self.device)) * (predictions == torch.zeros(labels.shape, device=self.device).long())).sum()  # [1]
-    #     correct = (predictions == labels.to(self.device)).sum()  # [1]
-    #     return tp, tn, fp, fn, correct
-
-    # def __convert_to_3_classes__(self, old):
-    #     classes_11 = (old.to(self.device) == torch.tensor([[1, 1]], device=self.device)).sum(dim=1)
-    #     classes_10 = (old.to(self.device) == torch.tensor([[1, 0]], device=self.device)).sum(dim=1)
-    #     new = torch.where(classes_11 == torch.tensor([1], device=self.device), torch.where(classes_10 == torch.tensor([2], device=self.device), torch.tensor([2], device=self.device), torch.tensor([1], device=self.device)), classes_11)
-    #     return new
-
-    def predictor(self, input_args):
+    def forward(self, input_args):
         input_lines = input_args[0]  # this model only takes the posts as input
         input_lines = [preprocess_tweet(tweet) for tweet in input_lines]
         with torch.no_grad():
@@ -98,12 +69,14 @@ class MozafariModel(nn.Module):
             for input_batch in self.__get_batch__(input_lines):
                 tweet_emb = self.__bert_encoding__(self.bert_model, input_batch)  # [BATCH, 768]
                 predictions = self.sigmoid(self.fc1(tweet_emb).float())  # [BATCH, NUM_CLASSES]
+                predictions = (predictions >= 0.5).long()
                 if answers is None:
                     answers = predictions
                 else:
                     answers = torch.cat([answers, predictions.detach()], dim=0)
-            return np.array(answers.cpu())
+            answers = torch.max(answers, axis=1)[0]
+            return answers.cpu()
 
     def __get_batch__(self, full_input):
-        for i in range(0, len(full_input), BATCH_SIZE):
-            yield full_input[i:min(i + BATCH_SIZE, len(full_input))]
+        for i in range(0, len(full_input), self.batch_size):
+            yield full_input[i:min(i + self.batch_size, len(full_input))]

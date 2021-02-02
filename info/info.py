@@ -18,7 +18,3 @@ KENNEDY_SEXISM_MODEL_PATH = 'models/sexism.bin'
 
 #Mozafari model parameters
 MOZAFARI_MODEL_PATH = 'models/mozafari_32_2e-05_0.1_model.pt'
-NUM_CLASSES = 2
-DROPOUT = 0.1
-BATCH_SIZE = 32
-

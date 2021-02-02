@@ -34,14 +34,14 @@ def main():
     adversifier.aaa(toy_model, data['train'], data['test'])  # Check arguments description in AAAdversifier.py
     
     # Example: Kennedy et al., 2020
-    print('\nEvaluating Kennedy Classiefier:')
+    print('\nEvaluating Kennedy Classifier:')
     kennedy_model = KennedyModel(KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, 100)
     adversifier.aaa(kennedy_model.forward, data['train'], data['test'])
     
     # Example: Mozafari et al., 2019
-    print('\nEvaluating Mozafari Classiefier:')
-    mozafari_model = MozafariModel(MOZAFARI_MODEL_PATH)
-    adversifier.aaa(mozafari_model.predictor, data['train'], data['test'])
+    print('\nEvaluating Mozafari Classifier:')
+    mozafari_model = MozafariModel(MOZAFARI_MODEL_PATH, 100)
+    adversifier.aaa(mozafari_model.forward, data['train'], data['test'])
 
 
 if __name__ == '__main__':

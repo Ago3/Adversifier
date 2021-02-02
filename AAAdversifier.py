@@ -9,7 +9,7 @@ class AAAdversifier():
         Arguments:
             config {dictionary} -- A dictionary contining the list of the group identifiers of interest and the dataset name (used as identifier). If the list of group identifiers is empty, a default one is used (check paper).
         """
-        self.group_indentifiers = config['group_indentifiers']
+        self.group_indentifiers = None
         self.dataset_name = config['dataset_name']
         self.scores = dict()
 
