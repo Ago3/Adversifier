@@ -1,4 +1,3 @@
-# import fileinput
 from transformers import BertTokenizer, BertForSequenceClassification
 import torch
 from sklearn.metrics import f1_score
