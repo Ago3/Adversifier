@@ -124,13 +124,15 @@ class Flip_n_to_a(Attack):
 
     def setup(self, params):
         self.idx = 0
-        train_post, train_labels = params[-1]
-        self.abusive_posts = list()
-        for post, label in zip(train_post, train_labels):
-            if label == 1:
-                self.abusive_posts.append(post)
-                if len(self.abusive_posts) == len(params[1][0]):  #we need one abusive post for each testing instance
-                    break
+        test_post, test_labels = params[1]
+        test_abusive_posts = [p for p, l in zip(test_post, test_labels) if l == 1]
+        random.shuffle(test_abusive_posts)
+        self.abusive_posts = test_abusive_posts
+        # for post, label in zip(train_post, train_labels):
+        #     if label == 1:
+        #         self.abusive_posts.append(post)
+        #         if len(self.abusive_posts) == len(params[1][0]):  #we need one abusive post for each testing instance
+        #             break
 
 
 class CorrAttack(Attack):
