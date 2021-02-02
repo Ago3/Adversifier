@@ -18,3 +18,7 @@ KENNEDY_SEXISM_MODEL_PATH = 'models/sexism.bin'
 
 #Mozafari model parameters
 MOZAFARI_MODEL_PATH = 'models/mozafari_32_2e-05_0.1_model.pt'
+
+
+#Mozafari Biased model parameters
+MOZAFARI_BIASED_MODEL_PATH = 'models/mozafari_32_2e-05_0.1_biased_model.pt'

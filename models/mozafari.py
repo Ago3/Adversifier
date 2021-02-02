@@ -17,7 +17,7 @@ class WaseemDataset(Dataset):
     def __init__(self, data):
         """
         Args:
-            data (dict): Mapping from instance id to [tweet id, text, [label1, label2, ..., labeln]]
+            data (dict): Mapping from instance id to [tweet id, text, label]
             transform (callable, optional): Optional transform to be applied
                 on a sample.
         """

@@ -1,6 +1,6 @@
 from AAAdversifier import AAAdversifier
 from utils import get_config
-from info import TRAIN_DATASET, TEST_DATASET, KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, MOZAFARI_MODEL_PATH
+from info import TRAIN_DATASET, TEST_DATASET, KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, MOZAFARI_MODEL_PATH, MOZAFARI_BIASED_MODEL_PATH
 from random import randint
 from models import KennedyModel, MozafariModel
 
@@ -42,6 +42,11 @@ def main():
     print('\nEvaluating Mozafari Classifier:')
     mozafari_model = MozafariModel(MOZAFARI_MODEL_PATH, 100)
     adversifier.aaa(mozafari_model.forward, data['train'], data['test'])
+
+    # Example: Mozafari et al., 2019 biased following Utama et al., 2020
+    print('\nEvaluating Mozafari Classifier:')
+    mozafari_biased_model = MozafariModel(MOZAFARI_BIASED_MODEL_PATH, 100)
+    adversifier.aaa(mozafari_biased_model.forward, data['train'], data['test'])
 
 
 if __name__ == '__main__':
