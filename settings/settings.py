@@ -152,7 +152,7 @@ class Corr_a_to_a(CorrAttack):
         return [1]
 
     def setup(self, params):
-        self.relevant_words = get_high_corr_words(params[0], params[1], class_id=0)
+        self.relevant_words = get_high_corr_words(params[0], params[-1], class_id=0)
 
 
 class Corr_n_to_n(CorrAttack):
@@ -163,7 +163,7 @@ class Corr_n_to_n(CorrAttack):
     def setup(self, params):
         wordnet_lemmatizer = WordNetLemmatizer()
         hateful_words = get_hateful_words()
-        high_corr_words = get_high_corr_words(params[0], params[1], class_id=1)
+        high_corr_words = get_high_corr_words(params[0], params[-1], class_id=1)
         self.relevant_words = list()
         for word in high_corr_words:
             if word not in hateful_words and wordnet_lemmatizer.lemmatize(word, pos='v') not in hateful_words:
