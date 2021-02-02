@@ -41,5 +41,5 @@ def is_significant(mean_score, new_score):
     # p_value = scipy.stats.norm.sf(abs(z))*2
     statistic = chisquare([new_score], [mean_score])[0]
     print(chisquare([new_score], [mean_score]))
-    critical_value = 9.49
+    critical_value = 3.84
     return statistic > critical_value
