@@ -1,10 +1,24 @@
 CONFIG_DIR = 'config'
 CONFIG_FILE = '/'.join([CONFIG_DIR, 'example.json'])  # CUSTOMIZE
 DATA = 'DATA'
-TRAIN_DATASET = '/'.join([DATA, 'waseem_train_np.tsv'])  # CUSTOMIZE
-TEST_DATASET = '/'.join([DATA, 'waseem_test_np.tsv'])  # CUSTOMIZE
-ORG = '/'.join([DATA, 'org.tsv'])  # CUSTOMIZE
+# ORG = '/'.join([DATA, 'org.tsv'])  # CUSTOMIZE
 CACHE_DIR = 'CACHE'
 LEXICON = '/'.join([DATA, 'hurtlex_EN_1.2.tsv'])
+
+
+#Dataset files
+TRAIN_DATASET = '/'.join([DATA, 'waseem_train_np.tsv'])  # CUSTOMIZE
+TEST_DATASET = '/'.join([DATA, 'waseem_test_np.tsv'])  # CUSTOMIZE
+
+
+#Kennedy model parameters
 KENNEDY_RACISM_MODEL_PATH = 'models/racism.bin'
 KENNEDY_SEXISM_MODEL_PATH = 'models/sexism.bin'
+
+
+#Mozafari model parameters
+MOZAFARI_MODEL_PATH = 'models/mozafari_32_2e-05_0.1_model.pt'
+NUM_CLASSES = 2
+DROPOUT = 0.1
+BATCH_SIZE = 32
+
