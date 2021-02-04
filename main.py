@@ -44,7 +44,7 @@ def main():
     adversifier.aaa(mozafari_model.forward, data['train'], data['test'])
 
     # Example: Mozafari et al., 2019 biased following Utama et al., 2020
-    print('\nEvaluating Mozafari Classifier:')
+    print('\nEvaluating Mozafari Biased Classifier:')
     mozafari_biased_model = MozafariModel(MOZAFARI_BIASED_MODEL_PATH, 100)
     adversifier.aaa(mozafari_biased_model.forward, data['train'], data['test'])
 
