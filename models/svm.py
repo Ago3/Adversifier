@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 from utils import preprocess_tweet
 import pickle
-from info import SVM_SEXISM_MODEL_PATH, SVM_RACISM_MODEL_PATH, SVM_SEXISM_VECTORIZER_PATH, SVM_RACISM_MODEL_PATH
+from info import SVM_SEXISM_MODEL_PATH, SVM_RACISM_MODEL_PATH, SVM_SEXISM_VECTORIZER_PATH, SVM_RACISM_VECTORIZER_PATH
 
 
 class SvmModel():
