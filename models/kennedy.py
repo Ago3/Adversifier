@@ -33,13 +33,13 @@ class KennedyModel():
         self.batch_size = batch_size
         self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
-        self.racism_model = BertForSequenceClassification.from_pretrained('bert-base-uncased').eval()
+        self.racism_model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2).eval()
         state_dict = torch.load(racism_model, map_location='cpu')
         state_dict['bert.embeddings.position_ids'] = self.racism_model.state_dict()['bert.embeddings.position_ids']
         self.racism_model.load_state_dict(state_dict)
         self.racism_model.to(self.device)
 
-        self.sexism_model = BertForSequenceClassification.from_pretrained('bert-base-uncased').eval()
+        self.sexism_model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2).eval()
         state_dict = torch.load(sexism_model, map_location='cpu')
         state_dict['bert.embeddings.position_ids'] = self.sexism_model.state_dict()['bert.embeddings.position_ids']
         self.sexism_model.load_state_dict(state_dict)
@@ -61,4 +61,5 @@ class KennedyModel():
                 predictions = current_predictions
             else:
                 predictions = torch.cat([predictions, current_predictions], dim=0)
+
         return predictions
