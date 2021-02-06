@@ -2,7 +2,7 @@ from AAAdversifier import AAAdversifier
 from utils import get_config
 from info import TRAIN_DATASET, TEST_DATASET, KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, MOZAFARI_MODEL_PATH, MOZAFARI_BIASED_MODEL_PATH
 from random import randint
-from models import KennedyModel, MozafariModel
+from models import KennedyModel, MozafariModel, SvmModel
 
 
 def toy_model(list_of_arguments):
@@ -47,6 +47,11 @@ def main():
     print('\nEvaluating Mozafari Biased Classifier:')
     mozafari_biased_model = MozafariModel(MOZAFARI_BIASED_MODEL_PATH, 100)
     adversifier.aaa(mozafari_biased_model.forward, data['train'], data['test'])
+
+    # Example: SVM
+    print('\nEvaluating SVM Classifier:')
+    svm_model = SvmModel()
+    adversifier.aaa(svm_model.predictor, data['train'], data['test'])
 
 
 if __name__ == '__main__':

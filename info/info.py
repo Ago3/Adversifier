@@ -22,3 +22,10 @@ MOZAFARI_MODEL_PATH = 'models/mozafari_32_2e-05_0.1_model.pt'
 
 #Mozafari Biased model parameters
 MOZAFARI_BIASED_MODEL_PATH = 'models/mozafari_32_2e-05_0.1_train_model.pt'
+
+
+#SVM parameters
+SVM_SEXISM_MODEL_PATH = 'models/sexism_svm.pkl'
+SVM_RACISM_MODEL_PATH = 'models/racism_svm.pkl'
+SVM_SEXISM_VECTORIZER_PATH = 'models/sexism_vectorizer.pkl'
+SVM_RACISM_VECTORIZER_PATH = 'models/racism_vectorizer.pkl'
