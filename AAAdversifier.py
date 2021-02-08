@@ -65,6 +65,6 @@ class AAAdversifier():
         # non_abusive_score = geometric_mean([self.scores[k] for k in ['quoting_nr', 'pmi_n']])
         # abusive_score = geometric_mean([self.scores[k] for k in ['pmi_a', 'quoting_a']])
         # self.scores['aaa'] = geometric_mean([self.scores['f1_o'], self.scores['org_n'], non_abusive_score, abusive_score], [1, 0.5, 0.5, 1])
-        self.scores['aaa'] = geometric_mean([self.scores[k] for k in ['quoting_nr', 'corr_n_to_n', 'corr_a_to_a', 'flip_n_to_a']])
-        print('AAA score: {}'.format(self.scores['aaa']))
+        self.scores['aaa'] = geometric_mean([self.scores[k] for k in ['quoting_a_to_n', 'corr_n_to_n', 'corr_a_to_a', 'flip_n_to_a']])
+        print('\nAAA score: {}'.format(self.scores['aaa']))
         return self.scores['aaa']

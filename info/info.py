@@ -4,6 +4,7 @@ DATA = 'DATA'
 # ORG = '/'.join([DATA, 'org.tsv'])  # CUSTOMIZE
 CACHE_DIR = 'CACHE'
 LEXICON = '/'.join([DATA, 'hurtlex_EN_1.2.tsv'])
+TEMPLATES = '/'.join([DATA, 'templates.txt'])
 
 
 #Dataset files
@@ -12,8 +13,8 @@ TEST_DATASET = '/'.join([DATA, 'waseem_test_np.tsv'])  # CUSTOMIZE
 
 
 #Kennedy model parameters
-KENNEDY_RACISM_MODEL_PATH = 'models/racism.bin'
-KENNEDY_SEXISM_MODEL_PATH = 'models/sexism.bin'
+KENNEDY_RACISM_MODEL_PATH = 'models/racism_new.v2.bin'
+KENNEDY_SEXISM_MODEL_PATH = 'models/sexism_new.v2.bin'
 
 
 #Mozafari model parameters

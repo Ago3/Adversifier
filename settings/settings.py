@@ -1,13 +1,14 @@
 from abc import ABC, abstractmethod
 import random
 import re
-from .strings import quoting_n_strings, group_identifiers, quoting_a_group_identifiers
+# from .strings import quoting_n_strings, group_identifiers, quoting_a_group_identifiers
 from utils import get_high_corr_words, get_hateful_words
 import nltk
 from nltk.stem import WordNetLemmatizer
+from info import TEMPLATES
 
 
-SETTING_NAMES = ['f1_o', 'hashtag_check', 'quoting_nr', 'corr_n_to_n', 'corr_a_to_a', 'flip_n_to_a']
+SETTING_NAMES = ['f1_o', 'hashtag_check', 'quoting_a_to_n', 'corr_n_to_n', 'corr_a_to_a', 'flip_n_to_a']
 
 
 class Setting(ABC):
@@ -66,9 +67,11 @@ class F1_o(Attack):
         return label
 
 
-class Quoting_nr(Attack):
+class Quoting_a_to_n(Attack):
     def perturb_post(self, post):
-        return """{} {}""".format(post, random.choice(quoting_n_strings))
+        template = random.choice(self.templates)
+        new_post = template.replace("<tweet>", post)
+        return new_post
 
     def affected_labels(self):
         return [1]
@@ -76,6 +79,9 @@ class Quoting_nr(Attack):
     def get_label(self, label):
         return 0
 
+    def setup(self, params):
+        with open(TEMPLATES, 'r') as f:
+            self.templates = [line.strip() for line in f.readlines()]
 
 # class Id_e(Attack):
 #     def perturb_post(self, post):
@@ -187,5 +193,5 @@ class Hashtag_check(Attack):
 
 def create_setting(setting_name):
     assert setting_name in SETTING_NAMES, 'The specified setting ({}) is not correct. Please select a setting from: {}'.format(setting_name, SETTING_NAMES)
-    ss = [F1_o(), Hashtag_check(), Quoting_nr(), Corr_n_to_n(), Corr_a_to_a(), Flip_n_to_a()]
+    ss = [F1_o(), Hashtag_check(), Quoting_a_to_n(), Corr_n_to_n(), Corr_a_to_a(), Flip_n_to_a()]
     return ss[SETTING_NAMES.index(setting_name)]
