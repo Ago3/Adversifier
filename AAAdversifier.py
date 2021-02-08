@@ -1,6 +1,7 @@
 from settings import create_setting, SETTING_NAMES
 from utils import geometric_mean, setting_score, get_high_corr_words, is_significant
 import random
+from utils import log
 
 
 class AAAdversifier():
@@ -39,7 +40,7 @@ class AAAdversifier():
         print('{} score: {}'.format(setting_name, self.scores[setting_name]))
         return self.scores[setting_name]
 
-    def aaa(self, model, train_data, test_data):
+    def aaa(self, model_name, model, train_data, test_data):
         """Computes the model scores on the AAA benchmark.        
         
         Arguments:
@@ -67,4 +68,5 @@ class AAAdversifier():
         # self.scores['aaa'] = geometric_mean([self.scores['f1_o'], self.scores['org_n'], non_abusive_score, abusive_score], [1, 0.5, 0.5, 1])
         self.scores['aaa'] = geometric_mean([self.scores[k] for k in ['quoting_a_to_n', 'corr_n_to_n', 'corr_a_to_a', 'flip_n_to_a']])
         print('\nAAA score: {}'.format(self.scores['aaa']))
+        log(model_name, self.scores)
         return self.scores['aaa']

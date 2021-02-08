@@ -31,27 +31,27 @@ def main():
     config = get_config()
     adversifier = AAAdversifier(config)
     data = get_data()
-    adversifier.aaa(toy_model, data['train'], data['test'])  # Check arguments description in AAAdversifier.py
+    adversifier.aaa('random', toy_model, data['train'], data['test'])  # Check arguments description in AAAdversifier.py
     
     # Example: Kennedy et al., 2020
     print('\nEvaluating Kennedy Classifier:')
     kennedy_model = KennedyModel(KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, 100)
-    adversifier.aaa(kennedy_model.forward, data['train'], data['test'])
+    adversifier.aaa('kennedy', kennedy_model.forward, data['train'], data['test'])
     
     # Example: Mozafari et al., 2019
     print('\nEvaluating Mozafari Classifier:')
     mozafari_model = MozafariModel(MOZAFARI_MODEL_PATH, 100)
-    adversifier.aaa(mozafari_model.forward, data['train'], data['test'])
+    adversifier.aaa('mozafari', mozafari_model.forward, data['train'], data['test'])
 
     # Example: Mozafari et al., 2019 biased following Utama et al., 2020
     print('\nEvaluating Mozafari Biased Classifier:')
     mozafari_biased_model = MozafariModel(MOZAFARI_BIASED_MODEL_PATH, 100)
-    adversifier.aaa(mozafari_biased_model.forward, data['train'], data['test'])
+    adversifier.aaa('mozafari-overfitted', mozafari_biased_model.forward, data['train'], data['test'])
 
     # Example: SVM
     print('\nEvaluating SVM Classifier:')
     svm_model = SvmModel()
-    adversifier.aaa(svm_model.predictor, data['train'], data['test'])
+    adversifier.aaa('svm', svm_model.predictor, data['train'], data['test'])
 
 
 if __name__ == '__main__':

@@ -5,6 +5,8 @@ DATA = 'DATA'
 CACHE_DIR = 'CACHE'
 LEXICON = '/'.join([DATA, 'hurtlex_EN_1.2.tsv'])
 TEMPLATES = '/'.join([DATA, 'templates.txt'])
+LOG = 'LOG'
+RES_FILE = LOG + '/results.tsv'
 
 
 #Dataset files
