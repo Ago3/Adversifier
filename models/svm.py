@@ -29,8 +29,10 @@ class SvmModel():
         input_lines = input_args[0]  # this model only takes the posts as input
         input_lines = [preprocess_tweet(tweet) for tweet in input_lines]
         sexism_data_features = self.sexism_vectorizer.transform(input_lines)
+        sexism_data_features = sexism_data_features.toarray()
         sexism_predictions = self.sexism_model.predict(sexism_data_features)
         racism_data_features = self.racism_vectorizer.transform(input_lines)
+        racism_data_features = racism_data_features.toarray()
         racism_predictions = self.racism_model.predict(sexism_data_features)
         predictions = np.max([sexism_predictions, racism_predictions], axis=0)
         return predictions
