@@ -19,7 +19,7 @@ def setting_score(predictions, labels, setting_name):
             c_tp = (np.array(c_predictions) == np.array(c_labels)).sum()
             c_tpr = c_tp / len(c_predictions)
             print("Class: {} TPR: {}".format(class_id, c_tpr))
-        return f1_score(predictions, labels, average='binary')
+        return f1_score(predictions, labels, average='micro')
     # if setting_name in settings.SETTING_NAMES[2:4]:
     #     class_id = 0
     # else:
