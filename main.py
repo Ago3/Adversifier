@@ -1,5 +1,5 @@
 from AAAdversifier import AAAdversifier
-from utils import get_config, evaluate_on_hatecheck_counter_quote
+from utils import get_config, evaluate_on_hatecheck
 from info import TRAIN_DATASET, TEST_DATASET, KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, MOZAFARI_MODEL_PATH, MOZAFARI_BIASED_MODEL_PATH, MOZAFARI_MODEL_NH_PATH
 from random import randint
 from models import KennedyModel, MozafariModel, SvmModel
