@@ -36,3 +36,8 @@ SVM_SEXISM_MODEL_PATH = 'models/sexism_svm.pkl'
 SVM_RACISM_MODEL_PATH = 'models/racism_svm.pkl'
 SVM_SEXISM_VECTORIZER_PATH = 'models/sexism_vectorizer.pkl'
 SVM_RACISM_VECTORIZER_PATH = 'models/racism_vectorizer.pkl'
+
+
+#HateCheck files
+HATECHECK_ROOT = DATA + '/hatecheck'
+HATECHECK_F20 = HATECHECK_ROOT + '/counter_quote_nh.tsv'

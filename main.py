@@ -1,5 +1,5 @@
 from AAAdversifier import AAAdversifier
-from utils import get_config
+from utils import get_config, evaluate_on_hatecheck_counter_quote
 from info import TRAIN_DATASET, TEST_DATASET, KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, MOZAFARI_MODEL_PATH, MOZAFARI_BIASED_MODEL_PATH, MOZAFARI_MODEL_NH_PATH
 from random import randint
 from models import KennedyModel, MozafariModel, SvmModel
@@ -37,16 +37,19 @@ def main():
     print('\nEvaluating Kennedy Classifier:')
     kennedy_model = KennedyModel(KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, 100)
     adversifier.aaa('kennedy', kennedy_model.forward, data['train'], data['test'])
+    evaluate_on_hatecheck_counter_quote(kennedy_model.forward)
     
     # Example: Mozafari et al., 2019
     print('\nEvaluating Mozafari Classifier:')
     mozafari_model = MozafariModel(MOZAFARI_MODEL_PATH, 100)
     adversifier.aaa('mozafari', mozafari_model.forward, data['train'], data['test'])
+    evaluate_on_hatecheck_counter_quote(mozafari_model.forward)
 
     # Example: Mozafari et al., 2019 overfitted
     print('\nEvaluating Mozafari Biased Classifier:')
     mozafari_biased_model = MozafariModel(MOZAFARI_BIASED_MODEL_PATH, 100)
     adversifier.aaa('mozafari-overfitted', mozafari_biased_model.forward, data['train'], data['test'])
+    evaluate_on_hatecheck_counter_quote(mozafari_biased_model.forward)
 
     # Example: Mozafari et al., 2019 with a pre-processing that discards hashtags
     print('\nEvaluating Mozafari (no hashtags) Classifier:')
@@ -57,6 +60,7 @@ def main():
     print('\nEvaluating SVM Classifier:')
     svm_model = SvmModel()
     adversifier.aaa('svm', svm_model.predictor, data['train'], data['test'])
+    evaluate_on_hatecheck_counter_quote(svm_model.predictor)
 
 
 if __name__ == '__main__':
