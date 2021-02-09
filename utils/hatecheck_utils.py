@@ -40,9 +40,9 @@ def evaluate_on_hatecheck_functionality(predictor, functionality):
     elif functionality == 'f21':
         examples = get_counter_ref_instances()
     elif functionality == 'f18':
-        examples = get_counter_ref_instances()
+        examples = get_ident_neutral_instances()
     elif functionality == 'f19':
-        examples = get_counter_ref_instances()
+        examples = get_ident_pos_instances()
     else:
         print('The functionality is not supported')
     predictions = predictor([examples])
