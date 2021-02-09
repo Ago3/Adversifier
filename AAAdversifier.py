@@ -33,8 +33,8 @@ class AAAdversifier():
         print('Generating predictions..')
         model_input = [posts] + ([] if len(test_data) == 2 else test_data[2:])
         predictions = model(model_input)
-        if setting_name == 'f1_o':
-            self.scores[setting_name] = setting_score(predictions, labels, setting_name)
+        if setting_name in ['f1_o', 'hashtag_check']:
+            self.scores[setting_name], self.scores[setting_name + '_tnr'], self.scores[setting_name + '_tpr'] = setting_score(predictions, labels, setting_name)
         else:
             self.scores[setting_name] = setting_score(predictions, labels, setting_name)
         print('{} score: {}'.format(setting_name, self.scores[setting_name]))
@@ -59,7 +59,7 @@ class AAAdversifier():
             get_high_corr_words(self.dataset_name, train_data[:2], class_id=class_id, cache=False)
         for setting in SETTING_NAMES:
             #If hashtags are not being used by the model, just skip the corr_a_to_a and corr_n_to_n attacks
-            if 'hashtag_check' in self.scores and is_significant(self.scores['hashtag_check'], self.scores['f1_o'])  and 'corr' in setting:
+            if 'hashtag_check' in self.scores and (is_significant(self.scores['hashtag_check_tnr'], self.scores['f1_o_tnr']) or is_significant(self.scores['hashtag_check_tpr'], self.scores['f1_o_tpr']))  and 'corr' in setting:
                 self.scores[setting] = 0
                 continue
             self.eval_setting(setting, model, test_data, train_data)

@@ -133,3 +133,4 @@ org*.tsv
 CACHE
 *.bin
 *.txt
+DATA/hatecheck/*

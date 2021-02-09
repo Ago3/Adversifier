@@ -53,7 +53,7 @@ def main():
 
     # Example: Mozafari et al., 2019 with a pre-processing that discards hashtags
     print('\nEvaluating Mozafari (no hashtags) Classifier:')
-    mozafari_model_nh = MozafariModel(MOZAFARI_MODEL_NH_PATH, 100)
+    mozafari_model_nh = MozafariModel(MOZAFARI_MODEL_NH_PATH, 100, use_hashtags=False)
     adversifier.aaa('mozafari-nh', mozafari_model_nh.forward, data['train'], data['test'])
 
     # Example: SVM
