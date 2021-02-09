@@ -41,3 +41,6 @@ SVM_RACISM_VECTORIZER_PATH = 'models/racism_vectorizer.pkl'
 #HateCheck files
 HATECHECK_ROOT = DATA + '/hatecheck'
 HATECHECK_F20 = HATECHECK_ROOT + '/counter_quote_nh.tsv'
+HATECHECK_F21 = HATECHECK_ROOT + '/counter_ref_nh.tsv'
+HATECHECK_F18 = HATECHECK_ROOT + '/ident_neutral_nh.tsv'
+HATECHECK_F19 = HATECHECK_ROOT + '/ident_pos_nh.tsv'
