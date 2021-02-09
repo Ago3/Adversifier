@@ -1,6 +1,6 @@
 from AAAdversifier import AAAdversifier
 from utils import get_config
-from info import TRAIN_DATASET, TEST_DATASET, KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, MOZAFARI_MODEL_PATH, MOZAFARI_BIASED_MODEL_PATH
+from info import TRAIN_DATASET, TEST_DATASET, KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, MOZAFARI_MODEL_PATH, MOZAFARI_BIASED_MODEL_PATH, MOZAFARI_MODEL_NH_PATH
 from random import randint
 from models import KennedyModel, MozafariModel, SvmModel
 
@@ -43,10 +43,15 @@ def main():
     mozafari_model = MozafariModel(MOZAFARI_MODEL_PATH, 100)
     adversifier.aaa('mozafari', mozafari_model.forward, data['train'], data['test'])
 
-    # Example: Mozafari et al., 2019 biased following Utama et al., 2020
+    # Example: Mozafari et al., 2019 overfitted
     print('\nEvaluating Mozafari Biased Classifier:')
     mozafari_biased_model = MozafariModel(MOZAFARI_BIASED_MODEL_PATH, 100)
     adversifier.aaa('mozafari-overfitted', mozafari_biased_model.forward, data['train'], data['test'])
+
+    # Example: Mozafari et al., 2019 with a pre-processing that discards hashtags
+    print('\nEvaluating Mozafari (no hashtags) Classifier:')
+    mozafari_model_nh = MozafariModel(MOZAFARI_MODEL_NH_PATH, 100)
+    adversifier.aaa('mozafari-nh', mozafari_model_nh.forward, data['train'], data['test'])
 
     # Example: SVM
     print('\nEvaluating SVM Classifier:')

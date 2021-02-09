@@ -36,7 +36,7 @@ class WaseemDataset(Dataset):
 
 
 class MozafariModel(nn.Module):
-    def __init__(self, mozafari_model, batch_size):
+    def __init__(self, mozafari_model, batch_size, use_hashtags=True):
         super(MozafariModel, self).__init__()
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         self.batch_size = batch_size
@@ -48,6 +48,7 @@ class MozafariModel(nn.Module):
         self.sigmoid = nn.Sigmoid()
         self.load_state_dict(torch.load(mozafari_model, map_location='cpu')['model_state_dict'])
         self.to(self.device)
+        self.use_hashtags = use_hashtags
 
     def __bert_encoding__(self, bert, sentences):
         import tensorflow as tf
@@ -64,7 +65,7 @@ class MozafariModel(nn.Module):
     def forward(self, input_args):
         input_lines = input_args[0]  # this model only takes the posts as input
         print(input_lines[:10])
-        input_lines = [preprocess_tweet(tweet) for tweet in input_lines]
+        input_lines = [preprocess_tweet(tweet, use_hashtags=self.use_hashtags) for tweet in input_lines]
         with torch.no_grad():
             answers = None
             for input_batch in self.__get_batch__(input_lines):

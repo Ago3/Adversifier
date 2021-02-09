@@ -3,7 +3,7 @@ import re
 from nltk.tokenize import TweetTokenizer
 
 
-def preprocess_tweet(text, max_len=512):
+def preprocess_tweet(text, max_len=512, use_hashtags=True):
     text = re.sub('\n', ' ', text)
     tknzr = TweetTokenizer(strip_handles=True, reduce_len=True)
     # Check characters to see if they are in punctuation
@@ -17,12 +17,13 @@ def preprocess_tweet(text, max_len=512):
     nopunc = re.sub(r'http\S+', '<url>', nopunc)
     # remove usernames
     nopunc = re.sub('@[^\s]+', '<user>', nopunc)
-    # remove the # in #hashtag
-    nopunc = re.sub(r'#([^\s]+)', r'<hashtag> \1 </hashtag>', nopunc)
-    # if need to test a model that does not use hashtags, comment the previous line and uncomment the followings:
-    # nopunc = re.sub(r'#([^\s]+)', r' ', nopunc)
-    # if not nopunc.strip():
-    #     nopunc = '<empty>'
+    if use_hashtags:
+        # remove the # in #hashtag
+        nopunc = re.sub(r'#([^\s]+)', r'<hashtag> \1 </hashtag>', nopunc)
+    else:
+        nopunc = re.sub(r'#([^\s]+)', r' ', nopunc)
+        if not nopunc.strip():
+            nopunc = '<empty>'
     # remove repeated characters
     nopunc = tknzr.tokenize(nopunc)
     nopunc = ' '.join(nopunc if len(nopunc) <= max_len else nopunc[:max_len])
