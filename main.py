@@ -1,5 +1,5 @@
 from AAAdversifier import AAAdversifier
-from utils import get_config, evaluate_on_hatecheck
+from utils import get_config, evaluate_on_hatecheck, get_davidson_data
 from info import TRAIN_DATASET, TEST_DATASET, KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, MOZAFARI_MODEL_PATH, MOZAFARI_BIASED_MODEL_PATH, MOZAFARI_MODEL_NH_PATH
 from random import randint
 from models import KennedyModel, MozafariModel, SvmModel
@@ -11,7 +11,7 @@ def toy_model(list_of_arguments):
     return list_of_predictions
 
 
-def get_data():
+def get_waseem_data():
     LABELS = ['neither', 'sexism', 'racism', 'both']
     data = dict()
     for dataset, name in zip([TRAIN_DATASET, TEST_DATASET], ['train', 'test']):
@@ -20,7 +20,7 @@ def get_data():
             posts = [line.split('\t')[1] for line in lines]
             labels = [LABELS.index(line.split('\t')[2].strip()) for line in lines]  # <--- Convert to 0 (not abusive) or 1 (abusive)
             labels = [l if l <= 1 else 1 for l in labels]
-            extra_info_the_model_might_need = ['' for l in labels]  # you can use this variable to pass, e.g., conversation context or user-related info
+            extra_info_the_model_might_need = ['' for l in labels]  # you can use this variable to pass, e.g., conversation context
             data[name] = [posts, labels, extra_info_the_model_might_need]
     return data
 
@@ -30,7 +30,7 @@ def main():
     print('Evaluating Random Classifier:')
     config = get_config()
     adversifier = AAAdversifier(config)
-    data = get_data()
+    data = get_waseem_data()
     adversifier.aaa('random', toy_model, data['train'], data['test'])  # Check arguments description in AAAdversifier.py
     
     # Example: Kennedy et al., 2020
@@ -61,6 +61,9 @@ def main():
     svm_model = SvmModel()
     adversifier.aaa('svm', svm_model.predictor, data['train'], data['test'])
     evaluate_on_hatecheck(svm_model.predictor)
+
+    davidson_data = get_davidson_data()
+    adversifier.aaa('random', toy_model, davidson_data['train'], davidson_data['test'])
 
 
 if __name__ == '__main__':

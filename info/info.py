@@ -1,7 +1,6 @@
 CONFIG_DIR = 'config'
 CONFIG_FILE = '/'.join([CONFIG_DIR, 'example.json'])  # CUSTOMIZE
 DATA = 'DATA'
-# ORG = '/'.join([DATA, 'org.tsv'])  # CUSTOMIZE
 CACHE_DIR = 'CACHE'
 LEXICON = '/'.join([DATA, 'hurtlex_EN_1.2.tsv'])
 TEMPLATES = '/'.join([DATA, 'templates.txt'])
@@ -12,6 +11,11 @@ RES_FILE = LOG + '/results.tsv'
 #Dataset files
 TRAIN_DATASET = '/'.join([DATA, 'waseem_train_np.tsv'])  # CUSTOMIZE
 TEST_DATASET = '/'.join([DATA, 'waseem_test_np.tsv'])  # CUSTOMIZE
+#Davidson file
+DAVIDSON_CSV_FILE = '/'.join([DATA, 'davidson_data.csv'])  # (download from https://github.com/t-davidson/hate-speech-and-offensive-language )
+DAVIDSON_TRAIN_IDS = '/'.join([DATA, 'davidson_train_ids.csv'])
+DAVIDSON_VAL_IDS = '/'.join([DATA, 'davidson_val_ids.csv'])
+DAVIDSON_TEST_IDS = '/'.join([DATA, 'davidson_test_ids.csv'])
 
 
 #Kennedy model parameters

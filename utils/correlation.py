@@ -4,7 +4,7 @@ import string
 from .twitter import preprocess_tweet
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 
 # def pmi(data, top_k=100, no_hashtag=False):
 #     documents = ['', '']
