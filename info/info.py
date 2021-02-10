@@ -35,6 +35,10 @@ MOZAFARI_BIASED_MODEL_PATH = 'models/mozafari_32_2e-05_0.1_train_model.pt'
 MOZAFARI_MODEL_NH_PATH = 'models/mozafari_32_2e-05_0.1_nh_model.pt'
 
 
+#Mozafari model trained on Davidson
+MOZAFARI_DAVIDSON_MODEL_PATH = 'models/mozafari_16_2e-05_0.1_davidson_model.pt'
+
+
 #SVM parameters
 SVM_SEXISM_MODEL_PATH = 'models/sexism_svm.pkl'
 SVM_RACISM_MODEL_PATH = 'models/racism_svm.pkl'
