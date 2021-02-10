@@ -46,6 +46,13 @@ SVM_SEXISM_VECTORIZER_PATH = 'models/sexism_vectorizer.pkl'
 SVM_RACISM_VECTORIZER_PATH = 'models/racism_vectorizer.pkl'
 
 
+#SVM trained on Davidson
+SVM_HATE_SPEECH_MODEL_PATH = 'models/hate_speech_svm.pkl'
+SVM_OFFENSIVE_MODEL_PATH = 'models/offensive_svm.pkl'
+SVM_HATE_SPEECH_VECTORIZER_PATH = 'models/hate_speech_vectorizer.pkl'
+SVM_OFFENSIVE_VECTORIZER_PATH = 'models/offensive_vectorizer.pkl'
+
+
 #HateCheck files
 HATECHECK_ROOT = DATA + '/hatecheck'
 HATECHECK_F20 = HATECHECK_ROOT + '/counter_quote_nh.tsv'

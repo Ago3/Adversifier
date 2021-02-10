@@ -70,6 +70,11 @@ def main():
     mozafari_davidson_model = MozafariModel(MOZAFARI_DAVIDSON_MODEL_PATH, 100)
     adversifier.aaa('mozafari-davidson', mozafari_davidson_model.forward, davidson_data['train'], davidson_data['test'])
 
+    # Example: SVM
+    print('\nEvaluating SVM Classifier on Davidson data:')
+    svm_model = SvmModel(dataset='davidson')
+    adversifier.aaa('svm-davidson', svm_model.predictor, davidson_data['train'], davidson_data['test'])
+
 
 if __name__ == '__main__':
     main()
