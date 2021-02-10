@@ -3,7 +3,7 @@ from sklearn.model_selection import StratifiedShuffleSplit, StratifiedKFold
 import sys
 sys.path.append(".")
 from info import DAVIDSON_CSV_FILE, DAVIDSON_TRAIN_IDS, DAVIDSON_VAL_IDS, DAVIDSON_TEST_IDS
-from twitter import preprocess_tweet
+from .twitter import preprocess_tweet
 
 
 def get_davidson_data():
