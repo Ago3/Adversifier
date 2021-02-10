@@ -16,17 +16,17 @@ class SvmModel():
             paths = [SVM_SEXISM_VECTORIZER_PATH, SVM_SEXISM_MODEL_PATH, SVM_RACISM_VECTORIZER_PATH, SVM_RACISM_MODEL_PATH]
         else:
             paths = [SVM_HATE_SPEECH_VECTORIZER_PATH, SVM_HATE_SPEECH_MODEL_PATH, SVM_OFFENSIVE_VECTORIZER_PATH, SVM_OFFENSIVE_MODEL_PATH]
-        print('Loading sexism vectorizer from path ', SVM_SEXISM_VECTORIZER_PATH)
-        with open(SVM_SEXISM_VECTORIZER_PATH, 'rb+') as f:
+        print('Loading sexism vectorizer from path ', paths[0])
+        with open(paths[0], 'rb+') as f:
             self.sexism_vectorizer = pickle.load(f)
-        print('Loading sexism SVM model from path ', SVM_SEXISM_MODEL_PATH)
-        with open(SVM_SEXISM_MODEL_PATH, 'rb+') as f:
+        print('Loading sexism SVM model from path ', paths[1])
+        with open(paths[1], 'rb+') as f:
             self.sexism_model = pickle.load(f)
-        print('Loading racism vectorizer from path ', SVM_RACISM_VECTORIZER_PATH)
-        with open(SVM_RACISM_VECTORIZER_PATH, 'rb+') as f:
+        print('Loading racism vectorizer from path ', paths[2])
+        with open(paths[2], 'rb+') as f:
             self.racism_vectorizer = pickle.load(f)
-        print('Loading racism SVM model from path ', SVM_RACISM_MODEL_PATH)
-        with open(SVM_RACISM_MODEL_PATH, 'rb+') as f:
+        print('Loading racism SVM model from path ', paths[3])
+        with open(paths[3], 'rb+') as f:
             self.racism_model = pickle.load(f)
 
 
