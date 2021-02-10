@@ -72,8 +72,8 @@ def main():
 
     # Example: SVM
     print('\nEvaluating SVM Classifier on Davidson data:')
-    svm_model = SvmModel(dataset='davidson')
-    adversifier.aaa('svm-davidson', svm_model.predictor, davidson_data['train'], davidson_data['test'])
+    svm_davidson_model = SvmModel(dataset='davidson')
+    adversifier.aaa('svm-davidson', svm_davidson_model.predictor, davidson_data['train'], davidson_data['test'])
 
 
 if __name__ == '__main__':
