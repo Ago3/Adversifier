@@ -134,4 +134,5 @@ CACHE
 *.bin
 *.txt
 *.csv
+*.tsv
 DATA/hatecheck/*
