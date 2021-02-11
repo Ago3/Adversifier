@@ -46,6 +46,11 @@ SVM_SEXISM_VECTORIZER_PATH = 'models/sexism_vectorizer.pkl'
 SVM_RACISM_VECTORIZER_PATH = 'models/racism_vectorizer.pkl'
 
 
+#Kennedy model trained on Davidson
+KENNEDY_HATESPEECH_MODEL_PATH = 'models/davidson_hatespeech.bin'
+KENNEDY_OFFENSIVE_MODEL_PATH 'models/davidson_offensive.bin'
+
+
 #SVM trained on Davidson
 SVM_HATE_SPEECH_MODEL_PATH = 'models/hate_speech_svm.pkl'
 SVM_OFFENSIVE_MODEL_PATH = 'models/offensive_svm.pkl'

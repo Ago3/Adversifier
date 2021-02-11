@@ -1,6 +1,6 @@
 from AAAdversifier import AAAdversifier
 from utils import get_config, evaluate_on_hatecheck, get_davidson_data
-from info import TRAIN_DATASET, TEST_DATASET, KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, MOZAFARI_MODEL_PATH, MOZAFARI_BIASED_MODEL_PATH, MOZAFARI_MODEL_NH_PATH, MOZAFARI_DAVIDSON_MODEL_PATH
+from info import TRAIN_DATASET, TEST_DATASET, KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, MOZAFARI_MODEL_PATH, MOZAFARI_BIASED_MODEL_PATH, MOZAFARI_MODEL_NH_PATH, MOZAFARI_DAVIDSON_MODEL_PATH, KENNEDY_HATESPEECH_MODEL_PATH, KENNEDY_OFFENSIVE_MODEL_PATH
 from random import randint
 from models import KennedyModel, MozafariModel, SvmModel
 
@@ -64,6 +64,11 @@ def main():
 
     davidson_data = get_davidson_data()
     adversifier.aaa('random', toy_model, davidson_data['train'], davidson_data['test'])
+
+    # Example: Kennedy et al., 2020
+    print('\nEvaluating Kennedy Classifier on Davidson data:')
+    kennedy_davidson_model = KennedyModel(KENNEDY_HATESPEECH_MODEL_PATH, KENNEDY_OFFENSIVE_MODEL_PATH, 100)
+    adversifier.aaa('kennedy', kennedy_davidson_model.forward, davidson_data['train'], davidson_data['test'])
 
     # Example: Mozafari et al., 2019
     print('\nEvaluating Mozafari Classifier on Davidson data:')
