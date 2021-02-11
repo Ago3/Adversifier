@@ -68,7 +68,7 @@ def main():
     # Example: Kennedy et al., 2020
     print('\nEvaluating Kennedy Classifier on Davidson data:')
     kennedy_davidson_model = KennedyModel(KENNEDY_HATESPEECH_MODEL_PATH, KENNEDY_OFFENSIVE_MODEL_PATH, 100)
-    adversifier.aaa('kennedy', kennedy_davidson_model.forward, davidson_data['train'], davidson_data['test'])
+    adversifier.aaa('kennedy-davidson', kennedy_davidson_model.forward, davidson_data['train'], davidson_data['test'])
 
     # Example: Mozafari et al., 2019
     print('\nEvaluating Mozafari Classifier on Davidson data:')
