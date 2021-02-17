@@ -39,7 +39,7 @@ Note that the _utils.get_davidson_data_ function maps the "hate speech" and "off
 We provide code and checkpoints for the SVM, BERT<sub>MOZ</sub> and BERT<sub>KEN</sub> models trained on the Waseem et al., 2018 and Davidson et al., 2017 datasets.
 
 ### Waseem et al., 2018 ###
-To replicate our experiments on the Waseem et al., 2018's dataset you'll need to download the following checkpoints. You can download *all the checkpoints from [here]()*, or download the ones of interest from the following list. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
+To replicate our experiments on the Waseem et al., 2018's dataset you'll need to download the following checkpoints. You can **download all the checkpoints from [here]()**, or download the ones of interest from the following list. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
 
 #### SVM ####
 The weights of our SVM model can be downloaded at:
@@ -59,7 +59,7 @@ The weights of BERT<sub>KEN</sub> [(Kennedy et al., 2020)](https://arxiv.org/pdf
 * [racism.bin]()
 
 ### Davidson et al., 2017 ###
-To replicate our experiments on the Davidson et al., 2017's dataset you'll need to download the following checkpoints. You can download *all the checkpoints from [here]()*, or download the ones of interest from the following list. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
+To replicate our experiments on the Davidson et al., 2017's dataset you'll need to download the following checkpoints. You can **download all the checkpoints from [here]()**, or download the ones of interest from the following list. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
 
 #### SVM ####
 The weights of our SVM model can be downloaded at:
