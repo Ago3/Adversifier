@@ -43,6 +43,7 @@ The weights of our SVM model can be downloaded at:
 #### BERT<sub>MOZ</sub> ####
 The weights of our re-implementation of BERT<sub>MOZ</sub> [(Mozafari et al., 2019)]() can be downloaded at:
 * [mozafari_waseem.pt]()
+* [mozafari_waseem_nh.pt]() (variant of the BERT<sub>MOZ</sub> model that fully discards hashtag content)
 
 #### BERT<sub>KEN</sub> ####
 The weights of BERT<sub>KEN</sub> [(Kennedy et al., 2020)](https://arxiv.org/pdf/2005.02439.pdf) can be downloaded at:
@@ -69,9 +70,22 @@ The weights of BERT<sub>KEN</sub> [(Kennedy et al., 2020)](https://arxiv.org/pdf
 * [offensive.bin]()
 
 ## Computing the AAA score for the supported models
-To replicate the experiments reported in the AAA paper, download the data files and models' checkpoint as described above, and run the following command:
+To replicate the experiments reported in the AAA paper, download the data files and models' checkpoints as described above, and run the following command:
 ```
 python3 main.py
 ```
 
-## How to evaluate your own model on a dataset
+## How to evaluate your model on a dataset
+To run the AAA tool on your model with a generic dataset, you'll need to provide:
+* the training and test sets, in the format specified [here](#Datasets "Goto Datasets").
+* your model's predictor: a function that takes as input a list of arguments, the 1<sup>st</sup> one being a list of *NON-pre-processed* posts, and returns a list of binary predictions.<br/>
+Here is an example:
+```
+from AAAdversifier import AAAdversifier
+
+
+adversifier = AAAdversifier()
+train_data, test_data = load_your_data()
+adversifier.aaa('your_model_name', your_model.predictor, train_data, test_data)
+```
+Check _main.py_ for usage examples.
