@@ -28,23 +28,24 @@ Splits are created using stratified sampling to split 0.8, 0.1, and 0.1 portions
 Note that the _utils.get_davidson_data_ function maps the "hate speech" and "offensive" labels into the abusive class, and the "neither" label into the non abusive class.
 
 ## Supported Models
+We provide code and checkpoints for the SVM, BERT<sub>MOZ</sub> and BERT<sub>KEN</sub> models trained on the Waseem et al., 2018 and Davidson et al., 2017 datasets.
 
 ### Waseem et al., 2018 ###
 To replicate our experiments on the [Waseem et al., 2018](https://link.springer.com/chapter/10.1007/978-3-319-78583-7_3)'s dataset you'll need to download the following checkpoints. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
 
 #### SVM ####
-The weights of our **SVM** model can be downloaded at:
+The weights of our SVM model can be downloaded at:
 * [sexism_model.pkl]()
 * [sexism_vectorizer.pkl]()
 * [racism_model.pkl]()
 * [racism_vectorizer.pkl]()
 
 #### BERT<sub>MOZ</sub> ####
-The weights of our re-implementation of **BERT<sub>MOZ</sub>** [(Mozafari et al., 2019)]() can be downloaded at:
+The weights of our re-implementation of BERT<sub>MOZ</sub> [(Mozafari et al., 2019)]() can be downloaded at:
 * [mozafari_waseem.pt]()
 
 #### BERT<sub>KEN</sub> ####
-The weights of **BERT<sub>KEN</sub>** [(Kennedy et al., 2020)](https://arxiv.org/pdf/2005.02439.pdf) can be downloaded at:
+The weights of BERT<sub>KEN</sub> [(Kennedy et al., 2020)](https://arxiv.org/pdf/2005.02439.pdf) can be downloaded at:
 * [sexism.bin]()
 * [racism.bin]()
 
@@ -52,19 +53,25 @@ The weights of **BERT<sub>KEN</sub>** [(Kennedy et al., 2020)](https://arxiv.org
 To replicate our experiments on the [Davidson et al., 2017](https://ojs.aaai.org/index.php/ICWSM/article/view/14955)'s dataset you'll need to download the following checkpoints. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
 
 #### SVM ####
-The weights of our **SVM** model can be downloaded at:
+The weights of our SVM model can be downloaded at:
 * [hate_speech_model.pkl]()
 * [hate_speech_vectorizer.pkl]()
 * [offensive_model.pkl]()
 * [offensive_vectorizer.pkl]()
 
 #### BERT<sub>MOZ</sub> ####
-The weights of our re-implementation of **BERT<sub>MOZ</sub>** [(Mozafari et al., 2019)]() can be downloaded at:
+The weights of our re-implementation of BERT<sub>MOZ</sub> [(Mozafari et al., 2019)]() can be downloaded at:
 * [mozafari_davidson.pt]()
 
 #### BERT<sub>KEN</sub> ####
-The weights of **BERT<sub>KEN</sub>** [(Kennedy et al., 2020)](https://arxiv.org/pdf/2005.02439.pdf) can be downloaded at:
+The weights of BERT<sub>KEN</sub> [(Kennedy et al., 2020)](https://arxiv.org/pdf/2005.02439.pdf) can be downloaded at:
 * [hate_speech.bin]()
 * [offensive.bin]()
 
-## How to evaluate your own model
+## Computing the AAA score for the supported models
+To replicate the experiments reported in the AAA paper, download the data files and models' checkpoint as described above, and run the following command:
+```
+python3 main.py
+```
+
+## How to evaluate your own model on a dataset
