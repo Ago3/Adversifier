@@ -1,6 +1,6 @@
 # Adversifier
 
-Official repository for the Adversarial Attacks against Abuse (AAA) evaluation tool. AAA is a new evaluation metric that better captures a model's performance on certain classes of hard-to-classify microposts, and for example penalises systems which are biased on low-level lexical features.
+Official repository for the Adversarial Attacks against Abuse (AAA) evaluation tool. AAA is a new evaluation metric for abuse detection systems that better captures a model's performance on certain classes of hard-to-classify microposts, and for example penalises systems which are biased on low-level lexical features.
 
 ## Setup
 <!-- Add other requirements: nltk, sklearn -->
@@ -9,7 +9,7 @@ If willing to replicate our results with the BERT<sub>MOZ</sub> or BERT<sub>KEN<
 ```
 pip3 install transformers
 ```
-All the files' paths (e.g., data files, models' checkpoints) are specified within the _info/info.py_ file. Customise the file to meet your needs.
+All the files' paths (e.g., data files, models' checkpoints) are specified within the _info/info.py_ file. Customise this file to meet your needs.
 
 ## Datasets
 For the AAA tool to run, you'll need to provide both a training and test set. Both sets should be in the form:
@@ -23,15 +23,48 @@ Labels are assumed to be binary, with 1 corresponding to the abusive class, and 
 <!-- To replicate our experiments on the [Waseem et al., 2018](https://link.springer.com/chapter/10.1007/978-3-319-78583-7_3)'s dataset,  -->
 
 ### Davidson et al., 2017 ###
-To run the AAA tool on the [Davidson et al., 2017](https://ojs.aaai.org/index.php/ICWSM/article/view/14955)'s dataset, download the [_davidson_data.csv_](https://raw.githubusercontent.com/t-davidson/hate-speech-and-offensive-language/master/data/labeled_data.csv) file and add it to the _DATA_ directory. You can then call the _utils.get_davidson_data_ function, that returns a dictionary with keys {'train', 'test'} and the corresponding data_split as argument.
-Note that this function maps the "hate speech" and "offensive" labels into the abusive class, and the "neither" label into the non abusive class.
+To run the AAA tool on the [Davidson et al., 2017](https://ojs.aaai.org/index.php/ICWSM/article/view/14955)'s dataset, download the [_davidson_data.csv_](https://raw.githubusercontent.com/t-davidson/hate-speech-and-offensive-language/master/data/labeled_data.csv) file and add it to the _DATA_ directory. You can then call the _utils.get_davidson_data_ function, that returns a dictionary with keys {'train', 'test'} and the corresponding data_split as argument.<br/>
+Splits are created using stratified sampling to split 0.8, 0.1, and 0.1 portions of tweets from each class into training, validation and test sets. The corresponding ids can be found in the _davidson_train_ids.csv_, _davidson_val_ids.csv_ and _davidson_test_ids.csv_ files within the _DATA_ directory.<br/>
+Note that the _utils.get_davidson_data_ function maps the "hate speech" and "offensive" labels into the abusive class, and the "neither" label into the non abusive class.
 
 ## Supported Models
 
-The weights of **BERT<sub>KEN</sub>** [(Kennedy et al., 2020)](https://arxiv.org/pdf/2005.02439.pdf) can be downloaded at:
-* [sexism.bin](https://drive.google.com/file/d/1qVsRTEFUPYWEKuY4gEsU2qSKk28vIagl/view?usp=sharing)
-* [racism.bin](https://drive.google.com/file/d/1waS2kcmw3ayEonK9fofsTKweqYOdguJu/view?usp=sharing)
+### Waseem et al., 2018 ###
+To replicate our experiments on the [Waseem et al., 2018](https://link.springer.com/chapter/10.1007/978-3-319-78583-7_3)'s dataset you'll need to download the following checkpoints. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
 
-Put both files in the _models_ directory.
+#### BERT<sub>KEN</sub ####
+The weights of our **SVM** model can be downloaded at:
+* [sexism_model.pkl]()
+* [sexism_vectorizer.pkl]()
+* [racism_model.pkl]()
+* [racism_vectorizer.pkl]()
+
+#### BERT<sub>MOZ</sub ####
+The weights of our re-implementation of **BERT<sub>MOZ</sub>** [(Mozafari et al., 2019)]() can be downloaded at:
+* [mozafari_waseem.pt]()
+
+#### BERT<sub>KEN</sub ####
+The weights of **BERT<sub>KEN</sub>** [(Kennedy et al., 2020)](https://arxiv.org/pdf/2005.02439.pdf) can be downloaded at:
+* [sexism.bin]()
+* [racism.bin]()
+
+### Davidson et al., 2017 ###
+To replicate our experiments on the [Davidson et al., 2017](https://ojs.aaai.org/index.php/ICWSM/article/view/14955)'s dataset you'll need to download the following checkpoints. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
+
+#### BERT<sub>KEN</sub ####
+The weights of our **SVM** model can be downloaded at:
+* [hate_speech_model.pkl]()
+* [hate_speech_vectorizer.pkl]()
+* [offensive_model.pkl]()
+* [offensive_vectorizer.pkl]()
+
+#### BERT<sub>MOZ</sub ####
+The weights of our re-implementation of **BERT<sub>MOZ</sub>** [(Mozafari et al., 2019)]() can be downloaded at:
+* [mozafari_davidson.pt]()
+
+#### BERT<sub>KEN</sub ####
+The weights of **BERT<sub>KEN</sub>** [(Kennedy et al., 2020)](https://arxiv.org/pdf/2005.02439.pdf) can be downloaded at:
+* [hate_speech.bin]()
+* [offensive.bin]()
 
 ## How to evaluate your own model
