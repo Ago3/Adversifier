@@ -32,18 +32,18 @@ Note that the _utils.get_davidson_data_ function maps the "hate speech" and "off
 ### Waseem et al., 2018 ###
 To replicate our experiments on the [Waseem et al., 2018](https://link.springer.com/chapter/10.1007/978-3-319-78583-7_3)'s dataset you'll need to download the following checkpoints. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
 
-#### BERT<sub>KEN</sub ####
+#### SVM ####
 The weights of our **SVM** model can be downloaded at:
 * [sexism_model.pkl]()
 * [sexism_vectorizer.pkl]()
 * [racism_model.pkl]()
 * [racism_vectorizer.pkl]()
 
-#### BERT<sub>MOZ</sub ####
+#### BERT<sub>MOZ</sub> ####
 The weights of our re-implementation of **BERT<sub>MOZ</sub>** [(Mozafari et al., 2019)]() can be downloaded at:
 * [mozafari_waseem.pt]()
 
-#### BERT<sub>KEN</sub ####
+#### BERT<sub>KEN</sub> ####
 The weights of **BERT<sub>KEN</sub>** [(Kennedy et al., 2020)](https://arxiv.org/pdf/2005.02439.pdf) can be downloaded at:
 * [sexism.bin]()
 * [racism.bin]()
@@ -51,18 +51,18 @@ The weights of **BERT<sub>KEN</sub>** [(Kennedy et al., 2020)](https://arxiv.org
 ### Davidson et al., 2017 ###
 To replicate our experiments on the [Davidson et al., 2017](https://ojs.aaai.org/index.php/ICWSM/article/view/14955)'s dataset you'll need to download the following checkpoints. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
 
-#### BERT<sub>KEN</sub ####
+#### SVM ####
 The weights of our **SVM** model can be downloaded at:
 * [hate_speech_model.pkl]()
 * [hate_speech_vectorizer.pkl]()
 * [offensive_model.pkl]()
 * [offensive_vectorizer.pkl]()
 
-#### BERT<sub>MOZ</sub ####
+#### BERT<sub>MOZ</sub> ####
 The weights of our re-implementation of **BERT<sub>MOZ</sub>** [(Mozafari et al., 2019)]() can be downloaded at:
 * [mozafari_davidson.pt]()
 
-#### BERT<sub>KEN</sub ####
+#### BERT<sub>KEN</sub> ####
 The weights of **BERT<sub>KEN</sub>** [(Kennedy et al., 2020)](https://arxiv.org/pdf/2005.02439.pdf) can be downloaded at:
 * [hate_speech.bin]()
 * [offensive.bin]()
