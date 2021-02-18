@@ -1,6 +1,6 @@
 from AAAdversifier import AAAdversifier
-from utils import evaluate_on_hatecheck, get_davidson_data
-from info import TRAIN_DATASET, TEST_DATASET, KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, MOZAFARI_MODEL_PATH, MOZAFARI_MODEL_NH_PATH, MOZAFARI_DAVIDSON_MODEL_PATH, KENNEDY_HATESPEECH_MODEL_PATH, KENNEDY_OFFENSIVE_MODEL_PATH
+from utils import evaluate_on_hatecheck, get_davidson_data, get_waseem_data
+from info import KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, MOZAFARI_MODEL_PATH, MOZAFARI_MODEL_NH_PATH, MOZAFARI_DAVIDSON_MODEL_PATH, KENNEDY_HATESPEECH_MODEL_PATH, KENNEDY_OFFENSIVE_MODEL_PATH
 from random import randint
 from models import KennedyModel, MozafariModel, SvmModel
 
@@ -11,24 +11,23 @@ def toy_model(list_of_arguments):
     return list_of_predictions
 
 
-def get_waseem_data():
-    LABELS = ['neither', 'sexism', 'racism', 'both']
-    data = dict()
-    for dataset, name in zip([TRAIN_DATASET, TEST_DATASET], ['train', 'test']):
-        with open(dataset, 'r') as f:
-            lines = f.readlines()
-            posts = [line.split('\t')[1] for line in lines]
-            labels = [LABELS.index(line.split('\t')[2].strip()) for line in lines]  # <--- Convert to 0 (not abusive) or 1 (abusive)
-            labels = [l if l <= 1 else 1 for l in labels]
-            extra_info_the_model_might_need = ['' for l in labels]  # you can use this variable to pass, e.g., conversation context
-            data[name] = [posts, labels, extra_info_the_model_might_need]
-    return data
+# def get_waseem_data():
+#     LABELS = ['neither', 'sexism', 'racism', 'both']
+#     data = dict()
+#     for dataset, name in zip([TRAIN_DATASET, TEST_DATASET], ['train', 'test']):
+#         with open(dataset, 'r') as f:
+#             lines = f.readlines()
+#             posts = [line.split('\t')[1] for line in lines]
+#             labels = [LABELS.index(line.split('\t')[2].strip()) for line in lines]  # <--- Convert to 0 (not abusive) or 1 (abusive)
+#             labels = [l if l <= 1 else 1 for l in labels]
+#             extra_info_the_model_might_need = ['' for l in labels]  # you can use this variable to pass, e.g., conversation context
+#             data[name] = [posts, labels, extra_info_the_model_might_need]
+#     return data
 
 
 def main():
     # Toy example
     print('Evaluating Random Classifier:')
-    # config = get_config()
     adversifier = AAAdversifier('waseem')
     data = get_waseem_data()
     adversifier.aaa('random', toy_model, data['train'], data['test'])  # Check arguments description in AAAdversifier.py

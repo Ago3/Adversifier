@@ -21,8 +21,8 @@ class AAAdversifier():
         Arguments:
             setting_name {string} -- The name of the setting (e.g., one of the available attacks)
             model {function} -- A function that takes as input a list of arguments, the 1st one being a list of (NON-preprocessed) posts, and returns a list containing the corresponding predictions
-            train_data {list} -- List in the form: [list_of_posts, list_of_labels, any_extra_info, your_model_might_need]. Each label should be in [0, 1], where 0 corresponds to the non-abusive class and 1 corresponds to the abusive class
             test_data {list} -- List in the form: [list_of_posts, list_of_labels, any_extra_info, your_model_might_need]. Each label should be in [0, 1], where 0 corresponds to the non-abusive class and 1 corresponds to the abusive class
+            train_data {list} -- List in the form: [list_of_posts, list_of_labels, any_extra_info, your_model_might_need]. Each label should be in [0, 1], where 0 corresponds to the non-abusive class and 1 corresponds to the abusive class
 
         Returns:
             float -- the score obtained by model under the specified setting
@@ -41,9 +41,10 @@ class AAAdversifier():
         return self.scores[setting_name]
 
     def aaa(self, model_name, model, train_data, test_data):
-        """Computes the model scores on the AAA benchmark.        
+        """Computes the model scores on the AAA benchmark. All scores are saved in info.RES_FILE .    
         
         Arguments:
+            model_name {string} -- A string identifier of the model
             model {function} -- A function that takes as input a list of arguments, the 1st one being a list of (NON-preprocessed) posts, and returns a list containing the corresponding predictions
             train_data {list} -- List in the form: [list_of_posts, list_of_labels, any_extra_info, your_model_might_need]. Each label should be in [0, 1], where 0 corresponds to the non-abusive class and 1 corresponds to the abusive class
             test_data {list} -- List in the form: [list_of_posts, list_of_labels, any_extra_info, your_model_might_need]. Each label should be in [0, 1], where 0 corresponds to the non-abusive class and 1 corresponds to the abusive class
