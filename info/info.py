@@ -6,14 +6,12 @@ LOG = 'LOG'
 RES_FILE = LOG + '/results.tsv'
 
 
-#Dataset files
-# TRAIN_DATASET = '/'.join([DATA, 'waseem_train_np.tsv'])  # CUSTOMIZE
-# TEST_DATASET = '/'.join([DATA, 'waseem_test_np.tsv'])  # CUSTOMIZE
 #Waseem file
 WASEEM_TSV_FILE = '/'.join([DATA, 'waseem_data.tsv'])  # put all tweets from Waseem et al., 2018 in this tsv file
 WASEEM_TRAIN_IDS = '/'.join([DATA, 'waseem_train_ids.csv'])
 WASEEM_VAL_IDS = '/'.join([DATA, 'waseem_val_ids.csv'])
 WASEEM_TEST_IDS = '/'.join([DATA, 'waseem_test_ids.csv'])
+
 #Davidson file
 DAVIDSON_CSV_FILE = '/'.join([DATA, 'davidson_data.csv'])  # (download from https://github.com/t-davidson/hate-speech-and-offensive-language )
 DAVIDSON_TRAIN_IDS = '/'.join([DATA, 'davidson_train_ids.csv'])
