@@ -136,3 +136,6 @@ CACHE
 *.csv
 *.tsv
 DATA/hatecheck/*
+models/*.pkl
+models/*.pt
+models/*.bin

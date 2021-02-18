@@ -13,6 +13,28 @@ pip3 install transformers
 ```
 All the files' paths (e.g., data files, models' checkpoints) are specified within the _info/info.py_ file. Customise this file to meet your needs.
 
+## How to evaluate your model on a dataset
+To run the AAA tool on your model with a generic dataset, you'll need to provide:
+* the training and test sets, in the format specified [here](#Datasets "Goto Datasets").
+* your model's predictor: a function that takes as input a list of arguments, the 1<sup>st</sup> one being a list of *NON-pre-processed* posts, and returns a list of binary predictions.
+
+Here is an example:
+```
+from AAAdversifier import AAAdversifier
+
+
+adversifier = AAAdversifier()
+train_data, test_data = load_your_data()
+adversifier.aaa('your_model_name', your_model.predictor, train_data, test_data)
+```
+Check _main.py_ for usage examples.
+
+## Computing the AAA score for the supported models
+To replicate the experiments reported in the AAA paper, download the data files and models' checkpoints as described below, and run the following command:
+```
+python3 main.py
+```
+
 ## Datasets
 For the AAA tool to run, you'll need to provide both a training and test set. Both sets should be in the form:
 ```
@@ -39,7 +61,12 @@ Note that the _utils.get_davidson_data_ function maps the "hate speech" and "off
 We provide code and checkpoints for the SVM, BERT<sub>MOZ</sub> and BERT<sub>KEN</sub> models trained on the Waseem et al., 2018 and Davidson et al., 2017 datasets.
 
 ### Waseem et al., 2018 ###
-To replicate our experiments on the Waseem et al., 2018's dataset you'll need to download the following checkpoints. **You can download all the checkpoints from [here](https://drive.google.com/file/d/1N6J67yGOVKZTphVPteWGIS_vDqDQq_g_/view?usp=sharing)** (3.01 GB), or download the ones of interest from the following list. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
+To replicate our experiments on the Waseem et al., 2018's dataset you'll need to download the following checkpoints. **You can download all the checkpoints from [here](https://drive.google.com/file/d/1N6J67yGOVKZTphVPteWGIS_vDqDQq_g_/view?usp=sharing)** (3.01 GB), or run the following command:
+```
+from utils import download_checkpoints
+download_checkpoints('waseem-18')
+```
+Alternatively, you can download the checkpoints of interest from the following list. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
 
 #### SVM ####
 The weights of our SVM model can be downloaded at:
@@ -59,7 +86,12 @@ The weights of BERT<sub>KEN</sub> [(Kennedy et al., 2020)](https://arxiv.org/pdf
 * [racism.bin](https://drive.google.com/file/d/1TbWGI0142DpN4shmLctOlDlK0fY42-tU/view?usp=sharing)
 
 ### Davidson et al., 2017 ###
-To replicate our experiments on the Davidson et al., 2017's dataset you'll need to download the following checkpoints. **You can download all the checkpoints from [here](https://drive.google.com/file/d/1O6q67BLD-q531odcu1grH2ioCY7OjDV1/view?usp=sharing)** (1.91 GB), or download the ones of interest from the following list. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
+To replicate our experiments on the Davidson et al., 2017's dataset you'll need to download the following checkpoints. **You can download all the checkpoints from [here](https://drive.google.com/file/d/1O6q67BLD-q531odcu1grH2ioCY7OjDV1/view?usp=sharing)** (1.91 GB), or run the following command:
+```
+from utils import download_checkpoints
+download_checkpoints('davidson-17')
+```
+Alternatively, you can download the checkpoints of interest from the following list. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
 
 #### SVM ####
 The weights of our SVM model can be downloaded at:
@@ -76,25 +108,3 @@ The weights of our re-implementation of BERT<sub>MOZ</sub> (Mozafari et al., 201
 The weights of BERT<sub>KEN</sub> (Kennedy et al., 2020) can be downloaded at:
 * [hate_speech.bin](https://drive.google.com/file/d/17_AInLbhhx9M7I1ldFcrGOGxoNeXDAXa/view?usp=sharing)
 * [offensive.bin](https://drive.google.com/file/d/1JsamtJ8Xa27tG4yG_o6ufLSwTCKDcmTu/view?usp=sharing)
-
-## Computing the AAA score for the supported models
-To replicate the experiments reported in the AAA paper, download the data files and models' checkpoints as described above, and run the following command:
-```
-python3 main.py
-```
-
-## How to evaluate your model on a dataset
-To run the AAA tool on your model with a generic dataset, you'll need to provide:
-* the training and test sets, in the format specified [here](#Datasets "Goto Datasets").
-* your model's predictor: a function that takes as input a list of arguments, the 1<sup>st</sup> one being a list of *NON-pre-processed* posts, and returns a list of binary predictions.
-
-Here is an example:
-```
-from AAAdversifier import AAAdversifier
-
-
-adversifier = AAAdversifier()
-train_data, test_data = load_your_data()
-adversifier.aaa('your_model_name', your_model.predictor, train_data, test_data)
-```
-Check _main.py_ for usage examples.
