@@ -1,12 +1,7 @@
 from transformers import BertTokenizer, BertForSequenceClassification
 import torch
-# from sklearn.metrics import f1_score
 from tqdm import tqdm
-# from argparse import ArgumentParser
 from utils import preprocess_tweet
-
-
-# LABELS = ['neither', 'sexism', 'racism', 'both']
 
 
 def batcher(lines, batch_size=100):
@@ -21,10 +16,6 @@ def batcher(lines, batch_size=100):
         batch.append(line)
     if batch:
         yield batch
-
-
-# def _string_to_label_(label):
-#     return torch.tensor([int(c) for c in ('0' + '{0:b}'.format(LABELS.index(label.strip())))[-2:]])
 
 
 class KennedyModel():

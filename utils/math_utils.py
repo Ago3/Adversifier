@@ -25,7 +25,6 @@ def setting_score(predictions, labels, setting_name):
     return tpr
 
 
-
 def is_significant(mean_score, new_score, eps=0.00001):
     mean_score += eps
     new_score += eps
