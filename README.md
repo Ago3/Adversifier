@@ -87,7 +87,7 @@ python3 main.py
 To run the AAA tool on your model with a generic dataset, you'll need to provide:
 * the training and test sets, in the format specified [here](#Datasets "Goto Datasets").
 * your model's predictor: a function that takes as input a list of arguments, the 1<sup>st</sup> one being a list of *NON-pre-processed* posts, and returns a list of binary predictions.
-<br/>
+
 Here is an example:
 ```
 from AAAdversifier import AAAdversifier
