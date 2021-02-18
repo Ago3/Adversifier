@@ -59,7 +59,7 @@ The weights of BERT<sub>KEN</sub> [(Kennedy et al., 2020)](https://arxiv.org/pdf
 * [racism.bin](https://drive.google.com/file/d/1TbWGI0142DpN4shmLctOlDlK0fY42-tU/view?usp=sharing)
 
 ### Davidson et al., 2017 ###
-To replicate our experiments on the Davidson et al., 2017's dataset you'll need to download the following checkpoints. **You can download all the checkpoints from [here](https://drive.google.com/file/d/1O6q67BLD-q531odcu1grH2ioCY7OjDV1/view?usp=sharing)**, or download the ones of interest from the following list. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
+To replicate our experiments on the Davidson et al., 2017's dataset you'll need to download the following checkpoints. **You can download all the checkpoints from [here](https://drive.google.com/file/d/1O6q67BLD-q531odcu1grH2ioCY7OjDV1/view?usp=sharing)** (1.91 GB), or download the ones of interest from the following list. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
 
 #### SVM ####
 The weights of our SVM model can be downloaded at:
@@ -86,7 +86,8 @@ python3 main.py
 ## How to evaluate your model on a dataset
 To run the AAA tool on your model with a generic dataset, you'll need to provide:
 * the training and test sets, in the format specified [here](#Datasets "Goto Datasets").
-* your model's predictor: a function that takes as input a list of arguments, the 1<sup>st</sup> one being a list of *NON-pre-processed* posts, and returns a list of binary predictions.<br/>
+* your model's predictor: a function that takes as input a list of arguments, the 1<sup>st</sup> one being a list of *NON-pre-processed* posts, and returns a list of binary predictions.
+<br/>
 Here is an example:
 ```
 from AAAdversifier import AAAdversifier
