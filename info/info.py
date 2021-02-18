@@ -1,5 +1,3 @@
-# CONFIG_DIR = 'config'
-# CONFIG_FILE = '/'.join([CONFIG_DIR, 'example.json'])  # CUSTOMIZE
 DATA = 'DATA'
 CACHE_DIR = 'CACHE'
 LEXICON = '/'.join([DATA, 'hurtlex_EN_1.2.tsv'])
@@ -27,17 +25,8 @@ KENNEDY_SEXISM_MODEL_PATH = 'models/sexism_new.v2.bin'
 MOZAFARI_MODEL_PATH = 'models/mozafari_32_2e-05_0.1_model.pt'
 
 
-#Mozafari Biased model parameters
-# MOZAFARI_BIASED_MODEL_PATH = 'models/mozafari_32_2e-05_0.1_train_model.pt'
-# MOZAFARI_BIASED_MODEL_PATHS = ['models/mozafari_32_2e-05_0.1_train-{}_model.pt'.format(n) for n in [20, 30, 40, 50]]
-
-
 #Mozafari trained discarding hashtags
 MOZAFARI_MODEL_NH_PATH = 'models/mozafari_32_2e-05_0.1_nh_model.pt'
-
-
-#Mozafari model trained on Davidson
-MOZAFARI_DAVIDSON_MODEL_PATH = 'models/mozafari_16_2e-05_0.1_davidson_model.pt'
 
 
 #SVM parameters
@@ -50,6 +39,10 @@ SVM_RACISM_VECTORIZER_PATH = 'models/racism_vectorizer.pkl'
 #Kennedy model trained on Davidson
 KENNEDY_HATESPEECH_MODEL_PATH = 'models/davidson_hatespeech.bin'
 KENNEDY_OFFENSIVE_MODEL_PATH = 'models/davidson_offensive.bin'
+
+
+#Mozafari model trained on Davidson
+MOZAFARI_DAVIDSON_MODEL_PATH = 'models/mozafari_16_2e-05_0.1_davidson_model.pt'
 
 
 #SVM trained on Davidson

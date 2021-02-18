@@ -1,8 +1,6 @@
 import numpy as np
 from sklearn.metrics import f1_score
-# import settings
 from scipy.stats import chisquare
-# from sklearn.metrics import confusion_matrix
 
 
 def geometric_mean(values, weights=None):
@@ -29,11 +27,8 @@ def setting_score(predictions, labels, setting_name):
 
 
 def is_significant(mean_score, new_score, eps=0.00001):
-    # z = (new_score - mean_score) / std
-    # p_value = scipy.stats.norm.sf(abs(z))*2
     mean_score += eps
     new_score += eps
     statistic = chisquare([new_score], [mean_score])[0]
-    # print(chisquare([new_score], [mean_score]))
     critical_value = 3.84
     return statistic > critical_value

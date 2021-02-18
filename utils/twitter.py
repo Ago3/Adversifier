@@ -30,11 +30,3 @@ def preprocess_tweet(text, max_len=512, use_hashtags=True):
     # remove numbers
     nopunc = re.sub('\d+', '<number>', nopunc)
     return nopunc
-
-
-# if __name__ == '__main__':
-#     for dataset in ['train', 'dev', 'test']:
-#         with open('../DATA/waseem_{}_np.tsv'.format(dataset), 'r') as f, open('../DATA/waseem_{}_processed_nh.tsv'.format(dataset), 'w+') as out:
-#             for line in f.readlines():
-#                 fields = [w.strip() for w in line.split('\t')]
-#                 out.write('{}\t{}\t{}\n'.format(fields[0], preprocess_tweet(fields[1], use_hashtags=False), fields[2]))

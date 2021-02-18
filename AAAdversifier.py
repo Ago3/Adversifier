@@ -9,10 +9,9 @@ class AAAdversifier():
         """Creates an istance of AAAdversifier.
                 
         Arguments:
-            config {dictionary} -- A dictionary contining the list of the group identifiers of interest and the dataset name (used as identifier). If the list of group identifiers is empty, a default one is used (check paper).
+            dataset_name {string} -- A string identifier of the dataset
         """
-        # self.group_indentifiers = None
-        print('Creating adversifier for ', dataset_name)
+        print('Creating adversifier for the {} dataset'.format(dataset_name))
         self.dataset_name = dataset_name
         self.scores = dict()
 
@@ -53,7 +52,7 @@ class AAAdversifier():
             float -- the AAA score
         """
         print('\nRunning AAA evaluation')
-        #Finding non-rare words with high correlation with each class
+        #Finding common words with high correlation with each class
         random.seed(0)
         self.scores = dict()
         for class_id in range(2):

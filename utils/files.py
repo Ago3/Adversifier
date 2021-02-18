@@ -1,17 +1,7 @@
-import json
 import pickle
 from os import path, mkdir
 from info import CACHE_DIR, LEXICON
 from .correlation import logReg
-
-
-# def get_config():
-#     with open(CONFIG_FILE) as json_data_file:
-#         config = json.load(json_data_file)
-#     print('CONFIG:')
-#     for k, v in config.items():
-#         print('--> {}\t{}'.format(k, v))
-#     return config
 
 
 def store_to_cache(structure, file_name):
@@ -36,7 +26,6 @@ def get_high_corr_words(dataset_name, data, class_id, cache=True):
         high_corr_words = load_from_cache('{}_{}_corr.pkl'.format(dataset_name, class_id))
     if not cache or not high_corr_words:
         high_corr_words = logReg(data, class_id)
-        # high_corr_words = pmi(data, no_hashtag=True)
         store_to_cache(high_corr_words, '{}_{}_corr.pkl'.format(dataset_name, class_id))
     return high_corr_words
 

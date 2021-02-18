@@ -1,38 +1,38 @@
 import torch
-import numpy as np
-from torch.utils.data import DataLoader
+# import numpy as np
+# from torch.utils.data import DataLoader
 from transformers import BertTokenizer, BertModel
 import torch.nn as nn
 from torch.nn.utils.weight_norm import weight_norm
-from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
-from torch.utils.data import Dataset
+# from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
+# from torch.utils.data import Dataset
 from utils import preprocess_tweet
 
 
 NUM_CLASSES = 2
 
 
-class WaseemDataset(Dataset):
+# class WaseemDataset(Dataset):
 
-    def __init__(self, data):
-        """
-        Args:
-            data (dict): Mapping from instance id to [tweet id, text, label]
-            transform (callable, optional): Optional transform to be applied
-                on a sample.
-        """
-        self.data = data
-        self.LABELS = ['neither', 'sexism', 'racism', 'both']
+#     def __init__(self, data):
+#         """
+#         Args:
+#             data (dict): Mapping from instance id to [tweet id, text, label]
+#             transform (callable, optional): Optional transform to be applied
+#                 on a sample.
+#         """
+#         self.data = data
+#         self.LABELS = ['neither', 'sexism', 'racism', 'both']
 
-    def __len__(self):
-        return len(self.data)
+#     def __len__(self):
+#         return len(self.data)
 
-    def __getitem__(self, idx):
-        sample = dict()
-        sample['nInst'] = idx
-        sample['id'], sample['text'], _ = self.data[idx]
-        sample['labels'] = torch.tensor([int(c) for c in ('0' + '{0:b}'.format(self.LABELS.index(self.data[idx][2])))[-2:]])
-        return sample
+#     def __getitem__(self, idx):
+#         sample = dict()
+#         sample['nInst'] = idx
+#         sample['id'], sample['text'], _ = self.data[idx]
+#         sample['labels'] = torch.tensor([int(c) for c in ('0' + '{0:b}'.format(self.LABELS.index(self.data[idx][2])))[-2:]])
+#         return sample
 
 
 class MozafariModel(nn.Module):
