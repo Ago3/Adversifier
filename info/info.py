@@ -1,5 +1,5 @@
-CONFIG_DIR = 'config'
-CONFIG_FILE = '/'.join([CONFIG_DIR, 'example.json'])  # CUSTOMIZE
+# CONFIG_DIR = 'config'
+# CONFIG_FILE = '/'.join([CONFIG_DIR, 'example.json'])  # CUSTOMIZE
 DATA = 'DATA'
 CACHE_DIR = 'CACHE'
 LEXICON = '/'.join([DATA, 'hurtlex_EN_1.2.tsv'])
@@ -28,8 +28,8 @@ MOZAFARI_MODEL_PATH = 'models/mozafari_32_2e-05_0.1_model.pt'
 
 
 #Mozafari Biased model parameters
-MOZAFARI_BIASED_MODEL_PATH = 'models/mozafari_32_2e-05_0.1_train_model.pt'
-MOZAFARI_BIASED_MODEL_PATHS = ['models/mozafari_32_2e-05_0.1_train-{}_model.pt'.format(n) for n in [20, 30, 40, 50]]
+# MOZAFARI_BIASED_MODEL_PATH = 'models/mozafari_32_2e-05_0.1_train_model.pt'
+# MOZAFARI_BIASED_MODEL_PATHS = ['models/mozafari_32_2e-05_0.1_train-{}_model.pt'.format(n) for n in [20, 30, 40, 50]]
 
 
 #Mozafari trained discarding hashtags

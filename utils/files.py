@@ -1,17 +1,17 @@
 import json
 import pickle
 from os import path, mkdir
-from info import CONFIG_FILE, CACHE_DIR, LEXICON
+from info import CACHE_DIR, LEXICON
 from .correlation import logReg
 
 
-def get_config():
-    with open(CONFIG_FILE) as json_data_file:
-        config = json.load(json_data_file)
-    print('CONFIG:')
-    for k, v in config.items():
-        print('--> {}\t{}'.format(k, v))
-    return config
+# def get_config():
+#     with open(CONFIG_FILE) as json_data_file:
+#         config = json.load(json_data_file)
+#     print('CONFIG:')
+#     for k, v in config.items():
+#         print('--> {}\t{}'.format(k, v))
+#     return config
 
 
 def store_to_cache(structure, file_name):

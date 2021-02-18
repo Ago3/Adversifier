@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 import random
 import re
-# from .strings import quoting_n_strings, group_identifiers, quoting_a_group_identifiers
 from utils import get_high_corr_words, get_hateful_words
 import nltk
+nltk.download('wordnet')
 from nltk.stem import WordNetLemmatizer
 from info import TEMPLATES
 
@@ -20,14 +20,6 @@ class Setting(ABC):
         pass
 
 
-# class Org_n(Setting):
-#     def run(self, params=None):
-#         with open(ORG, 'r') as f:
-#             posts = [line.split('\t')[1] for line in f.readlines()]
-#             labels = [0 for p in posts]
-#             return posts, labels
-
-
 class Attack(Setting):
     def run(self, params=None):
         self.setup(params)
@@ -37,9 +29,6 @@ class Attack(Setting):
             if label in self.affected_labels():
                 new_posts.append(self.perturb_post(post))
                 new_labels.append(self.get_label(label))
-            # else:
-            #     new_posts.append(post)
-            #     new_labels.append(label)
         return new_posts, new_labels
 
     @abstractmethod
@@ -83,36 +72,6 @@ class Quoting_a_to_n(Attack):
         with open(TEMPLATES, 'r') as f:
             self.templates = [line.strip() for line in f.readlines()]
 
-# class Id_e(Attack):
-#     def perturb_post(self, post):
-#         n = random.randint(1, 5)
-#         wordlist = [random.choice(self.group_identifiers) for i in range(n)]
-#         return "{} {}".format(post, ' '.join(wordlist))
-
-#     def affected_labels(self):
-#         return [0]
-
-#     def get_label(self, label):
-#         return label
-
-#     def setup(self, params):
-#         self.group_identifiers = params[-1] if params[-1] else group_identifiers
-
-
-# class Quoting_a(Attack):
-#     def perturb_post(self, post):
-#         self.identifier = random.choice(self.group_identifiers)
-#         return "{} only a {} could agree with this".format(post, self.identifier)
-
-#     def affected_labels(self):
-#         return [0]
-
-#     def get_label(self, label):
-#         return 1
-
-#     def setup(self, params):
-#         self.group_identifiers = params[-2] if params[-2] else quoting_a_group_identifiers
-
 
 class Flip_n_to_a(Attack):
     # From non-abusive to abusive
@@ -133,11 +92,6 @@ class Flip_n_to_a(Attack):
         test_abusive_posts = [p for p, l in zip(test_post, test_labels) if l == 1]
         random.shuffle(test_abusive_posts)
         self.abusive_posts = test_abusive_posts
-        # for post, label in zip(train_post, train_labels):
-        #     if label == 1:
-        #         self.abusive_posts.append(post)
-        #         if len(self.abusive_posts) == len(params[1][0]):  #we need one abusive post for each testing instance
-        #             break
 
 
 class CorrAttack(Attack):
@@ -145,7 +99,7 @@ class CorrAttack(Attack):
         n = random.randint(1, 5)
         wordlist = []
         for i in range(n):
-            wordlist.append('#' + random.choice(self.relevant_words))  # e.g., Pmi_a: Pick n random words that are relevant for the non-abusive class
+            wordlist.append('#' + random.choice(self.relevant_words))  # e.g., Corr_a_to_a: Pick n random words that are relevant for the non-abusive class
         return "{} {}".format(post, ' '.join(wordlist))
 
     def get_label(self, label):

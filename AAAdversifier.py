@@ -5,14 +5,14 @@ from utils import log
 
 
 class AAAdversifier():
-    def __init__(self, config):
+    def __init__(self):
         """Creates an istance of AAAdversifier.
                 
         Arguments:
             config {dictionary} -- A dictionary contining the list of the group identifiers of interest and the dataset name (used as identifier). If the list of group identifiers is empty, a default one is used (check paper).
         """
-        self.group_indentifiers = None
-        self.dataset_name = config['dataset_name']
+        # self.group_indentifiers = None
+        # self.dataset_name = config['dataset_name']
         self.scores = dict()
 
     def eval_setting(self, setting_name, model, test_data, train_data):
@@ -29,7 +29,7 @@ class AAAdversifier():
         """
         print('\nSETTING: {}'.format(setting_name))
         setting = create_setting(setting_name)
-        posts, labels = setting.run(params=[self.dataset_name, test_data[:2], self.group_indentifiers, train_data[:2]])
+        posts, labels = setting.run(params=[self.dataset_name, test_data[:2], train_data[:2]])
         print('Generating predictions..')
         model_input = [posts] + ([] if len(test_data) == 2 else test_data[2:])
         predictions = model(model_input)
@@ -63,9 +63,6 @@ class AAAdversifier():
                 self.scores[setting] = 0
                 continue
             self.eval_setting(setting, model, test_data, train_data)
-        # non_abusive_score = geometric_mean([self.scores[k] for k in ['quoting_nr', 'pmi_n']])
-        # abusive_score = geometric_mean([self.scores[k] for k in ['pmi_a', 'quoting_a']])
-        # self.scores['aaa'] = geometric_mean([self.scores['f1_o'], self.scores['org_n'], non_abusive_score, abusive_score], [1, 0.5, 0.5, 1])
         self.scores['aaa'] = geometric_mean([self.scores[k] for k in ['quoting_a_to_n', 'corr_n_to_n', 'corr_a_to_a', 'flip_n_to_a']])
         print('\nAAA score: {}'.format(self.scores['aaa']))
         log(model_name, self.scores)

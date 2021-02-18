@@ -1,7 +1,4 @@
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics import f1_score
 from sklearn.svm import SVC
-from matplotlib import pyplot as plt
 import numpy as np
 from utils import preprocess_tweet
 import pickle
@@ -16,30 +13,30 @@ class SvmModel():
             paths = [SVM_SEXISM_VECTORIZER_PATH, SVM_SEXISM_MODEL_PATH, SVM_RACISM_VECTORIZER_PATH, SVM_RACISM_MODEL_PATH]
         else:
             paths = [SVM_HATE_SPEECH_VECTORIZER_PATH, SVM_HATE_SPEECH_MODEL_PATH, SVM_OFFENSIVE_VECTORIZER_PATH, SVM_OFFENSIVE_MODEL_PATH]
-        print('Loading sexism vectorizer from path ', paths[0])
+        print('Loading first vectorizer from path ', paths[0])
         with open(paths[0], 'rb+') as f:
-            self.sexism_vectorizer = pickle.load(f)
-        print('Loading sexism SVM model from path ', paths[1])
+            self.first_vectorizer = pickle.load(f)
+        print('Loading first SVM model from path ', paths[1])
         with open(paths[1], 'rb+') as f:
-            self.sexism_model = pickle.load(f)
-        print('Loading racism vectorizer from path ', paths[2])
+            self.first_model = pickle.load(f)
+        print('Loading second vectorizer from path ', paths[2])
         with open(paths[2], 'rb+') as f:
-            self.racism_vectorizer = pickle.load(f)
-        print('Loading racism SVM model from path ', paths[3])
+            self.second_vectorizer = pickle.load(f)
+        print('Loading second SVM model from path ', paths[3])
         with open(paths[3], 'rb+') as f:
-            self.racism_model = pickle.load(f)
+            self.second_model = pickle.load(f)
 
 
     def predictor(self, input_args):
         input_lines = input_args[0]  # this model only takes the posts as input
         input_lines = [preprocess_tweet(tweet) for tweet in input_lines]
-        sexism_data_features = self.sexism_vectorizer.transform(input_lines)
-        sexism_data_features = sexism_data_features.toarray()
-        sexism_predictions = self.sexism_model.predict(sexism_data_features)
-        racism_data_features = self.racism_vectorizer.transform(input_lines)
-        racism_data_features = racism_data_features.toarray()
-        racism_predictions = self.racism_model.predict(sexism_data_features)
-        predictions = np.max([sexism_predictions, racism_predictions], axis=0)
+        c1_data_features = self.first_vectorizer.transform(input_lines)
+        c1_data_features = c1_data_features.toarray()
+        c1_predictions = self.first_model.predict(c1_data_features)
+        c2_data_features = self.second_vectorizer.transform(input_lines)
+        c2_data_features = c2_data_features.toarray()
+        c2_predictions = self.second_model.predict(c2_data_features)
+        predictions = np.max([c1_predictions, c2_predictions], axis=0)
         return predictions
 
 

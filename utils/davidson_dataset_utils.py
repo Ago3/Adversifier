@@ -1,9 +1,9 @@
 import csv
-from sklearn.model_selection import StratifiedShuffleSplit, StratifiedKFold
+from sklearn.model_selection import StratifiedShuffleSplit
 import sys
 sys.path.append(".")
 from info import DAVIDSON_CSV_FILE, DAVIDSON_TRAIN_IDS, DAVIDSON_VAL_IDS, DAVIDSON_TEST_IDS
-from .twitter import preprocess_tweet
+# from .twitter import preprocess_tweet
 
 
 def get_davidson_data():
@@ -57,21 +57,21 @@ def __split_dataset__(ids, labels):
             f.write('\n'.join([str(x) for x in dataset]))
 
 
-def __save_preprocessed_files__():
-    ids, posts, labels = __read_davidson_csv_file__()
-    files = [DAVIDSON_TRAIN_IDS, DAVIDSON_VAL_IDS, DAVIDSON_TEST_IDS]
-    outfiles = ['DATA/davidson_train_processed.tsv', 'DATA/davidson_val_processed.tsv', 'DATA/davidson_test_processed.tsv']
-    for filename, dataset_name, outfile in zip(files, ['train', 'val', 'test'], outfiles):
-        with open(filename, 'r') as f:
-            split_ids = [int(line.strip()) for line in f.readlines()]
-            split_posts = [p for idx, p in enumerate(posts) if idx in split_ids]
-            split_labels = [l for idx, l in enumerate(labels) if idx in split_ids]
-            split_binary_labels = [0 if l == 2 else 1 for l in split_labels]
-            extra_info_the_model_might_need = ['' for l in split_binary_labels]  # you can use this variable to pass, e.g., conversation context
-            # data[dataset_name] = [split_posts, split_binary_labels, extra_info_the_model_might_need]
-            with open(outfile, 'w+') as out:
-                for i, post, label in zip(split_ids, split_posts, split_labels):
-                    out.write('{}\t{}\t{}\n'.format(i, preprocess_tweet(post.replace('\n', '  ')), label))
+# def __save_preprocessed_files__():
+#     ids, posts, labels = __read_davidson_csv_file__()
+#     files = [DAVIDSON_TRAIN_IDS, DAVIDSON_VAL_IDS, DAVIDSON_TEST_IDS]
+#     outfiles = ['DATA/davidson_train_processed.tsv', 'DATA/davidson_val_processed.tsv', 'DATA/davidson_test_processed.tsv']
+#     for filename, dataset_name, outfile in zip(files, ['train', 'val', 'test'], outfiles):
+#         with open(filename, 'r') as f:
+#             split_ids = [int(line.strip()) for line in f.readlines()]
+#             split_posts = [p for idx, p in enumerate(posts) if idx in split_ids]
+#             split_labels = [l for idx, l in enumerate(labels) if idx in split_ids]
+#             split_binary_labels = [0 if l == 2 else 1 for l in split_labels]
+#             extra_info_the_model_might_need = ['' for l in split_binary_labels]  # you can use this variable to pass, e.g., conversation context
+#             # data[dataset_name] = [split_posts, split_binary_labels, extra_info_the_model_might_need]
+#             with open(outfile, 'w+') as out:
+#                 for i, post, label in zip(split_ids, split_posts, split_labels):
+#                     out.write('{}\t{}\t{}\n'.format(i, preprocess_tweet(post.replace('\n', '  ')), label))
 
 
 if __name__ == '__main__':

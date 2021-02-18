@@ -1,6 +1,6 @@
 from AAAdversifier import AAAdversifier
-from utils import get_config, evaluate_on_hatecheck, get_davidson_data
-from info import TRAIN_DATASET, TEST_DATASET, KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, MOZAFARI_MODEL_PATH, MOZAFARI_BIASED_MODEL_PATH, MOZAFARI_MODEL_NH_PATH, MOZAFARI_DAVIDSON_MODEL_PATH, KENNEDY_HATESPEECH_MODEL_PATH, KENNEDY_OFFENSIVE_MODEL_PATH, MOZAFARI_BIASED_MODEL_PATHS
+from utils import evaluate_on_hatecheck, get_davidson_data
+from info import TRAIN_DATASET, TEST_DATASET, KENNEDY_RACISM_MODEL_PATH, KENNEDY_SEXISM_MODEL_PATH, MOZAFARI_MODEL_PATH, MOZAFARI_MODEL_NH_PATH, MOZAFARI_DAVIDSON_MODEL_PATH, KENNEDY_HATESPEECH_MODEL_PATH, KENNEDY_OFFENSIVE_MODEL_PATH
 from random import randint
 from models import KennedyModel, MozafariModel, SvmModel
 
@@ -28,8 +28,8 @@ def get_waseem_data():
 def main():
     # Toy example
     print('Evaluating Random Classifier:')
-    config = get_config()
-    adversifier = AAAdversifier(config)
+    # config = get_config()
+    adversifier = AAAdversifier()
     data = get_waseem_data()
     adversifier.aaa('random', toy_model, data['train'], data['test'])  # Check arguments description in AAAdversifier.py
     
@@ -44,13 +44,6 @@ def main():
     mozafari_model = MozafariModel(MOZAFARI_MODEL_PATH, 100)
     adversifier.aaa('mozafari', mozafari_model.forward, data['train'], data['test'])
     evaluate_on_hatecheck(mozafari_model.forward)
-
-    # Example: Mozafari et al., 2019 overfitted
-    print('\nEvaluating Mozafari Biased Classifiers:')
-    for i, path in enumerate(MOZAFARI_BIASED_MODEL_PATHS):
-        mozafari_biased_model = MozafariModel(path, 100)
-        adversifier.aaa('mozafari-overfitted-{}'.format(i), mozafari_biased_model.forward, data['train'], data['test'])
-        evaluate_on_hatecheck(mozafari_biased_model.forward)
 
     # Example: Mozafari et al., 2019 with a pre-processing that discards hashtags
     print('\nEvaluating Mozafari (no hashtags) Classifier:')

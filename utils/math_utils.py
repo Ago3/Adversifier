@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.metrics import f1_score
-import settings
+# import settings
 from scipy.stats import chisquare
 # from sklearn.metrics import confusion_matrix
 
@@ -34,6 +34,6 @@ def is_significant(mean_score, new_score, eps=0.00001):
     mean_score += eps
     new_score += eps
     statistic = chisquare([new_score], [mean_score])[0]
-    print(chisquare([new_score], [mean_score]))
+    # print(chisquare([new_score], [mean_score]))
     critical_value = 3.84
     return statistic > critical_value
