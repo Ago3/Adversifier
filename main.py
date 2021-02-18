@@ -29,7 +29,7 @@ def main():
     # Toy example
     print('Evaluating Random Classifier:')
     # config = get_config()
-    adversifier = AAAdversifier()
+    adversifier = AAAdversifier('waseem')
     data = get_waseem_data()
     adversifier.aaa('random', toy_model, data['train'], data['test'])  # Check arguments description in AAAdversifier.py
     
@@ -56,6 +56,7 @@ def main():
     adversifier.aaa('svm', svm_model.predictor, data['train'], data['test'])
     evaluate_on_hatecheck(svm_model.predictor)
 
+    adversifier = AAAdversifier('davidson')
     davidson_data = get_davidson_data()
     adversifier.aaa('random', toy_model, davidson_data['train'], davidson_data['test'])
 
