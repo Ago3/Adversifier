@@ -39,43 +39,43 @@ Note that the _utils.get_davidson_data_ function maps the "hate speech" and "off
 We provide code and checkpoints for the SVM, BERT<sub>MOZ</sub> and BERT<sub>KEN</sub> models trained on the Waseem et al., 2018 and Davidson et al., 2017 datasets.
 
 ### Waseem et al., 2018 ###
-To replicate our experiments on the Waseem et al., 2018's dataset you'll need to download the following checkpoints. You can **download all the checkpoints from [here]()**, or download the ones of interest from the following list. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
+To replicate our experiments on the Waseem et al., 2018's dataset you'll need to download the following checkpoints. **You can download all the checkpoints from [here](https://drive.google.com/file/d/1N6J67yGOVKZTphVPteWGIS_vDqDQq_g_/view?usp=sharing)** (3.01 GB), or download the ones of interest from the following list. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
 
 #### SVM ####
 The weights of our SVM model can be downloaded at:
-* [sexism_model.pkl]()
-* [sexism_vectorizer.pkl]()
-* [racism_model.pkl]()
-* [racism_vectorizer.pkl]()
+* [sexism_model.pkl](https://drive.google.com/file/d/19uVCQm0o5IHOI3jlJ8EM8Bw1dAI1Fy91/view?usp=sharing)
+* [sexism_vectorizer.pkl](https://drive.google.com/file/d/1LV5_KL-neQkm3sKGwjd3pIzPLk_yiP8h/view?usp=sharing)
+* [racism_model.pkl](https://drive.google.com/file/d/1vRqbuqXSUnqRK2ruL1a2WIDGVlcJh5QI/view?usp=sharing)
+* [racism_vectorizer.pkl](https://drive.google.com/file/d/1FS9vyHtjOUbSeXROt33RchDL13ZQsAeE/view?usp=sharing)
 
 #### BERT<sub>MOZ</sub> ####
 The weights of our re-implementation of BERT<sub>MOZ</sub> [(Mozafari et al., 2019)](https://arxiv.org/pdf/1910.12574.pdf) can be downloaded at:
-* [mozafari_waseem.pt]()
-* [mozafari_waseem_nh.pt]() (variant of the BERT<sub>MOZ</sub> model that fully discards hashtag content)
+* [mozafari_waseem.pt](https://drive.google.com/file/d/1LyJAy74RzqGe2Hg-INZOjlXhEnDsTGWP/view?usp=sharing)
+* [mozafari_waseem_nh.pt](https://drive.google.com/file/d/1-tbY0IOzjvbcu2utZ4RF1biAiUpXiHpU/view?usp=sharing) (variant of the BERT<sub>MOZ</sub> model that fully discards hashtag content)
 
 #### BERT<sub>KEN</sub> ####
 The weights of BERT<sub>KEN</sub> [(Kennedy et al., 2020)](https://arxiv.org/pdf/2005.02439.pdf) can be downloaded at:
-* [sexism.bin]()
-* [racism.bin]()
+* [sexism.bin](https://drive.google.com/file/d/1F0N0FZSBSkdm4EEGnH8mbB0m6FBDg4fj/view?usp=sharing)
+* [racism.bin](https://drive.google.com/file/d/1TbWGI0142DpN4shmLctOlDlK0fY42-tU/view?usp=sharing)
 
 ### Davidson et al., 2017 ###
-To replicate our experiments on the Davidson et al., 2017's dataset you'll need to download the following checkpoints. You can **download all the checkpoints from [here]()**, or download the ones of interest from the following list. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
+To replicate our experiments on the Davidson et al., 2017's dataset you'll need to download the following checkpoints. **You can download all the checkpoints from [here](https://drive.google.com/file/d/1O6q67BLD-q531odcu1grH2ioCY7OjDV1/view?usp=sharing)**, or download the ones of interest from the following list. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
 
 #### SVM ####
 The weights of our SVM model can be downloaded at:
-* [hate_speech_model.pkl]()
-* [hate_speech_vectorizer.pkl]()
-* [offensive_model.pkl]()
-* [offensive_vectorizer.pkl]()
+* [hate_speech_model.pkl](https://drive.google.com/file/d/1MPpb-6TouSlkRJ0GkeYIwkG2R-UONZze/view?usp=sharing)
+* [hate_speech_vectorizer.pkl](https://drive.google.com/file/d/1g9clFa9fENLjumFrTE7IMT849n5NmKjR/view?usp=sharing)
+* [offensive_model.pkl](https://drive.google.com/file/d/15QvP5EGffUAwtkwSwfjJRrunnpwqdmNc/view?usp=sharing)
+* [offensive_vectorizer.pkl](https://drive.google.com/file/d/1lqsNOTT7ZwIEgPClcrWeFN4j5WMeHbrr/view?usp=sharing)
 
 #### BERT<sub>MOZ</sub> ####
 The weights of our re-implementation of BERT<sub>MOZ</sub> (Mozafari et al., 2019) can be downloaded at:
-* [mozafari_davidson.pt]()
+* [mozafari_davidson.pt](https://drive.google.com/file/d/1FFspZaUiznGKpqBtaOTseqSF-ple5KOs/view?usp=sharing)
 
 #### BERT<sub>KEN</sub> ####
 The weights of BERT<sub>KEN</sub> (Kennedy et al., 2020) can be downloaded at:
-* [hate_speech.bin]()
-* [offensive.bin]()
+* [hate_speech.bin](https://drive.google.com/file/d/17_AInLbhhx9M7I1ldFcrGOGxoNeXDAXa/view?usp=sharing)
+* [offensive.bin](https://drive.google.com/file/d/1JsamtJ8Xa27tG4yG_o6ufLSwTCKDcmTu/view?usp=sharing)
 
 ## Computing the AAA score for the supported models
 To replicate the experiments reported in the AAA paper, download the data files and models' checkpoints as described above, and run the following command:
