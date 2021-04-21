@@ -2,6 +2,7 @@ from settings import create_setting, SETTING_NAMES
 from utils import geometric_mean, setting_score, get_high_corr_words, is_significant
 import random
 from utils import log
+import os
 
 
 class AAAdversifier():
@@ -68,3 +69,19 @@ class AAAdversifier():
         print('\nAAA score: {}'.format(self.scores['aaa']))
         log(model_name, self.scores)
         return self.scores['aaa']
+
+
+    def generate_datafile(self, setting_name, test_data, train_data, outdir):
+        print('\nSETTING: {}'.format(setting_name))
+        setting = create_setting(setting_name)
+        posts, labels = setting.run(params=[self.dataset_name, test_data[:2], train_data[:2]])
+        if not os.path.exists(outdir):
+            os.makedirs(outdir)
+        with open(os.path.join(outdir, '{}.tsv'.format(setting_name)), 'w+') as out:
+            for post, label in zip(posts, labels):
+                out.write('{}\t{}\n'.format(post, label))
+
+
+    def generate_aaa_datafiles(self, test_data, train_data, outdir):
+        for setting_name in SETTING_NAMES:
+            self.generate_datafile(setting_name, test_data, train_data, outdir)
