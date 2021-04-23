@@ -1,5 +1,5 @@
 from settings import create_setting, SETTING_NAMES
-from utils import geometric_mean, setting_score, get_high_corr_words, is_significant
+from utils import geometric_mean, setting_score, get_high_corr_words, is_significant, read_tsv_datafile
 import random
 from utils import log
 import os
@@ -70,24 +70,47 @@ class AAAdversifier():
         log(model_name, self.scores)
         return self.scores['aaa']
 
-
-    def generate_datafile(self, setting_name, test_data, train_data, outdir):
+    def generate_datafile(self, setting_name, train_data_tsv, test_data_tsv, outdir):
+        """Applies the AAA attacks to the provided datasets, and stores the generated instances to outdir.
+        
+        Arguments:
+            setting_name {string} -- The name of the setting (e.g., one of the available attacks)
+            train_data_tsv {string} -- The path to the training set file, in tsv format: <post>\t<label> . Each label should be in [0, 1], where 0 corresponds to the non-abusive class and 1 corresponds to the abusive class
+            test_data_tsv {string} -- The path to the test set file, in tsv format: <post>\t<label> . Each label should be in [0, 1], where 0 corresponds to the non-abusive class and 1 corresponds to the abusive class
+            outdir {string} -- The name of the directory where the generated files will be stored.
+        """
         print('\nSETTING: {}'.format(setting_name))
         setting = create_setting(setting_name)
-        posts, labels = setting.run(params=[self.dataset_name, test_data[:2], train_data[:2]])
+        test_data = read_tsv_datafile(test_data_tsv)
+        train_data = read_tsv_datafile(train_data_tsv)
+        posts, labels = setting.run(params=[self.dataset_name, test_data, train_data])
         if not os.path.exists(outdir):
             os.makedirs(outdir)
         with open(os.path.join(outdir, '{}.tsv'.format(setting_name)), 'w+') as out:
             for post, label in zip(posts, labels):
                 out.write('{}\t{}\n'.format(post, label))
 
-
-    def generate_aaa_datafiles(self, test_data, train_data, outdir):
+    def generate_aaa_datafiles(self, train_data_tsv, test_data_tsv, outdir):
+        """Applies the AAA attacks to the provided datasets, and stores the generated instances to outdir.
+        
+        Arguments:
+            train_data_tsv {string} -- The path to the training set file, in tsv format: <post>\t<label> . Each label should be in [0, 1], where 0 corresponds to the non-abusive class and 1 corresponds to the abusive class
+            test_data_tsv {string} -- The path to the test set file, in tsv format: <post>\t<label> . Each label should be in [0, 1], where 0 corresponds to the non-abusive class and 1 corresponds to the abusive class
+            outdir {string} -- The name of the directory where the generated files will be stored.
+        """
         for setting_name in SETTING_NAMES:
-            self.generate_datafile(setting_name, test_data, train_data, outdir)
-
+            self.generate_datafile(setting_name, train_data_tsv, test_data_tsv, outdir)
 
     def eval_answerfile(self, setting_name, indir):
+        """Reads the model's predictions from the answer file, and computes the score on the specified setting.        
+        
+        Arguments:
+            setting_name {string} -- The name of the setting (e.g., one of the available attacks)
+            indir {string} -- Name of the directory containing the answer files. The tool expects one tsv file per setting, in the following format: <post>\t<label>\t<prediction>. Files should be named as <setting_name>.tsv
+
+        Returns:
+            float -- the score obtained by model under the specified setting
+        """
         print('\nSETTING: {}'.format(setting_name))
         if not os.path.exists(os.path.join(indir, '{}.tsv'.format(setting_name))):
             print('Error: file {} doesn\'t exist'.format(os.path.join(indir, '{}.tsv'.format(setting_name))))
@@ -106,11 +129,19 @@ class AAAdversifier():
         print('{} score: {}'.format(setting_name, self.scores[setting_name]))
         return self.scores[setting_name]
 
+    def eval_aaa_answerfiles(self, indir, model_name='default_name'):
+        """Reads the model's predictions from the answer files, and computes the score on each setting. All scores are saved in info.RES_FILE .      
+        
+        Arguments:
+            indir {string} -- Name of the directory containing the answer files. The tool expects one tsv file per setting, in the following format: <post>\t<label>\t<prediction>. Files should be named as <setting_name>.tsv
 
-    def eval_aaa_answerfiles(self, indir):
+        Returns:
+            float -- the AAA score
+        """
         self.scores = dict()
         for setting_name in SETTING_NAMES:
             self.eval_answerfile(setting_name, indir)
         self.scores['aaa'] = geometric_mean([self.scores[k] for k in ['quoting_a_to_n', 'corr_n_to_n', 'corr_a_to_a', 'flip_n_to_a']])
         print('\nAAA score: {}'.format(self.scores['aaa']))
+        log(model_name, self.scores)
         return self.scores['aaa']

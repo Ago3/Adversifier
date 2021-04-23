@@ -36,3 +36,11 @@ def get_hateful_words():
         for line in f.readlines():
             hateful_words.add(line.split('\t')[4])
     return hateful_words
+
+
+def read_tsv_datafile(file_name):
+    with open(file_name, 'r') as f:
+        lines = [line.strip().split('\t') for line in f.readlines()]
+        posts = [line[0] for line in lines]
+        labels = [int(line[1]) for line in lines]
+    return [posts, labels]
