@@ -85,3 +85,32 @@ class AAAdversifier():
     def generate_aaa_datafiles(self, test_data, train_data, outdir):
         for setting_name in SETTING_NAMES:
             self.generate_datafile(setting_name, test_data, train_data, outdir)
+
+
+    def eval_answerfile(self, setting_name, indir):
+        print('\nSETTING: {}'.format(setting_name))
+        if not os.path.exists(os.path.join(indir, '{}.tsv'.format(setting_name))):
+            print('Error: file {} doesn\'t exist'.format(os.path.join(indir, '{}.tsv'.format(setting_name))))
+            exit(1)
+        with open(os.path.join(indir, '{}.tsv'.format(setting_name)), 'r') as f:
+            lines = [line.strip().split('\t') for line in f.readlines()]
+            # In HashtagCheck, tweets containing only a user tag are empty
+            lines = [line if len(line) == 3 else [' '] + line for line in lines]
+            posts = [line[0] for line in lines]
+            labels = [line[1] for line in lines]
+            predictions = [line[2] for line in lines]
+        if setting_name in ['f1_o', 'hashtag_check']:
+            self.scores[setting_name], self.scores[setting_name + '_tnr'], self.scores[setting_name + '_tpr'] = setting_score(predictions, labels, setting_name)
+        else:
+            self.scores[setting_name] = setting_score(predictions, labels, setting_name)
+        print('{} score: {}'.format(setting_name, self.scores[setting_name]))
+        return self.scores[setting_name]
+
+
+    def eval_aaa_answerfiles(self, indir):
+        self.scores = dict()
+        for setting_name in SETTING_NAMES:
+            self.eval_answerfile(setting_name, indir)
+        self.scores['aaa'] = geometric_mean([self.scores[k] for k in ['quoting_a_to_n', 'corr_n_to_n', 'corr_a_to_a', 'flip_n_to_a']])
+        print('\nAAA score: {}'.format(self.scores['aaa']))
+        return self.scores['aaa']
