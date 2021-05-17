@@ -3,6 +3,7 @@ from utils import geometric_mean, setting_score, get_high_corr_words, is_signifi
 import random
 from utils import log
 import os
+import ntpath
 
 
 class AAAdversifier():
@@ -35,7 +36,8 @@ class AAAdversifier():
         model_input = [posts] + ([] if len(test_data) == 2 else test_data[2:])
         predictions = model(model_input)
         if setting_name in ['f1_o', 'hashtag_check']:
-            self.scores[setting_name], self.scores[setting_name + '_tnr'], self.scores[setting_name + '_tpr'] = setting_score(predictions, labels, setting_name)
+            # self.scores[setting_name], self.scores[setting_name + '_tnr'], self.scores[setting_name + '_tpr'] = setting_score(predictions, labels, setting_name)
+            self.scores[setting_name], self.scores[setting_name + '_cm'] = setting_score(predictions, labels, setting_name)
         else:
             self.scores[setting_name] = setting_score(predictions, labels, setting_name)
         print('{} score: {}'.format(setting_name, self.scores[setting_name]))
@@ -61,13 +63,14 @@ class AAAdversifier():
             get_high_corr_words(self.dataset_name, train_data[:2], class_id=class_id, cache=False)
         for setting in SETTING_NAMES:
             #If hashtags are not being used by the model, just skip the corr_a_to_a and corr_n_to_n attacks
-            if 'hashtag_check' in self.scores and (is_significant(self.scores['hashtag_check_tnr'], self.scores['f1_o_tnr']) or is_significant(self.scores['hashtag_check_tpr'], self.scores['f1_o_tpr']))  and 'corr' in setting:
+            # if 'hashtag_check' in self.scores and 'corr' in setting and (is_significant(self.scores['hashtag_check_tnr'], self.scores['f1_o_tnr']) or is_significant(self.scores['hashtag_check_tpr'], self.scores['f1_o_tpr'])):
+            if 'hashtag_check' in self.scores and 'corr' in setting and is_significant(self.scores['hashtag_check_cm'], self.scores['f1_o_cm']):
                 self.scores[setting] = 0
                 continue
             self.eval_setting(setting, model, test_data, train_data)
         self.scores['aaa'] = geometric_mean([self.scores[k] for k in ['quoting_a_to_n', 'corr_n_to_n', 'corr_a_to_a', 'flip_n_to_a']])
         print('\nAAA score: {}'.format(self.scores['aaa']))
-        log(model_name, self.scores)
+        log(self.scores)
         return self.scores['aaa']
 
     def generate_datafile(self, setting_name, train_data_tsv, test_data_tsv, outdir):
@@ -98,6 +101,12 @@ class AAAdversifier():
             test_data_tsv {string} -- The path to the test set file, in tsv format: <post>\t<label> . Each label should be in [0, 1], where 0 corresponds to the non-abusive class and 1 corresponds to the abusive class
             outdir {string} -- The name of the directory where the generated files will be stored.
         """
+        random.seed(0)
+        #Find common words with high correlation with each class
+        train_data = read_tsv_datafile(train_data_tsv)
+        filename = ntpath.basename(train_data_tsv)
+        for class_id in range(2):
+            get_high_corr_words(filename, train_data, class_id=class_id, cache=False)
         for setting_name in SETTING_NAMES:
             self.generate_datafile(setting_name, train_data_tsv, test_data_tsv, outdir)
 
@@ -117,19 +126,18 @@ class AAAdversifier():
             exit(1)
         with open(os.path.join(indir, '{}.tsv'.format(setting_name)), 'r') as f:
             lines = [line.strip().split('\t') for line in f.readlines()]
-            # In HashtagCheck, tweets containing only a user tag are empty
+            # In HashtagCheck, tweets containing only a user tag are empty <- should be solved
             lines = [line if len(line) == 3 else [' '] + line for line in lines]
-            posts = [line[0] for line in lines]
-            labels = [line[1] for line in lines]
-            predictions = [line[2] for line in lines]
+            posts, labels, predictions = [list(t) for t in zip(*[[line[0], int(line[1]), int(line[2])] for line in lines])]
         if setting_name in ['f1_o', 'hashtag_check']:
-            self.scores[setting_name], self.scores[setting_name + '_tnr'], self.scores[setting_name + '_tpr'] = setting_score(predictions, labels, setting_name)
+            # self.scores[setting_name], self.scores[setting_name + '_tnr'], self.scores[setting_name + '_tpr'] = setting_score(predictions, labels, setting_name)
+            self.scores[setting_name], self.scores[setting_name + '_cm'] = setting_score(predictions, labels, setting_name)
         else:
             self.scores[setting_name] = setting_score(predictions, labels, setting_name)
         print('{} score: {}'.format(setting_name, self.scores[setting_name]))
         return self.scores[setting_name]
 
-    def eval_aaa_answerfiles(self, indir, model_name='default_name'):
+    def eval_aaa_answerfiles(self, indir):
         """Reads the model's predictions from the answer files, and computes the score on each setting. All scores are saved in info.RES_FILE .      
         
         Arguments:
@@ -140,8 +148,12 @@ class AAAdversifier():
         """
         self.scores = dict()
         for setting_name in SETTING_NAMES:
-            self.eval_answerfile(setting_name, indir)
+            if 'hashtag_check' in self.scores and 'corr' in setting_name and is_significant(self.scores['hashtag_check_cm'], self.scores['f1_o_cm']):
+            # if 'hashtag_check' in self.scores and 'corr' in setting_name and (is_significant(self.scores['hashtag_check_tnr'], self.scores['f1_o_tnr']) or is_significant(self.scores['hashtag_check_tpr'], self.scores['f1_o_tpr'])):
+                self.scores[setting_name] = 0
+            else:
+                self.eval_answerfile(setting_name, indir)
         self.scores['aaa'] = geometric_mean([self.scores[k] for k in ['quoting_a_to_n', 'corr_n_to_n', 'corr_a_to_a', 'flip_n_to_a']])
         print('\nAAA score: {}'.format(self.scores['aaa']))
-        log(model_name, self.scores)
+        log(self.scores)
         return self.scores['aaa']

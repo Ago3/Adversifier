@@ -4,6 +4,7 @@ import string
 from .twitter import preprocess_tweet
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
+import warnings
 
 
 def logReg(data, class_id):
@@ -15,14 +16,15 @@ def logReg(data, class_id):
     train_tweets = preprocessed_train_tweets
     vectorizer = CountVectorizer(analyzer="word", tokenizer=None, preprocessor=None, stop_words=None, max_features=1500) 
     train_data_features = vectorizer.fit_transform(train_tweets)
-    print("Creating Features...")
+    # print("Creating Features...")
     train_data_features = train_data_features.toarray()
-    print("done! Going to Train the Data Features")
-    print("The length of the array is " + str(len(train_data_features)))
+    # print("done! Going to Train the Data Features")
+    # print("The length of the array is " + str(len(train_data_features)))
     clf = LogisticRegression(random_state=0)
-    print("Training..")
-    clf = clf.fit(train_data_features, train_labels)
-    print("Training Completed")
+    # print("Training..")
+    with warnings.catch_warnings(record=True) as w:
+        clf = clf.fit(train_data_features, train_labels)
+    # print("Training Completed")
     features = feature_importance(clf.coef_, vectorizer.get_feature_names(), class_id)
     return features
 
