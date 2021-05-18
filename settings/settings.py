@@ -143,7 +143,7 @@ class Hashtag_check(Attack):
         wordlist = ['#' + w for w in post.split() if '@' not in w]
         wordlist = [re.sub(r'##([^\s]+)', r'#\1', w) for w in wordlist]
         if len(wordlist) == 0:
-            wordlist = [' ']
+            wordlist = ['.']
         return ' '.join(wordlist)
 
 

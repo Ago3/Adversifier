@@ -126,8 +126,6 @@ class AAAdversifier():
             exit(1)
         with open(os.path.join(indir, '{}.tsv'.format(setting_name)), 'r') as f:
             lines = [line.strip().split('\t') for line in f.readlines()]
-            # In HashtagCheck, tweets containing only a user tag are empty <- should be solved
-            lines = [line if len(line) == 3 else [' '] + line for line in lines]
             posts, labels, predictions = [list(t) for t in zip(*[[line[0], int(line[1]), int(line[2])] for line in lines])]
         if setting_name in ['f1_o', 'hashtag_check']:
             # self.scores[setting_name], self.scores[setting_name + '_tnr'], self.scores[setting_name + '_tpr'] = setting_score(predictions, labels, setting_name)
