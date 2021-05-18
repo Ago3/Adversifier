@@ -29,6 +29,9 @@ adversifier.aaa('your_model_name', your_model.predictor, train_data, test_data)
 ```
 Check _main.py_ for usage examples.
 
+<summary>CLICK ME</summary>
+<p>
+
 ## Computing the AAA score for the supported models
 To replicate the experiments reported in the AAA paper, download the data files and models' checkpoints as described below, and run the following command:
 ```
@@ -108,3 +111,5 @@ The weights of our re-implementation of BERT<sub>MOZ</sub> (Mozafari et al., 201
 The weights of BERT<sub>KEN</sub> (Kennedy et al., 2020) can be downloaded at:
 * [hate_speech.bin](https://drive.google.com/file/d/17_AInLbhhx9M7I1ldFcrGOGxoNeXDAXa/view?usp=sharing)
 * [offensive.bin](https://drive.google.com/file/d/1JsamtJ8Xa27tG4yG_o6ufLSwTCKDcmTu/view?usp=sharing)
+
+</p>
