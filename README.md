@@ -113,6 +113,7 @@ The weights of BERT<sub>KEN</sub> (Kennedy et al., 2020) can be downloaded at:
 * [offensive.bin](https://drive.google.com/file/d/1JsamtJ8Xa27tG4yG_o6ufLSwTCKDcmTu/view?usp=sharing)
 
 </p>
+</details>
 
 ## Reference
 If you use our data, please cite our paper:
