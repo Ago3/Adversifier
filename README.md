@@ -29,7 +29,7 @@ adversifier.aaa('your_model_name', your_model.predictor, train_data, test_data)
 ```
 Check _main.py_ for usage examples.
 
-<details><summary>CLICK ME</summary>
+<details><summary>For details on how to replicate the experiments in the AAA paper, click here.</summary>
 <p>
 
 ## Computing the AAA score for the supported models
