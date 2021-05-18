@@ -113,3 +113,22 @@ The weights of BERT<sub>KEN</sub> (Kennedy et al., 2020) can be downloaded at:
 * [offensive.bin](https://drive.google.com/file/d/1JsamtJ8Xa27tG4yG_o6ufLSwTCKDcmTu/view?usp=sharing)
 
 </p>
+
+## Reference
+If you use our data, please cite our paper:
+```
+@inproceedings{calabrese-etal-2020-aaa,
+  author    = {Calabrese, Agostina and
+               Michele, Bevilacqua and
+               Ross, Björn and
+               Tripodi, Rocco and
+               Navigli, Roberto},
+  title     = {{AAA}: Fair Evaluation for Abuse Detection Systems Wanted},
+  booktitle = {WebSci '21: 13th {ACM} Conference on Web Science, Virtual Event, UK,
+               June 21-25, 2021},
+  publisher = {{ACM}},
+  year      = {2021},
+  url       = {https://doi.org/10.1145/3447535.3462484},
+  doi       = {10.1145/3447535.3462484},
+}
+```
