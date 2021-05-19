@@ -19,10 +19,22 @@ The AAA tool works in two steps:
 2. Reading your answer files and computing the AAA score and sub-scores.
 
 ### Generating the AAA Data Files
-Example.
+Run the following command:
+```
+docker run -v $AAA_FILE_DIR:/aaa/input aaa python3 gen.py --dataset_name $DATASET_NAME --train $TRAINING_SET --test $TEST_SET
+```
+where ```$AAA_FILE_DIR``` is the directory containing your dataset, ```$TRAINING_SET``` and ```$TEST_SET``` are the name of the training and test data files, and ```$DATASET_NAME``` is a string identifier for the dataset.
+The tool will create a directory ```${AAA_FILE_DIR}/aaa_files``` containing the following tab-separeted files:
+* ```f1_o.tsv```
+* ```flip_n_to_a.tsv```
 
 ### Evaluating the Answer Files
-Example.
+....
+Run the following command:
+```
+docker run -v $ANSWER_FILE_DIR:/aaa/output/answer_files aaa python3 eval.py --dataset_name $DATASET_NAME
+```
+where ```$ANSWER_FILE_DIR``` is the path to the directory containing your answer files, while ```$DATASET_NAME``` is a string identifier for the dataset.
 
 </details>
 
