@@ -14,7 +14,15 @@ docker build -t aaa .
 ```
 
 ## How to evaluate your model on a dataset
-To run the AAA tool on your model with a generic dataset,
+The AAA tool works in two steps:
+1. Generating the AAA data files starting from your training and test sets
+2. Reading your answer files and computing the AAA score and sub-scores.
+
+### Generating the AAA Data Files
+Example.
+
+### Evaluating the Answer Files
+Example.
 
 </details>
 
@@ -47,6 +55,9 @@ Check _main.py_ for usage examples.
 
 # Replicating the Experiments from the AAA Paper
 
+<details><summary>For details on how to replicate the experiments in the AAA paper, click here.</summary>
+<p>
+
 ## Setup
 Within the _Adversifier_ directory run the following command:
 ```
@@ -58,8 +69,6 @@ pip3 install transformers
 ```
 All the files' paths (e.g., data files, models' checkpoints) are specified within the _info/info.py_ file. Customise this file to meet your needs.
 
-<details><summary>For details on how to replicate the experiments in the AAA paper, click here.</summary>
-<p>
 
 ## Computing the AAA score for the supported models
 To replicate the experiments reported in the AAA paper, download the data files and models' checkpoints as described below, and run the following command:
