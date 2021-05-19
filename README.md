@@ -8,8 +8,13 @@ Official repository for the Adversarial Attacks against Abuse (AAA) evaluation t
 <details><summary>With Docker</summary>
 
 ## Setup
+Within the _Adversifier_ directory run the following command:
+```
+docker build -t aaa .
+```
 
-Example.
+## How to evaluate your model on a dataset
+To run the AAA tool on your model with a generic dataset,
 
 </details>
 
@@ -20,11 +25,7 @@ Within the _Adversifier_ directory run the following command:
 ```
 ./setup.sh
 ```
-If willing to replicate our results with the BERT<sub>MOZ</sub> or BERT<sub>KEN</sub> models, you'll need to install the [transformers](https://huggingface.co/transformers/) library:
-```
-pip3 install transformers
-```
-All the files' paths (e.g., data files, models' checkpoints) are specified within the _info/info.py_ file. Customise this file to meet your needs.
+All the files' paths (e.g., data files) are specified within the _info/info.py_ file. Customise this file to meet your needs.
 
 ## How to evaluate your model on a dataset
 To run the AAA tool on your model with a generic dataset, you'll need to provide:
@@ -43,6 +44,19 @@ adversifier.aaa('your_model_name', your_model.predictor, train_data, test_data)
 Check _main.py_ for usage examples.
 
 </details>
+
+# Replicating the Experiments from the AAA Paper
+
+## Setup
+Within the _Adversifier_ directory run the following command:
+```
+./setup.sh
+```
+If willing to replicate our results with the BERT<sub>MOZ</sub> or BERT<sub>KEN</sub> models, you'll need to install the [transformers](https://huggingface.co/transformers/) library:
+```
+pip3 install transformers
+```
+All the files' paths (e.g., data files, models' checkpoints) are specified within the _info/info.py_ file. Customise this file to meet your needs.
 
 <details><summary>For details on how to replicate the experiments in the AAA paper, click here.</summary>
 <p>
