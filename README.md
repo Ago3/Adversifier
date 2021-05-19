@@ -24,9 +24,22 @@ Run the following command:
 docker run -v $AAA_FILE_DIR:/aaa/input aaa python3 gen.py --dataset_name $DATASET_NAME --train $TRAINING_SET --test $TEST_SET
 ```
 where ```$AAA_FILE_DIR``` is the directory containing your dataset, ```$TRAINING_SET``` and ```$TEST_SET``` are the name of the training and test data files, and ```$DATASET_NAME``` is a string identifier for the dataset.
-The tool will create a directory ```${AAA_FILE_DIR}/aaa_files``` containing the following tab-separeted files:
+The tool will create the ```${AAA_FILE_DIR}/aaa_files``` directory containing the following tab-separeted files:
+* ```corr_a_to_a.tsv```
+* ```corr_n_to_n.tsv```
 * ```f1_o.tsv```
 * ```flip_n_to_a.tsv```
+* ```hashtag_check.tsv```
+* ```quoting_a_to_n.tsv```
+
+```
+corr_a_to_a.tsv
+corr_n_to_n.tsv
+f1_o.tsv
+flip_n_to_a.tsv
+hashtag_check.tsv
+quoting_a_to_n.tsv
+```
 
 ### Evaluating the Answer Files
 ....
