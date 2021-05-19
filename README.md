@@ -80,12 +80,61 @@ All the files' paths (e.g., data files) are specified within the _info/info.py_ 
 ## How to evaluate your model on a dataset
 To run the AAA tool on your model with a generic dataset, you can choose among two different strategies:
 * [two-step pipeline](#two-step-pipeline "Goto two-step-pipeline"): first query the tool to generate the AAA files starting from your data files, and then make a new query to evaluate your answer files.
-* one-step pipeline: one single query to generate the new instances and evaluate your model. Besides your training and test sets, it requires you to provide your model's predictor.
+* [one-step pipeline](#one-step-pipeline "Goto one-step-pipeline"): one single query to generate the new instances and evaluate your model. Besides your training and test sets, it requires you to provide your model's predictor.
 
 
 ### Two-Step Pipeline
 You'll need to provide:
-* the training and test sets, in the format specified [here](#Datasets "Goto Datasets").
+* the training and test sets, as tab-separated files in the format:
+```
+post_text	label
+```
+Labels are assumed to be binary, with 1 corresponding to the abusive class, and 0 to the non-abusive class.
+
+To generate the AAA data files, create a directory named ```input``` within the _Adversifier_ directory, and copy there your training and test sets. Then run the following command:
+```
+python3 gen.py --dataset_name $DATASET_NAME --train $TRAINING_SET --test $TEST_SET
+```
+where ```$TRAINING_SET``` and ```$TEST_SET``` are the name of the training and test data files, and ```$DATASET_NAME``` is a string identifier for the dataset.
+
+The tool will create the ```input/aaa_files``` directory containing the following tab-separeted files:
+```
+corr_a_to_a.tsv
+corr_n_to_n.tsv
+f1_o.tsv
+flip_n_to_a.tsv
+hashtag_check.tsv
+quoting_a_to_n.tsv
+```
+All files have the following format:
+```
+post_text	label
+```
+
+In order to evaluate your model with the AAA tool, create a directory named ```output/answer_files``` containing the following tab-separeted files:
+```
+corr_a_to_a.tsv
+corr_n_to_n.tsv
+f1_o.tsv
+flip_n_to_a.tsv
+hashtag_check.tsv
+quoting_a_to_n.tsv
+```
+All files are expected to follow the following format:
+```
+post_text	label	your_model_prediction
+```
+
+To evaluate the answer files, run the following command:
+```
+python3 eval.py --dataset_name $DATASET_NAME
+```
+where ```$DATASET_NAME``` is a string identifier for the dataset.
+
+
+### One-Step Pipeline
+You'll need to provide:
+* the training and test sets, in the format specified [here](#data-format "Goto data-format").
 * your model's predictor: a function that takes as input a list of arguments, the 1<sup>st</sup> one being a list of *NON-pre-processed* posts, and returns a list of binary predictions.
 
 Here is an example:
@@ -98,6 +147,15 @@ train_data, test_data = load_your_data()
 adversifier.aaa('your_model_name', your_model.predictor, train_data, test_data)
 ```
 Check _main.py_ for usage examples.
+
+
+#### Data Format
+For the AAA tool to run, you'll need to provide both a training and test set. Both sets should be in the form:
+```
+data_split = [list of posts, list of labels, list of any extra information your model might use]
+```
+Therefore,  the i<sup>th</sup> element of each list will contain information regarding the i<sup>th</sup> instance in the split.
+Labels are assumed to be binary, with 1 corresponding to the abusive class, and 0 to the non-abusive class.
 
 </details>
 
