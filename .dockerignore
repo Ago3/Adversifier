@@ -1,0 +1,12 @@
+aaa_answer_files
+aaa_files
+__pycache__/*
+.git*
+README.md
+setup.sh
+debug.py
+*.bin
+*.pkl
+*.pt
+main.py
+debug.py
