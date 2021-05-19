@@ -1,3 +1,3 @@
 #!/bin/bash
 
-pip3 install nltk sklearn numpy pickle
+pip3 install nltk sklearn numpy pickle requests
