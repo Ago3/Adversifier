@@ -2,6 +2,7 @@
 
 Official repository for the Adversarial Attacks against Abuse (AAA) evaluation tool. AAA is a new evaluation metric for abuse detection systems that better captures a model's performance on certain classes of hard-to-classify microposts, and for example penalises systems which are biased on low-level lexical features.
 
+![](AAA-tool-image.pdf)
 
 # Running the AAA Tool
 
