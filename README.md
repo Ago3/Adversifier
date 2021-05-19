@@ -91,6 +91,7 @@ post_text	label
 ```
 Labels are assumed to be binary, with 1 corresponding to the abusive class, and 0 to the non-abusive class.
 
+#### Step 1
 To generate the AAA data files, create a directory named ```input``` within the _Adversifier_ directory, and copy there your training and test sets. Then run the following command:
 ```
 python3 gen.py --dataset_name $DATASET_NAME --train $TRAINING_SET --test $TEST_SET
@@ -111,6 +112,7 @@ All files have the following format:
 post_text	label
 ```
 
+#### Step 2
 In order to evaluate your model with the AAA tool, create a directory named ```output/answer_files``` containing the following tab-separeted files:
 ```
 corr_a_to_a.tsv
