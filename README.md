@@ -19,19 +19,19 @@ The AAA tool works in two steps:
 2. Reading your answer files and computing the AAA score and sub-scores.
 
 ### Generating the AAA Data Files
-Run the following command:
+The AAA data files are generated starting from your training and test sets. Both files are expected to be tab-separeted files with format:
+```
+post_text	label
+```
+Labels are assumed to be binary, with 1 corresponding to the abusive class, and 0 to the non-abusive class.
+
+To generate the AAA data files, run the following command:
 ```
 docker run -v $AAA_FILE_DIR:/aaa/input aaa python3 gen.py --dataset_name $DATASET_NAME --train $TRAINING_SET --test $TEST_SET
 ```
 where ```$AAA_FILE_DIR``` is the directory containing your dataset, ```$TRAINING_SET``` and ```$TEST_SET``` are the name of the training and test data files, and ```$DATASET_NAME``` is a string identifier for the dataset.
-The tool will create the ```${AAA_FILE_DIR}/aaa_files``` directory containing the following tab-separeted files:
-* ```corr_a_to_a.tsv```
-* ```corr_n_to_n.tsv```
-* ```f1_o.tsv```
-* ```flip_n_to_a.tsv```
-* ```hashtag_check.tsv```
-* ```quoting_a_to_n.tsv```
 
+The tool will create the ```${AAA_FILE_DIR}/aaa_files``` directory containing the following tab-separeted files:
 ```
 corr_a_to_a.tsv
 corr_n_to_n.tsv
@@ -40,10 +40,27 @@ flip_n_to_a.tsv
 hashtag_check.tsv
 quoting_a_to_n.tsv
 ```
+All files have the following format:
+```
+post_text	label
+```
 
 ### Evaluating the Answer Files
-....
-Run the following command:
+In order to evaluate your model with the AAA tool, create a ```ANSWER_FILE_DIR``` directory containing the following tab-separeted files:
+```
+corr_a_to_a.tsv
+corr_n_to_n.tsv
+f1_o.tsv
+flip_n_to_a.tsv
+hashtag_check.tsv
+quoting_a_to_n.tsv
+```
+All files are expected to follow the following format:
+```
+post_text	label	your_model_prediction
+```
+
+To evaluate the answer files, run the following command:
 ```
 docker run -v $ANSWER_FILE_DIR:/aaa/output/answer_files aaa python3 eval.py --dataset_name $DATASET_NAME
 ```
