@@ -65,7 +65,7 @@ To evaluate the answer files, run the following command:
 ```
 docker run -v $ANSWER_FILE_DIR:/aaa/output/answer_files aaa python3 eval.py --dataset_name $DATASET_NAME
 ```
-where ```$ANSWER_FILE_DIR``` is the path to the directory containing your answer files, while ```$DATASET_NAME``` is a string identifier for the dataset.
+where ```$ANSWER_FILE_DIR``` is the path to the directory containing your answer files, while ```$DATASET_NAME``` is a string identifier for the dataset. Scores are stored in the ```$ANSWER_FILE_DIR/results.tsv``` file.
 
 </details>
 
@@ -132,7 +132,7 @@ To evaluate the answer files, run the following command:
 ```
 python3 eval.py --dataset_name $DATASET_NAME
 ```
-where ```$DATASET_NAME``` is a string identifier for the dataset.
+where ```$DATASET_NAME``` is a string identifier for the dataset. Scores are stored in the ```output/answer_files/results.tsv``` file.
 
 
 ### One-Step Pipeline
@@ -149,7 +149,7 @@ adversifier = AAAdversifier()
 train_data, test_data = load_your_data()
 adversifier.aaa('your_model_name', your_model.predictor, train_data, test_data)
 ```
-Check _main.py_ for usage examples.
+Check _main.py_ for usage examples. Scores are stored in the ```output/answer_files/results.tsv``` file.
 
 
 #### Data Format

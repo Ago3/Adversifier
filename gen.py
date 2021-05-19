@@ -1,6 +1,3 @@
-# docker build -t aaa .
-# docker run -v ~/phd/research/aaa/Adversifier/aaa_files:/aaa/input aaa python3 gen.py --dataset_name waseem --train fake_input.tsv --test fake_input_test.tsv
-
 from AAAdversifier import AAAdversifier
 import argparse
 

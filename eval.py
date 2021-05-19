@@ -1,6 +1,3 @@
-# docker build -t aaa .
-# docker run -v ~/phd/research/aaa/Adversifier/aaa_answer_files:/aaa/output/answer_files aaa python3 eval.py --dataset_name waseem
-
 from AAAdversifier import AAAdversifier
 import argparse
 
