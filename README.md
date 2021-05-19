@@ -1,6 +1,19 @@
-# Adversifier
+# AAA Tool
 
 Official repository for the Adversarial Attacks against Abuse (AAA) evaluation tool. AAA is a new evaluation metric for abuse detection systems that better captures a model's performance on certain classes of hard-to-classify microposts, and for example penalises systems which are biased on low-level lexical features.
+
+
+# Running the AAA Tool
+
+<details><summary>With Docker</summary>
+
+## Setup
+
+Example.
+
+</details>
+
+<details><summary>Old school way</summary>
 
 ## Setup
 Within the _Adversifier_ directory run the following command:
@@ -28,6 +41,8 @@ train_data, test_data = load_your_data()
 adversifier.aaa('your_model_name', your_model.predictor, train_data, test_data)
 ```
 Check _main.py_ for usage examples.
+
+</details>
 
 <details><summary>For details on how to replicate the experiments in the AAA paper, click here.</summary>
 <p>
