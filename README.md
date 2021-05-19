@@ -79,7 +79,7 @@ All the files' paths (e.g., data files) are specified within the _info/info.py_ 
 
 ## How to evaluate your model on a dataset
 To run the AAA tool on your model with a generic dataset, you can choose among two different strategies:
-* [two-step pipeline](#Two-Step-Pipeline "Goto Two-Step Pipeline"): first query the tool to generate the AAA files starting from your data files, and then make a new query to evaluate your answer files.
+* [two-step pipeline](#two-step-pipeline "Goto two-step-pipeline"): first query the tool to generate the AAA files starting from your data files, and then make a new query to evaluate your answer files.
 * one-step pipeline: one single query to generate the new instances and evaluate your model. Besides your training and test sets, it requires you to provide your model's predictor.
 
 
