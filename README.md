@@ -116,7 +116,7 @@ The weights of BERT<sub>KEN</sub> (Kennedy et al., 2020) can be downloaded at:
 </details>
 
 ## Reference
-If you use our data, please cite our paper:
+If you use our tool or metric, please cite our paper:
 ```
 @inproceedings{calabrese-etal-2020-aaa,
   author    = {Calabrese, Agostina and
