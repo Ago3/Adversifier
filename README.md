@@ -68,7 +68,7 @@ where ```$ANSWER_FILE_DIR``` is the path to the directory containing your answer
 
 </details>
 
-<details><summary>Old school way</summary>
+<details><summary>Old-school way</summary>
 
 ## Setup
 Within the _Adversifier_ directory run the following command:
@@ -78,7 +78,13 @@ Within the _Adversifier_ directory run the following command:
 All the files' paths (e.g., data files) are specified within the _info/info.py_ file. Customise this file to meet your needs.
 
 ## How to evaluate your model on a dataset
-To run the AAA tool on your model with a generic dataset, you'll need to provide:
+To run the AAA tool on your model with a generic dataset, you can choose among two different strategies:
+* [two-step pipeline](#Two-Step-Pipeline "Goto Two-Step Pipeline"): first query the tool to generate the AAA files starting from your data files, and then make a new query to evaluate your answer files.
+* one-step pipeline: one single query to generate the new instances and evaluate your model. Besides your training and test sets, it requires you to provide your model's predictor.
+
+
+### Two-Step Pipeline
+You'll need to provide:
 * the training and test sets, in the format specified [here](#Datasets "Goto Datasets").
 * your model's predictor: a function that takes as input a list of arguments, the 1<sup>st</sup> one being a list of *NON-pre-processed* posts, and returns a list of binary predictions.
 
