@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.metrics import f1_score
-from scipy.stats import chisquare
+from scipy.stats import chisquare, norm
 
 
 def geometric_mean(values, weights=None):
@@ -42,9 +42,14 @@ def is_significant(expected_scores, observed_scores, p_value_ref=0.05, threshold
     print(expected_scores, observed_scores)
     # expected_scores = [700, 500, 20000000, 30000000]
     # observed_scores = [680, 520, 20000001, 29999999]
-    chi, p_value = chisquare(observed_scores, f_exp=expected_scores, ddof=1)
-    diff = max([abs(e - o) / e for e, o in zip(expected_scores, observed_scores)])
-    print(chi, p_value, diff)
+    # chi, p_value = chisquare(observed_scores, f_exp=expected_scores, ddof=1)
+    # diff = max([abs(e - o) / e for e, o in zip(expected_scores, observed_scores)])
+    diff = abs(expected_scores - observed_scores) / expected_scores
+    # print(chi, p_value, diff)
+    std = expected_scores * 0.2
+    zscore = (observed_scores - expected_scores) / std
+    p_value = norm.sf(abs(z_score)) * 2
+    print(p_value, diff)
     print(p_value <= p_value_ref, diff >= threshold)
     # expected_scores = [700, 500, 20, 30]
     # observed_scores = [680, 520, 21, 29]

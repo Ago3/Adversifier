@@ -64,7 +64,7 @@ class AAAdversifier():
         for setting in SETTING_NAMES:
             #If hashtags are not being used by the model, just skip the corr_a_to_a and corr_n_to_n attacks
             # if 'hashtag_check' in self.scores and 'corr' in setting and (is_significant(self.scores['hashtag_check_tnr'], self.scores['f1_o_tnr']) or is_significant(self.scores['hashtag_check_tpr'], self.scores['f1_o_tpr'])):
-            if 'hashtag_check' in self.scores and 'corr' in setting and is_significant(self.scores['hashtag_check_cm'], self.scores['f1_o_cm']):
+            if 'hashtag_check' in self.scores and 'corr' in setting and is_significant(self.scores['hashtag_check'], self.scores['f1_o']):
                 self.scores[setting] = 0
                 continue
             self.eval_setting(setting, model, test_data, train_data)
@@ -146,7 +146,7 @@ class AAAdversifier():
         """
         self.scores = dict()
         for setting_name in SETTING_NAMES:
-            if 'hashtag_check' in self.scores and 'corr' in setting_name and is_significant(self.scores['hashtag_check_cm'], self.scores['f1_o_cm']):
+            if 'hashtag_check' in self.scores and 'corr' in setting_name and is_significant(self.scores['hashtag_check'], self.scores['f1_o']):
             # if 'hashtag_check' in self.scores and 'corr' in setting_name and (is_significant(self.scores['hashtag_check_tnr'], self.scores['f1_o_tnr']) or is_significant(self.scores['hashtag_check_tpr'], self.scores['f1_o_tpr'])):
                 self.scores[setting_name] = 0
             else:
