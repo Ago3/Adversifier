@@ -28,9 +28,9 @@ Labels are assumed to be binary, with 1 corresponding to the abusive class, and 
 
 To generate the AAA data files, run the following command:
 ```
-docker run -v $AAA_FILE_DIR:/aaa/input aaa python3 gen.py --dataset_name $DATASET_NAME --train $TRAINING_SET --test $TEST_SET
+docker run --mount type=bind,source=$AAA_FILE_DIR,target=/aaa/input aaa python3 gen.py --dataset_name $DATASET_NAME --train $TRAINING_SET --test $TEST_SET
 ```
-where ```$AAA_FILE_DIR``` is the directory containing your dataset, ```$TRAINING_SET``` and ```$TEST_SET``` are the name of the training and test data files, and ```$DATASET_NAME``` is a string identifier for the dataset.
+where ```$AAA_FILE_DIR``` is the absolute path to the directory containing your dataset (for example, "$(pwd)"/mydata), ```$TRAINING_SET``` and ```$TEST_SET``` are the name of the training and test data files, and ```$DATASET_NAME``` is a string identifier for the dataset.
 
 The tool will create the ```${AAA_FILE_DIR}/aaa_files``` directory containing the following tab-separeted files:
 ```
@@ -64,8 +64,10 @@ post_text	label	your_model_prediction
 To evaluate the answer files, run the following command:
 ```
 docker run -v $ANSWER_FILE_DIR:/aaa/output/answer_files aaa python3 eval.py --dataset_name $DATASET_NAME
+docker run --mount type=bind,source=$AAA_FILE_DIR,target=/aaa/output/answer_files aaa python3 eval.py --dataset_name $DATASET_NAME
 ```
-where ```$ANSWER_FILE_DIR``` is the path to the directory containing your answer files, while ```$DATASET_NAME``` is a string identifier for the dataset. Scores are stored in the ```$ANSWER_FILE_DIR/results.tsv``` file.
+
+where ```$ANSWER_FILE_DIR``` is the absolute path to the directory containing your answer files (for example, "$(pwd)"/mydata/aaa_files), while ```$DATASET_NAME``` is a string identifier for the dataset. Scores are stored in the ```$ANSWER_FILE_DIR/results.tsv``` file.
 
 </details>
 
