@@ -9,7 +9,7 @@ Official repository for the Adversarial Attacks against Abuse (AAA) evaluation t
 <details><summary>With Docker</summary>
 
 ## Setup
-Within the _Adversifier_ directory run the following command:
+Within the `Adversifier` directory run the following command:
 ```
 docker build -t aaa .
 ```
@@ -20,19 +20,25 @@ The AAA tool works in two steps:
 2. Reading your answer files and computing the AAA score and sub-scores.
 
 ### Generating the AAA Data Files
-The AAA data files are generated starting from your training and test sets. Both files are expected to be tab-separeted files with format:
+The AAA data files are generated starting from your training and test sets. Both files are expected to be tab-separated files with format:
 ```
 post_text	label
 ```
-Labels are assumed to be binary, with 1 corresponding to the abusive class, and 0 to the non-abusive class.
+
+Labels need to be binary, with 1 corresponding to the abusive class, and 0 to the non-abusive class, e.g.:
+
+```
+This is an abusive message	0
+This is a non-abusive message	1
+```
 
 To generate the AAA data files, run the following command:
 ```
 docker run --mount type=bind,source=$AAA_FILE_DIR,target=/aaa/input aaa python3 gen.py --dataset_name $DATASET_NAME --train $TRAINING_SET --test $TEST_SET
 ```
-where ```$AAA_FILE_DIR``` is the absolute path to the directory containing your dataset (for example, `"$(pwd)"/mydata`), ```$TRAINING_SET``` and ```$TEST_SET``` are the name of the training and test data files, and ```$DATASET_NAME``` is a string identifier for the dataset.
+where ```$AAA_FILE_DIR``` is the absolute path to the directory containing your datasets (for example, `"$(pwd)"/mydata`), ```$TRAINING_SET``` and ```$TEST_SET``` are the filenames of the training and test data files (to be placed inside $AAA_FILE_DIR), and ```$DATASET_NAME``` is a string identifier for the dataset.
 
-The tool will create the ```${AAA_FILE_DIR}/aaa_files``` directory containing the following tab-separeted files:
+The tool will create the ```${AAA_FILE_DIR}/aaa_files``` directory containing the following tab-separated files:
 ```
 corr_a_to_a.tsv
 corr_n_to_n.tsv
@@ -41,13 +47,13 @@ flip_n_to_a.tsv
 hashtag_check.tsv
 quoting_a_to_n.tsv
 ```
-All files have the following format:
+All files will have the same format as your input datasets:
 ```
 post_text	label
 ```
 
 ### Evaluating the Answer Files
-In order to evaluate your model with the AAA tool, create a ```ANSWER_FILE_DIR``` directory containing the following tab-separeted files:
+In order to evaluate your model with the AAA tool, create a ```ANSWER_FILE_DIR``` directory containing the following tab-separated files:
 ```
 corr_a_to_a.tsv
 corr_n_to_n.tsv
@@ -61,7 +67,7 @@ All files are expected to follow the following format:
 post_text	label	your_model_prediction
 ```
 
-To evaluate the answer files, run the following command:
+To evaluate the answer files, run the following commands:
 ```
 docker run -v $ANSWER_FILE_DIR:/aaa/output/answer_files aaa python3 eval.py --dataset_name $DATASET_NAME
 docker run --mount type=bind,source=$AAA_FILE_DIR,target=/aaa/output/answer_files aaa python3 eval.py --dataset_name $DATASET_NAME
@@ -74,11 +80,11 @@ where ```$ANSWER_FILE_DIR``` is the absolute path to the directory containing yo
 <details><summary>Old-school way</summary>
 
 ## Setup
-Within the _Adversifier_ directory run the following command:
+Within the `Adversifier` directory run the following command:
 ```
 ./setup.sh
 ```
-All the files' paths (e.g., data files) are specified within the _info/info.py_ file. Customise this file to meet your needs.
+All the files' paths (e.g., data files) are specified within the `info/info.py` file. Customise this file to meet your needs.
 
 ## How to evaluate your model on a dataset
 To run the AAA tool on your model with a generic dataset, you can choose among two different strategies:
@@ -92,16 +98,23 @@ You'll need to provide:
 ```
 post_text	label
 ```
+
+Labels need to be binary, with 1 corresponding to the abusive class, and 0 to the non-abusive class, e.g.:
+
+```
+This is an abusive message	0
+This is a non-abusive message	1
+```
 Labels are assumed to be binary, with 1 corresponding to the abusive class, and 0 to the non-abusive class.
 
 #### Step 1
-To generate the AAA data files, create a directory named ```input``` within the _Adversifier_ directory, and copy there your training and test sets. Then run the following command:
+To generate the AAA data files, create a directory named ```input``` within the `Adversifier` directory, and copy there your training and test sets. Then run the following command:
 ```
 python3 gen.py --dataset_name $DATASET_NAME --train $TRAINING_SET --test $TEST_SET
 ```
 where ```$TRAINING_SET``` and ```$TEST_SET``` are the name of the training and test data files, and ```$DATASET_NAME``` is a string identifier for the dataset.
 
-The tool will create the ```input/aaa_files``` directory containing the following tab-separeted files:
+The tool will create the ```input/aaa_files``` directory containing the following tab-separated files:
 ```
 corr_a_to_a.tsv
 corr_n_to_n.tsv
@@ -116,7 +129,7 @@ post_text	label
 ```
 
 #### Step 2
-In order to evaluate your model with the AAA tool, create a directory named ```output/answer_files``` containing the following tab-separeted files:
+In order to evaluate your model with the AAA tool, create a directory named ```output/answer_files``` containing the following tab-separated files:
 ```
 corr_a_to_a.tsv
 corr_n_to_n.tsv
@@ -151,7 +164,7 @@ adversifier = AAAdversifier()
 train_data, test_data = load_your_data()
 adversifier.aaa('your_model_name', your_model.predictor, train_data, test_data)
 ```
-Check _main.py_ for usage examples. Scores are stored in the ```output/answer_files/results.tsv``` file.
+Check `main.py` for usage examples. Scores are stored in the ```output/answer_files/results.tsv``` file.
 
 
 #### Data Format
@@ -170,7 +183,7 @@ Labels are assumed to be binary, with 1 corresponding to the abusive class, and 
 <p>
 
 ## Setup
-Within the _Adversifier_ directory run the following command:
+Within the `Adversifier` directory run the following command:
 ```
 ./setup.sh
 ```
@@ -178,7 +191,7 @@ If willing to replicate our results with the BERT<sub>MOZ</sub> or BERT<sub>KEN<
 ```
 pip3 install transformers
 ```
-All the files' paths (e.g., data files, models' checkpoints) are specified within the _info/info.py_ file. Customise this file to meet your needs.
+All the files' paths (e.g., data files, models' checkpoints) are specified within the `info/info.py` file. Customise this file to meet your needs.
 
 
 ## Computing the AAA score for the supported models
@@ -196,18 +209,18 @@ Therefore,  the i<sup>th</sup> element of each list will contain information reg
 Labels are assumed to be binary, with 1 corresponding to the abusive class, and 0 to the non-abusive class.
 
 ### Waseem et al., 2018 ###
-To run the AAA tool on the [Waseem et al., 2018](https://link.springer.com/chapter/10.1007/978-3-319-78583-7_3)'s dataset, download the tweets through the Twitter API and put them in _DATA/waseem_data.tsv_. The tab-separated file should have the following header (and format):
+To run the AAA tool on the [Waseem et al., 2018](https://link.springer.com/chapter/10.1007/978-3-319-78583-7_3)'s dataset, download the tweets through the Twitter API and put them in `DATA/waseem_data.tsv`. The tab-separated file should have the following header (and format):
 ```
 tweet_id	tweet_text	label
 ```
-You can then call the _utils.get_waseem_data_ function, that returns a dictionary with keys {'train', 'test'} and the corresponding data_split as argument.<br/>
-Splits are created using stratified sampling to split 0.8, 0.1, and 0.1 portions of tweets from each class into training, validation and test sets. The corresponding ids can be found in the _waseem_train_ids.csv_, _waseem_val_ids.csv_ and _waseem_test_ids.csv_ files within the _DATA_ directory.<br/>
-Note that the _utils.get_waseem_data_ function maps the "sexism", "racism" and "both" labels into the abusive class, and the "neither" label into the non abusive class.
+You can then call the `utils.get_waseem_data` function, that returns a dictionary with keys {'train', 'test'} and the corresponding data_split as argument.<br/>
+Splits are created using stratified sampling to split tweets from each class into training (80%), validation (10%) and test (10%) sets. The corresponding ids can be found in the `waseem_train_ids.csv`,`waseem_val_ids.csv` and `waseem_test_ids.csv` files within the `DATA` directory.<br/>
+Note that the `utils.get_waseem_data` function maps the "sexism", "racism" and "both" labels into the abusive class, and the "neither" label into the non abusive class.
 
 ### Davidson et al., 2017 ###
-To run the AAA tool on the [Davidson et al., 2017](https://ojs.aaai.org/index.php/ICWSM/article/view/14955)'s dataset, download the [_davidson_data.csv_](https://raw.githubusercontent.com/t-davidson/hate-speech-and-offensive-language/master/data/labeled_data.csv) file and add it to the _DATA_ directory. You can then call the _utils.get_davidson_data_ function, that returns a dictionary with keys {'train', 'test'} and the corresponding data_split as argument.<br/>
-Splits are created using stratified sampling to split 0.8, 0.1, and 0.1 portions of tweets from each class into training, validation and test sets. The corresponding ids can be found in the _davidson_train_ids.csv_, _davidson_val_ids.csv_ and _davidson_test_ids.csv_ files within the _DATA_ directory.<br/>
-Note that the _utils.get_davidson_data_ function maps the "hate speech" and "offensive" labels into the abusive class, and the "neither" label into the non abusive class.
+To run the AAA tool on the [Davidson et al., 2017](https://ojs.aaai.org/index.php/ICWSM/article/view/14955)'s dataset, download the [`davidson_data.csv`](https://raw.githubusercontent.com/t-davidson/hate-speech-and-offensive-language/master/data/labeled_data.csv) file and add it to the `DATA` directory. You can then call the `utils.get_davidson_data` function, that returns a dictionary with keys {'train', 'test'} and the corresponding data_split as argument.<br/>
+Splits are created using stratified sampling to split 0.8, 0.1, and 0.1 portions of tweets from each class into training, validation and test sets. The corresponding ids can be found in the `davidson_train_ids.csv`, `davidson_val_ids.csv` and `davidson_test_ids.csv` files within the `DATA` directory.<br/>
+Note that the `utils.get_davidson_data` function maps the "hate speech" and "offensive" labels into the abusive class, and the "neither" label into the non abusive class.
 
 ## Supported Models
 We provide code and checkpoints for the SVM, BERT<sub>MOZ</sub> and BERT<sub>KEN</sub> models trained on the Waseem et al., 2018 and Davidson et al., 2017 datasets.
@@ -218,7 +231,7 @@ To replicate our experiments on the Waseem et al., 2018's dataset you'll need to
 from utils import download_checkpoints
 download_checkpoints('waseem-18')
 ```
-Alternatively, you can download the checkpoints of interest from the following list. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
+Alternatively, you can download the checkpoints of interest from the following list. Add all the files to the `models` directory, or modify the `info/info.py` file accordingly.
 
 #### SVM ####
 The weights of our SVM model can be downloaded at:
@@ -243,7 +256,7 @@ To replicate our experiments on the Davidson et al., 2017's dataset you'll need 
 from utils import download_checkpoints
 download_checkpoints('davidson-17')
 ```
-Alternatively, you can download the checkpoints of interest from the following list. Add all the files to the _models_ directory, or modify the _info/info.py_ file accordingly.
+Alternatively, you can download the checkpoints of interest from the following list. Add all the files to the `models` directory, or modify the `info/info.py` file accordingly.
 
 #### SVM ####
 The weights of our SVM model can be downloaded at:
