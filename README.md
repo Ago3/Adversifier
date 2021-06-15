@@ -28,8 +28,8 @@ post_text	label
 Labels need to be binary, with 1 corresponding to the abusive class, and 0 to the non-abusive class, e.g.:
 
 ```
-This is an abusive message	0
-This is a non-abusive message	1
+This is an abusive message	1
+This is a non-abusive message	0
 ```
 
 To generate the AAA data files, run the following command:
@@ -102,8 +102,8 @@ post_text	label
 Labels need to be binary, with 1 corresponding to the abusive class, and 0 to the non-abusive class, e.g.:
 
 ```
-This is an abusive message	0
-This is a non-abusive message	1
+This is an abusive message	1
+This is a non-abusive message	0
 ```
 Labels are assumed to be binary, with 1 corresponding to the abusive class, and 0 to the non-abusive class.
 
