@@ -36,8 +36,7 @@ class AAAdversifier():
         model_input = [posts] + ([] if len(test_data) == 2 else test_data[2:])
         predictions = model(model_input)
         if setting_name in ['f1_o', 'hashtag_check']:
-            # self.scores[setting_name], self.scores[setting_name + '_tnr'], self.scores[setting_name + '_tpr'] = setting_score(predictions, labels, setting_name)
-            self.scores[setting_name], self.scores[setting_name + '_cm'] = setting_score(predictions, labels, setting_name)
+            self.scores[setting_name] = setting_score(predictions, labels, setting_name)
         else:
             self.scores[setting_name] = setting_score(predictions, labels, setting_name)
         print('{} score: {}'.format(setting_name, self.scores[setting_name]))
@@ -129,8 +128,7 @@ class AAAdversifier():
             assert all([len(l) == 3 for l in lines]), "Error: expected 3 columns in {}.tsv file".format(setting_name)
             posts, labels, predictions = [list(t) for t in zip(*[[line[0], int(line[1]), int(line[2])] for line in lines])]
         if setting_name in ['f1_o', 'hashtag_check']:
-            # self.scores[setting_name], self.scores[setting_name + '_tnr'], self.scores[setting_name + '_tpr'] = setting_score(predictions, labels, setting_name)
-            self.scores[setting_name], self.scores[setting_name + '_cm'] = setting_score(predictions, labels, setting_name)
+            self.scores[setting_name] = setting_score(predictions, labels, setting_name)
         else:
             self.scores[setting_name] = setting_score(predictions, labels, setting_name)
         print('{} score: {}'.format(setting_name, self.scores[setting_name]))

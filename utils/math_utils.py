@@ -11,17 +11,13 @@ def geometric_mean(values, weights=None):
 
 def setting_score(predictions, labels, setting_name):
     if setting_name in ['f1_o', 'hashtag_check']:
-        # tpr = []
-        cm = []
         for class_id in [0, 1]:
             c_predictions = [p for p, l in zip(predictions, labels) if l == class_id]
             c_labels = [class_id] * len(c_predictions)
             c_tp = (np.array(c_predictions) == np.array(c_labels)).sum()
-            cm += [c_tp, len(c_predictions) - c_tp]
             c_tpr = c_tp / len(c_predictions)
-            # tpr.append(c_tpr)
             print("Class: {} CPR: {}".format(class_id, c_tpr))
-        return f1_score(predictions, labels, average='micro'), cm  # tpr[0], tpr[1]
+        return f1_score(predictions, labels, average='micro')
     tp = (np.array(predictions) == np.array(labels)).sum()
     tpr = tp / len(predictions)
     return tpr
