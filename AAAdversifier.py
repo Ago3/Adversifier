@@ -126,6 +126,7 @@ class AAAdversifier():
             exit(1)
         with open(os.path.join(indir, '{}.tsv'.format(setting_name)), 'r') as f:
             lines = [line.strip().split('\t') for line in f.readlines()]
+            assert all([len(l) == 3 for l in lines]), "Error: expected 3 columns in {}.tsv file".format(setting_name)
             posts, labels, predictions = [list(t) for t in zip(*[[line[0], int(line[1]), int(line[2])] for line in lines])]
         if setting_name in ['f1_o', 'hashtag_check']:
             # self.scores[setting_name], self.scores[setting_name + '_tnr'], self.scores[setting_name + '_tpr'] = setting_score(predictions, labels, setting_name)
