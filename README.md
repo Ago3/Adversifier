@@ -283,7 +283,7 @@ If you use our tool or metric, please cite our paper:
 @inproceedings{calabrese-etal-2020-aaa,
   author    = {Calabrese, Agostina and
                Michele, Bevilacqua and
-               Ross, Björn and
+               Ross, Bj{\"o}rn and
                Tripodi, Rocco and
                Navigli, Roberto},
   title     = {{AAA}: Fair Evaluation for Abuse Detection Systems Wanted},
