@@ -10,3 +10,4 @@ debug.py
 *.pt
 main.py
 debug.py
+models/*
