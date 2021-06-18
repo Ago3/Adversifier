@@ -78,7 +78,7 @@ where ```$ANSWER_FILE_DIR``` is the absolute path to the directory containing yo
 </details>
 
 <details><summary>With Binder</summary>
-Click on -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Ago3/Adversifier/binder-support)
+Click on -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Ago3/Adversifier/binder-support)]
 </details>
 
 <details><summary>Old-school way</summary>
