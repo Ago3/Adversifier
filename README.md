@@ -1,3 +1,4 @@
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Ago3/Adversifier/binder-support)
 # AAA Tool
 
 Official repository for the Adversarial Attacks against Abuse (AAA) evaluation tool. AAA is a new evaluation metric for abuse detection systems that better captures a model's performance on certain classes of hard-to-classify microposts, and for example penalises systems which are biased on low-level lexical features.
@@ -75,10 +76,6 @@ docker run --mount type=bind,source=$AAA_FILE_DIR,target=/aaa/output/answer_file
 
 where ```$ANSWER_FILE_DIR``` is the absolute path to the directory containing your answer files (for example, `"$(pwd)"/mydata/aaa_files`), while ```$DATASET_NAME``` is a string identifier for the dataset. Scores are stored in the ```$ANSWER_FILE_DIR/results.tsv``` file.
 
-</details>
-
-<details><summary>With Binder</summary>
-Click on -> [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Ago3/Adversifier/binder-support)]
 </details>
 
 <details><summary>Old-school way</summary>
