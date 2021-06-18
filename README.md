@@ -68,13 +68,78 @@ All files are expected to follow the following format:
 post_text	label	your_model_prediction
 ```
 
-To evaluate the answer files, run the following commands:
+To evaluate the answer files, run the following command:
 ```
-docker run -v $ANSWER_FILE_DIR:/aaa/output/answer_files aaa python3 eval.py --dataset_name $DATASET_NAME
 docker run --mount type=bind,source=$AAA_FILE_DIR,target=/aaa/output/answer_files aaa python3 eval.py --dataset_name $DATASET_NAME
 ```
 
 where ```$ANSWER_FILE_DIR``` is the absolute path to the directory containing your answer files (for example, `"$(pwd)"/mydata/aaa_files`), while ```$DATASET_NAME``` is a string identifier for the dataset. Scores are stored in the ```$ANSWER_FILE_DIR/results.tsv``` file.
+
+</details>
+
+<details><summary>With Binder</summary>
+
+## Demo
+
+https://user-images.githubusercontent.com/30800478/122552595-69fa0c80-d02e-11eb-944b-27ee3d213898.mov
+
+### Generating the AAA Data Files
+The AAA data files are generated starting from your training and test sets. Both files are expected to be tab-separated files with format:
+```
+post_text	label
+```
+
+Labels need to be binary, with 1 corresponding to the abusive class, and 0 to the non-abusive class, e.g.:
+
+```
+This is an abusive message	1
+This is a non-abusive message	0
+```
+
+To generate the AAA data files:
+1. Click on the Binder badge at the top of this page.
+2. Upload your training and test sets into the `input` folder.
+3. Open a new terminal, and run the following command:
+```
+python gen.py --dataset_name $DATASET_NAME --train $TRAINING_SET --test $TEST_SET
+```
+where ```$TRAINING_SET``` and ```$TEST_SET``` are the filenames of the training and test data files (to be placed inside `input`), and ```$DATASET_NAME``` is a string identifier for the dataset.
+
+The tool will create the ```input/aaa_files``` directory containing the following tab-separated files:
+```
+corr_a_to_a.tsv
+corr_n_to_n.tsv
+f1_o.tsv
+flip_n_to_a.tsv
+hashtag_check.tsv
+quoting_a_to_n.tsv
+```
+All files will have the same format as your input datasets:
+```
+post_text	label
+```
+  
+### Evaluating the Answer Files
+In order to evaluate your model with the AAA tool, upload your answer files into the ```output/answer_files``` directory. The tool expects the following tab-separated files:
+```
+corr_a_to_a.tsv
+corr_n_to_n.tsv
+f1_o.tsv
+flip_n_to_a.tsv
+hashtag_check.tsv
+quoting_a_to_n.tsv
+```
+All files are expected to follow the following format:
+```
+post_text	label	your_model_prediction
+```
+
+To evaluate the answer files, run the following command in the terminal:
+```
+python eval.py --dataset_name $DATASET_NAME
+```
+
+where ```$DATASET_NAME``` is a string identifier for the dataset. Scores are stored in the ```output/answer_files/results.tsv``` file.
 
 </details>
 
