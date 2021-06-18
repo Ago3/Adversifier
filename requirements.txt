@@ -1,0 +1,5 @@
+python>=3
+nltk
+numpy
+sklearn
+requests
