@@ -1,0 +1,4 @@
+#!/bin/bash
+
+mkdir input
+mkdir -p output/answer_files
