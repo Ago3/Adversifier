@@ -347,17 +347,26 @@ The weights of BERT<sub>KEN</sub> (Kennedy et al., 2020) can be downloaded at:
 If you use our tool or metric, please cite our paper:
 ```
 @inproceedings{calabrese-etal-2021-aaa,
-  author    = {Calabrese, Agostina and
-               Michele, Bevilacqua and
-               Ross, Bj{\"o}rn and
-               Tripodi, Rocco and
-               Navigli, Roberto},
-  title     = {{AAA}: Fair Evaluation for Abuse Detection Systems Wanted},
-  booktitle = {WebSci '21: 13th {ACM} Conference on Web Science, Virtual Event, UK,
-               June 21-25, 2021},
+  author    = {Agostina Calabrese and
+               Michele Bevilacqua and
+               Bj{\"{o}}rn Ross and
+               Rocco Tripodi and
+               Roberto Navigli},
+  editor    = {Clare Hooper and
+               Matthew Weber and
+               Katrin Weller and
+               Wendy Hall and
+               Noshir Contractor and
+               Jie Tang},
+  title     = {{AAA:} Fair Evaluation for Abuse Detection Systems Wanted},
+  booktitle = {WebSci '21: 13th {ACM} Web Science Conference 2021, Virtual Event,
+               United Kingdom, June 21-25, 2021},
+  pages     = {243--252},
   publisher = {{ACM}},
   year      = {2021},
   url       = {https://doi.org/10.1145/3447535.3462484},
   doi       = {10.1145/3447535.3462484},
+  timestamp = {Thu, 24 Jun 2021 15:05:45 +0200},
+  biburl    = {https://dblp.org/rec/conf/websci/CalabreseBRTN21.bib}
 }
 ```
