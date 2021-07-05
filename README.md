@@ -1,4 +1,4 @@
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Ago3/Adversifier/binder-support)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Ago3/Adversifier/HEAD)
 # AAA Tool
 
 Official repository for the [Adversarial Attacks against Abuse (AAA)](https://dl.acm.org/doi/pdf/10.1145/3447535.3462484) evaluation tool. AAA is a new evaluation metric for abuse detection systems that better captures a model's performance on certain classes of hard-to-classify microposts, and for example penalises systems which are biased on low-level lexical features.
@@ -12,7 +12,7 @@ Official repository for the [Adversarial Attacks against Abuse (AAA)](https://dl
 ## Setup
 Within the `Adversifier` directory run the following command:
 ```
-docker build -t aaa .
+docker build -f AAA-Dockerfile -t aaa .
 ```
 
 ## How to evaluate your model on a dataset
