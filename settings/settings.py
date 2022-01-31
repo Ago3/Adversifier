@@ -4,6 +4,7 @@ import re
 from utils import get_high_corr_words, get_hateful_words
 import nltk
 nltk.download('wordnet')
+nltk.download('omw-1.4')
 from nltk.stem import WordNetLemmatizer
 from info import TEMPLATES
 
