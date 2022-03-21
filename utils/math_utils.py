@@ -17,7 +17,7 @@ def setting_score(predictions, labels, setting_name):
             c_tp = (np.array(c_predictions) == np.array(c_labels)).sum()
             c_tpr = c_tp / len(c_predictions)
             print("Class: {} CPR: {}".format(class_id, c_tpr))
-        return f1_score(predictions, labels, average='micro')
+        return f1_score(labels, predictions, average='micro')
     tp = (np.array(predictions) == np.array(labels)).sum()
     tpr = tp / len(predictions)
     return tpr
