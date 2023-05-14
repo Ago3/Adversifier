@@ -25,7 +25,7 @@ def logReg(data, class_id):
     with warnings.catch_warnings(record=True) as w:
         clf = clf.fit(train_data_features, train_labels)
     # print("Training Completed")
-    features = feature_importance(clf.coef_, vectorizer.get_feature_names(), class_id)
+    features = feature_importance(clf.coef_, vectorizer.get_feature_names_out(), class_id)
     return features
 
 
