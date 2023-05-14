@@ -64,8 +64,7 @@ class AAAdversifier():
             #If hashtags are not being used by the model, just skip the corr_a_to_a and corr_n_to_n attacks
             # if 'hashtag_check' in self.scores and 'corr' in setting and (is_significant(self.scores['hashtag_check_tnr'], self.scores['f1_o_tnr']) or is_significant(self.scores['hashtag_check_tpr'], self.scores['f1_o_tpr'])):
             if 'hashtag_check' in self.scores and 'corr' in setting and is_significant(self.scores['hashtag_check'], self.scores['f1_o']):
-                self.scores[setting] = 0
-                continue
+                print('Warning: performance under the hashtag_check attack are significantly different. Please check your model is not discarding hashtags.')
             self.eval_setting(setting, model, test_data, train_data)
         self.scores['aaa'] = geometric_mean([self.scores[k] for k in ['quoting_a_to_n', 'corr_n_to_n', 'corr_a_to_a', 'flip_n_to_a']])
         print('\nAAA score: {}'.format(self.scores['aaa']))
