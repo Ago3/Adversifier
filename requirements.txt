@@ -1,4 +1,4 @@
 nltk
 numpy
-sklearn
+scikit-learn
 requests
