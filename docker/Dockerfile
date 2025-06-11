@@ -10,4 +10,5 @@ RUN pip install --upgrade pip && \
         nltk \
         transformers==4.3.0 \
         scikit-learn==0.24.1 \
-        packaging==21.3
+        packaging==21.3 \
+        'torchmetrics<0.8'
