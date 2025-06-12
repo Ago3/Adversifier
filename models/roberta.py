@@ -80,7 +80,7 @@ def set_seed(seed=42):
     torch.backends.cudnn.benchmark = False
 
 
-def finetune_roberta_model(train_data, val_data, model=None, epochs=3, batch_size=16, seed=74361):
+def finetune_roberta_model(train_data, val_data, dataset_name, model=None, epochs=3, batch_size=16, seed=74361):
     set_seed(seed)
 
     train_texts = [preprocess_tweet(tweet, use_hashtags=True) for tweet in train_data[0]]
@@ -96,7 +96,7 @@ def finetune_roberta_model(train_data, val_data, model=None, epochs=3, batch_siz
 
 
     training_args = TrainingArguments(
-        output_dir="./CACHE/roberta_results",
+        output_dir=f"./CACHE/roberta_results_{dataset_name}",
         num_train_epochs=1,
         per_device_train_batch_size=batch_size,
         per_device_eval_batch_size=batch_size,
@@ -118,7 +118,7 @@ def finetune_roberta_model(train_data, val_data, model=None, epochs=3, batch_siz
     )
 
     checkpoint_path = None
-    best_model_path = "./models/best_roberta_model"
+    best_model_path = f"./models/best_roberta_model_{dataset_name}"
     best_f1 = -np.inf
 
     for epoch in range(epochs):
@@ -126,7 +126,7 @@ def finetune_roberta_model(train_data, val_data, model=None, epochs=3, batch_siz
         trainer.args.num_train_epochs = 1
         trainer.train(resume_from_checkpoint=checkpoint_path)
         metrics = trainer.evaluate()
-        checkpoint_path = "./CACHE/roberta_results/checkpoint-last"
+        checkpoint_path = f"./CACHE/roberta_results_{dataset_name}/checkpoint-last"
         print(f"Epoch {epoch + 1} — F1: {metrics['eval_f1']:.4f}")
         if metrics['eval_f1'] > best_f1:
             best_f1 = metrics['eval_f1']

@@ -13,10 +13,10 @@ def toy_model(list_of_arguments):
 
 def main():
     # Toy example
-    print('Evaluating Random Classifier:')
+    # print('Evaluating Random Classifier:')
     adversifier = AAAdversifier('waseem')
     data = get_waseem_data(include_validation=True)
-    adversifier.aaa('random', toy_model, data['train'], data['test'])  # Check arguments description in AAAdversifier.py
+    # adversifier.aaa('random', toy_model, data['train'], data['test'])  # Check arguments description in AAAdversifier.py
     
     # Example: Kennedy et al., 2020
     # print('\nEvaluating Kennedy Classifier:')
@@ -36,34 +36,38 @@ def main():
     # adversifier.aaa('mozafari-nh', mozafari_model_nh.forward, data['train'], data['test'])
 
     print('\nFinetuning and evlauating RoBERTa Classifier:')
-    roberta_model = finetune_roberta_model(data["train"], data["validation"], epochs=20, batch_size=32, seed=74361)
+    roberta_model = finetune_roberta_model(data["train"], data["validation"], "waseem", epochs=20, batch_size=16, seed=74361)
     adversifier.aaa('roberta', roberta_model.run_inference, data['train'], data['test'])
     evaluate_on_hatecheck(roberta_model.run_inference)
 
     # Example: SVM
-    print('\nEvaluating SVM Classifier:')
-    svm_model = SvmModel()
-    adversifier.aaa('svm', svm_model.predictor, data['train'], data['test'])
-    evaluate_on_hatecheck(svm_model.predictor)
+    # print('\nEvaluating SVM Classifier:')
+    # svm_model = SvmModel()
+    # adversifier.aaa('svm', svm_model.predictor, data['train'], data['test'])
+    # evaluate_on_hatecheck(svm_model.predictor)
 
     adversifier = AAAdversifier('davidson')
     davidson_data = get_davidson_data()
-    adversifier.aaa('random', toy_model, davidson_data['train'], davidson_data['test'])
+    # adversifier.aaa('random', toy_model, davidson_data['train'], davidson_data['test'])
 
-    # Example: Kennedy et al., 2020
-    print('\nEvaluating Kennedy Classifier on Davidson data:')
-    kennedy_davidson_model = KennedyModel(KENNEDY_HATESPEECH_MODEL_PATH, KENNEDY_OFFENSIVE_MODEL_PATH, 100)
-    adversifier.aaa('kennedy-davidson', kennedy_davidson_model.forward, davidson_data['train'], davidson_data['test'])
+    # # Example: Kennedy et al., 2020
+    # print('\nEvaluating Kennedy Classifier on Davidson data:')
+    # kennedy_davidson_model = KennedyModel(KENNEDY_HATESPEECH_MODEL_PATH, KENNEDY_OFFENSIVE_MODEL_PATH, 100)
+    # adversifier.aaa('kennedy-davidson', kennedy_davidson_model.forward, davidson_data['train'], davidson_data['test'])
 
-    # Example: Mozafari et al., 2019
-    print('\nEvaluating Mozafari Classifier on Davidson data:')
-    mozafari_davidson_model = MozafariModel(MOZAFARI_DAVIDSON_MODEL_PATH, 100)
-    adversifier.aaa('mozafari-davidson', mozafari_davidson_model.forward, davidson_data['train'], davidson_data['test'])
+    # # Example: Mozafari et al., 2019
+    # print('\nEvaluating Mozafari Classifier on Davidson data:')
+    # mozafari_davidson_model = MozafariModel(MOZAFARI_DAVIDSON_MODEL_PATH, 100)
+    # adversifier.aaa('mozafari-davidson', mozafari_davidson_model.forward, davidson_data['train'], davidson_data['test'])
 
-    # Example: SVM
-    print('\nEvaluating SVM Classifier on Davidson data:')
-    svm_davidson_model = SvmModel(dataset='davidson')
-    adversifier.aaa('svm-davidson', svm_davidson_model.predictor, davidson_data['train'], davidson_data['test'])
+    # # Example: SVM
+    # print('\nEvaluating SVM Classifier on Davidson data:')
+    # svm_davidson_model = SvmModel(dataset='davidson')
+    # adversifier.aaa('svm-davidson', svm_davidson_model.predictor, davidson_data['train'], davidson_data['test'])
+    print('\nFinetuning and evlauating RoBERTa Classifier:')
+    roberta_model = finetune_roberta_model(data["train"], data["validation"], "davidson", epochs=20, batch_size=16, seed=74361)
+    adversifier.aaa('roberta', roberta_model.run_inference, data['train'], data['test'])
+    evaluate_on_hatecheck(roberta_model.run_inference)
 
 
 if __name__ == '__main__':
