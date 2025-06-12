@@ -2,12 +2,13 @@ import csv
 from info import WASEEM_TSV_FILE, WASEEM_TRAIN_IDS, WASEEM_VAL_IDS, WASEEM_TEST_IDS
 
 
-def get_waseem_data():
+def get_waseem_data(include_validation=False):
     id2post, id2label = __read_waseem_tsv_file__()
-    files = [WASEEM_TRAIN_IDS, WASEEM_TEST_IDS]
+    files = [WASEEM_TRAIN_IDS, WASEEM_TEST_IDS] if not include_validation else [WASEEM_TRAIN_IDS, WASEEM_VAL_IDS, WASEEM_TEST_IDS]
+    splits = ['train', 'test'] if not include_validation else ['train', 'validation', 'test']
     LABELS = ['neither', 'sexism', 'racism', 'both']
     data = dict()
-    for filename, dataset_name in zip(files, ['train', 'test']):
+    for filename, dataset_name in zip(files, splits):
         with open(filename, 'r') as f:
             lines = f.readlines()
             split_ids = [line.strip() for line in lines if line.strip() in id2post]
