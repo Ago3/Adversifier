@@ -5,11 +5,12 @@ sys.path.append(".")
 from info import DAVIDSON_CSV_FILE, DAVIDSON_TRAIN_IDS, DAVIDSON_VAL_IDS, DAVIDSON_TEST_IDS
 
 
-def get_davidson_data():
+def get_davidson_data(include_validation=False):
     ids, posts, labels = __read_davidson_csv_file__()
-    files = [DAVIDSON_TRAIN_IDS, DAVIDSON_TEST_IDS]
+    files = [DAVIDSON_TRAIN_IDS, DAVIDSON_TEST_IDS] if not include_validation else [DAVIDSON_TRAIN_IDS, DAVIDSON_VAL_IDS, DAVIDSON_TEST_IDS]
+    splits = ['train', 'test'] if not include_validation else ['train', 'validation', 'test']
     data = dict()
-    for filename, dataset_name in zip(files, ['train', 'test']):
+    for filename, dataset_name in zip(files, splits):
         with open(filename, 'r') as f:
             split_ids = [int(line.strip()) for line in f.readlines()]
             split_posts = [p for idx, p in enumerate(posts) if idx in split_ids]
@@ -60,3 +61,10 @@ if __name__ == '__main__':
     ids, posts, labels = __read_davidson_csv_file__()
     __split_dataset__(ids, labels)
     __save_preprocessed_files__()
+    # data = get_davidson_data()
+    # for k, v in data.items():
+    #     with open('davidson_{}_np.tsv'.format(k), 'w+') as f:
+    #         i = 0
+    #         for post, label in zip(v[0], v[1]):
+    #             f.write('{}\t{}\t{}\n'.format(i, post.replace('\n', ' '), label))
+    #             i += 1

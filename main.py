@@ -47,7 +47,7 @@ def main():
     # evaluate_on_hatecheck(svm_model.predictor)
 
     adversifier = AAAdversifier('davidson')
-    davidson_data = get_davidson_data()
+    davidson_data = get_davidson_data(include_validation=True)
     # adversifier.aaa('random', toy_model, davidson_data['train'], davidson_data['test'])
 
     # # Example: Kennedy et al., 2020
