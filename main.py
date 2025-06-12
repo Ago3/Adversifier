@@ -65,8 +65,8 @@ def main():
     # svm_davidson_model = SvmModel(dataset='davidson')
     # adversifier.aaa('svm-davidson', svm_davidson_model.predictor, davidson_data['train'], davidson_data['test'])
     print('\nFinetuning and evlauating RoBERTa Classifier:')
-    roberta_model = finetune_roberta_model(data["train"], data["validation"], "davidson", epochs=20, batch_size=16, seed=74361)
-    adversifier.aaa('roberta', roberta_model.run_inference, data['train'], data['test'])
+    roberta_model = finetune_roberta_model(davidson_data["train"], davidson_data["validation"], "davidson", epochs=20, batch_size=16, seed=74361)
+    adversifier.aaa('roberta', roberta_model.run_inference, davidson_data['train'], davidson_data['test'])
     evaluate_on_hatecheck(roberta_model.run_inference)
 
 
