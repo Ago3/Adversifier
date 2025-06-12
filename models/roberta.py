@@ -16,12 +16,15 @@ class RobertaModel(nn.Module):
 
 
     def run_inference(self, input_args):
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.roberta.to(device)
+        
         input_lines = input_args[0]  # list of posts
         input_lines = [preprocess_tweet(tweet, use_hashtags=True) for tweet in input_lines]
 
         all_preds = []
 
-        self.eval()
+        self.roberta.eval()
         with torch.no_grad():
             for input_batch in self.__get_batch__(input_lines):
                 encodings = self.tokenizer(
