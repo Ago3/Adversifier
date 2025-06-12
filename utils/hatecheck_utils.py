@@ -1,4 +1,4 @@
-from info import HATECHECK_F20, HATECHECK_F21, HATECHECK_F18, HATECHECK_F19
+from info import HATECHECK_F20, HATECHECK_F21, HATECHECK_F18, HATECHECK_F19, HATECHECK_F23
 import numpy as np
 
 
@@ -34,6 +34,14 @@ def get_ident_pos_instances():
     return examples
 
 
+def get_target_indiv_nh_instances():
+    examples = list()
+    with open(HATECHECK_F23, 'r') as f:
+        for line in f.readlines():
+            examples.append(line.split('\t')[1].strip())
+    return examples
+
+
 def evaluate_on_hatecheck_functionality(predictor, functionality):
     if functionality == 'f20':
         examples = get_counter_quote_instances()
@@ -43,6 +51,8 @@ def evaluate_on_hatecheck_functionality(predictor, functionality):
         examples = get_ident_neutral_instances()
     elif functionality == 'f19':
         examples = get_ident_pos_instances()
+    elif functionality == 'f23':
+        examples = get_target_indiv_nh_instances()
     else:
         print('The functionality is not supported')
     predictions = predictor([examples])
@@ -53,6 +63,6 @@ def evaluate_on_hatecheck_functionality(predictor, functionality):
 
 
 def evaluate_on_hatecheck(predictor):
-    for functionality in ['f20', 'f21', 'f18', 'f19']:
+    for functionality in ['f20', 'f21', 'f18', 'f19', 'f23']:
         evaluate_on_hatecheck_functionality(predictor, functionality)
 
