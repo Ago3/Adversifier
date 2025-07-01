@@ -1,4 +1,4 @@
-from info import HATECHECK_F20, HATECHECK_F21, HATECHECK_F18, HATECHECK_F19, HATECHECK_F23
+from info import HATECHECK_F20, HATECHECK_F21, HATECHECK_F18, HATECHECK_F19, HATECHECK_F23, HATECHECK_ROOT
 import numpy as np
 
 
@@ -44,7 +44,7 @@ def get_target_indiv_nh_instances():
 
 def get_functionality_instances(functionality: str):
     examples = list()
-    with open(f"{functionality}.tsv", 'r') as f:
+    with open(f"{HATECHECK_ROOT}/{functionality}.tsv", 'r') as f:
         for line in f.readlines():
             examples.append(line.split('\t')[1].strip())
     return examples
