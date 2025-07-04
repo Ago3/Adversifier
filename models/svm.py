@@ -79,9 +79,9 @@ class SvmModel():
             y = np.array(input_data[1])
 
             # First model and vectorizer
-            self.first_vectorizer = TfidfVectorizer(ngram_range=(1, 1), max_features=5000)
+            self.first_vectorizer = TfidfVectorizer(analyzer="word", tokenizer=None, preprocessor=None, stop_words=None, max_features=1500)
             X1 = self.first_vectorizer.fit_transform(texts)
-            self.first_model = SVC(kernel='linear', random_state=seed)
+            self.first_model = SVC(gamma='auto', cache_size=12000, max_iter=-1, kernel='linear', probability=True, random_state=seed)
             self.first_model.fit(X1, y)
 
             # Save first model/vectorizer
@@ -91,15 +91,15 @@ class SvmModel():
                 pickle.dump(self.first_model, f)
 
             # Second model and vectorizer
-            self.second_vectorizer = TfidfVectorizer(ngram_range=(1, 2), max_features=8000)
+            self.second_vectorizer = TfidfVectorizer(analyzer="word", tokenizer=None, preprocessor=None, stop_words=None, max_features=1500)
             X2 = self.second_vectorizer.fit_transform(texts)
-            self.second_model = SVC(kernel='linear', random_state=seed)
+            self.second_model = SVC(gamma='auto', cache_size=12000, max_iter=-1, kernel='linear', probability=True, random_state=seed)
             self.second_model.fit(X2, y)
 
-            # Save second model/vectorizer
-            with open(self.paths[2], 'wb') as f:
-                pickle.dump(self.second_vectorizer, f)
-            with open(self.paths[3], 'wb') as f:
-                pickle.dump(self.second_model, f)
+            # # Save second model/vectorizer
+            # with open(self.paths[2], 'wb') as f:
+            #     pickle.dump(self.second_vectorizer, f)
+            # with open(self.paths[3], 'wb') as f:
+            #     pickle.dump(self.second_model, f)
 
-            print("Training complete. Models saved.")
+            print("Training complete.")
