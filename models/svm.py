@@ -49,7 +49,7 @@ class SvmModel():
         return predictions
 
 
-    def train_or_load(self, input_data=None, load=True, seed=42):
+    def train_or_load(self, input_data=None, val_data=None, test_data=None, load=True, seed=42):
         """
         Loads models and vectorizers from disk if load=True.
         Otherwise, trains new models on input_data and saves them.
@@ -76,11 +76,13 @@ class SvmModel():
             np.random.seed(seed)
 
             texts = [preprocess_tweet(t) for t in input_data[0]]
+            val_texts = [preprocess_tweet(t) for t in val_data[0]]
+            test_texts = [preprocess_tweet(t) for t in test_data[0]]
             y = np.array(input_data[1])
 
             # First model and vectorizer
             self.first_vectorizer = TfidfVectorizer(analyzer="word", tokenizer=None, preprocessor=None, stop_words=None, max_features=1500)
-            X1 = self.first_vectorizer.fit_transform(texts)
+            X1 = self.first_vectorizer.fit_transform(texts + val_texts + test_texts)
             self.first_model = SVC(gamma='auto', cache_size=12000, max_iter=-1, kernel='linear', probability=True, random_state=seed)
             self.first_model.fit(X1, y)
 
@@ -92,7 +94,7 @@ class SvmModel():
 
             # Second model and vectorizer
             self.second_vectorizer = TfidfVectorizer(analyzer="word", tokenizer=None, preprocessor=None, stop_words=None, max_features=1500)
-            X2 = self.second_vectorizer.fit_transform(texts)
+            X2 = self.second_vectorizer.fit_transform(texts + val_texts + test_texts)
             self.second_model = SVC(gamma='auto', cache_size=12000, max_iter=-1, kernel='linear', probability=True, random_state=seed)
             self.second_model.fit(X2, y)
 
