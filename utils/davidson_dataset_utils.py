@@ -33,7 +33,7 @@ def get_disaggregated_davidson_data(include_validation=False):
             split_labels = [l for idx, l in enumerate(labels) if idx in split_ids]
             split_hateful_labels = [1 if l == 0 else 0 for l in split_labels]
             split_offensive_labels = [1 if l == 1 else 0 for l in split_labels]
-            extra_info_the_model_might_need = ['' for l in split_binary_labels]  # you can use this variable to pass, e.g., conversation context
+            extra_info_the_model_might_need = ['' for l in split_labels]  # you can use this variable to pass, e.g., conversation context
             data[dataset_name] = [split_posts, split_hateful_labels, split_offensive_labels, extra_info_the_model_might_need]
     return data
 
