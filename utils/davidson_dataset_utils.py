@@ -21,6 +21,43 @@ def get_davidson_data(include_validation=False):
     return data
 
 
+def get_disaggregated_davidson_data(include_validation=False):
+    ids, posts, labels = __read_davidson_csv_file__()
+    files = [DAVIDSON_TRAIN_IDS, DAVIDSON_TEST_IDS] if not include_validation else [DAVIDSON_TRAIN_IDS, DAVIDSON_VAL_IDS, DAVIDSON_TEST_IDS]
+    splits = ['train', 'test'] if not include_validation else ['train', 'validation', 'test']
+    data = dict()
+    for filename, dataset_name in zip(files, splits):
+        with open(filename, 'r') as f:
+            split_ids = [int(line.strip()) for line in f.readlines()]
+            split_posts = [p for idx, p in enumerate(posts) if idx in split_ids]
+            split_labels = [l for idx, l in enumerate(labels) if idx in split_ids]
+            split_hateful_labels = [1 if l == 0 else 0 for l in split_labels]
+            split_offensive_labels = [1 if l == 1 else 0 for l in split_labels]
+            extra_info_the_model_might_need = ['' for l in split_binary_labels]  # you can use this variable to pass, e.g., conversation context
+            data[dataset_name] = [split_posts, split_hateful_labels, split_offensive_labels, extra_info_the_model_might_need]
+    return data
+
+
+def create_davidson_huggingface_files():
+    import json
+    from utils import preprocess_tweet
+    ids, posts, labels = __read_davidson_csv_file__()
+    files = [DAVIDSON_TRAIN_IDS, DAVIDSON_VAL_IDS, DAVIDSON_TEST_IDS]
+    splits = ['train', 'validation', 'test']
+    data = dict()
+    for filename, dataset_name in zip(files, splits):
+        with open(filename, 'r') as f:
+            split_ids = [int(line.strip()) for line in f.readlines()]
+            split_posts = [p for idx, p in enumerate(posts) if idx in split_ids]
+            split_labels = [l for idx, l in enumerate(labels) if idx in split_ids]
+            split_binary_labels = [0 if l == 2 else 1 for l in split_labels]
+            data[dataset_name] = [{"qid": i, "text": preprocess_tweet(split_posts[i]), "rule": "comparison" if split_binary_labels[i] else "nothate"} for i in range(len(split_ids))]
+        with open(f"DATA/hf_davidson/{dataset_name}.jsonl", "w+") as out:
+            for instance in data[dataset_name]:
+                json.dump(instance, out)
+                out.write("\n")
+
+
 def __read_davidson_csv_file__():
     with open(DAVIDSON_CSV_FILE, 'r') as csvfile:
         csvreader = csv.reader(csvfile)
